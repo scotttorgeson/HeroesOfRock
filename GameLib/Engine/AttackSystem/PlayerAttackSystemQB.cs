@@ -168,7 +168,7 @@ namespace GameLib.Engine.AttackSystem {
                                                             10, .25f, .5f, Vector2.One, Vector2.One * 2.0f,
                                                             Vector3.Zero, bloodDir, 2 * Vector3.One, "blood1");
                             Stage.ActiveStage.GetQB<Gameplay.BloodSplatterQB>().SplatBlood();
-                            Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(actorPos, new BoundingBox(new Vector3(-10.0f, -10.0f, -10.0f), new Vector3(10.0f, 10.0f, 10.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
+                            Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(actorPos, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
                             //Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(new Ray(actor.PhysicsObject.Position, Vector3.Down), 10.0f, "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
                         }
 
@@ -282,7 +282,7 @@ namespace GameLib.Engine.AttackSystem {
                                                             10, .25f, .5f, Vector2.One, Vector2.One * 2.0f, Vector3.Zero, 
                                                             bloodDir, 2 * Vector3.One, "blood1");
                     Stage.ActiveStage.GetQB<Gameplay.BloodSplatterQB>().SplatBlood();
-                    Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(mainCharacter.PhysicsObject.Position, new BoundingBox(new Vector3(-10.0f, -10.0f, -10.0f), new Vector3(10.0f, 10.0f, 10.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
+                    Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(mainCharacter.PhysicsObject.Position, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
                     //Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(new Ray(mainCharacter.PhysicsObject.Position, Vector3.Down), 10.0f, "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
 
                     playerRockMeter.RockLevelDownDueToDamage(dmg);
