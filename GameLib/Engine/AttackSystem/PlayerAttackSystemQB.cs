@@ -133,11 +133,11 @@ namespace GameLib.Engine.AttackSystem {
                     {
                         if (newMove.Force != Vector2.Zero && remainingHealth > 0)
                         {
-                            force *= (actorPos - position);
-                            force.Normalize();
+                            Vector3 f = force * (actorPos - position);
+                            f.Normalize();
 
-                            force.X *= newMove.Force.X + newMove.Force.X * increase;
-                            force.X *= newMove.Force.X + newMove.Force.X * increase;
+                            f.X *= newMove.Force.X + newMove.Force.X * increase;
+                            f.Z *= newMove.Force.X + newMove.Force.X * increase;
                             float jumpVal = newMove.Force.Y + newMove.Force.Y * increase;
 
                             if (actor.PhysicsObject.physicsType == PhysicsObject.PhysicsType.CylinderCharacter)
@@ -148,7 +148,7 @@ namespace GameLib.Engine.AttackSystem {
                                     actor.PhysicsObject.CylinderCharController.Jump(jumpVal / actor.PhysicsObject.CylinderCharController.Body.Mass);
                                 }
                                 if (force != Vector3.Zero)
-                                    actor.PhysicsObject.CylinderCharController.Body.ApplyLinearImpulse(ref force);
+                                    actor.PhysicsObject.CylinderCharController.Body.ApplyLinearImpulse(ref f);
                             }
                         }
 
