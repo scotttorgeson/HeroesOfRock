@@ -1,0 +1,7 @@
+ModelName=SmallEnemy\SmallEnemy_01_RunAnimation
+Mass=10
+PhysicsType=SimpleCharacter
+ModelType=Skinned
+Agents=AnimatedAgent,AIWeak,HealthAgent
+Texture=SmallEnemy\imp
+BumpMap=SmallEnemy\norm_small_enemy

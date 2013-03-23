@@ -1,0 +1,4 @@
+ModelName=Grid\grid
+Mass=0
+PhysicsType=StaticMesh
+Texture=Grid\GridTexture

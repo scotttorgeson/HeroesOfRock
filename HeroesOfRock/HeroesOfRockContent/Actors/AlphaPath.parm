@@ -1,0 +1,4 @@
+ModelName=LevelAlphaPath_v01\LevelAlphaPath_v01
+Mass=-1
+PhysicsType=StaticMesh
+Texture=LevelAlphaPath_v01\MainEnviron_Texture_05

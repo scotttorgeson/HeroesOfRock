@@ -1,0 +1,4 @@
+ModelName=Droid
+Agents=Avatar
+Mass=60
+PhysicsType=Box

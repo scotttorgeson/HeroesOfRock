@@ -1,0 +1,6 @@
+ModelName=SmallEnemy\SmallEnemy_01_RunAnimation
+Mass=10
+PhysicsType=SimpleCharacter
+Agents=AIWeak,HealthAgent
+Texture=SmallEnemy\imp
+BumpMap=SmallEnemy\norm_small_enemy

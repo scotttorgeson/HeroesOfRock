@@ -1,0 +1,26 @@
+#values to copy and paste!
+#Bool: =True=False
+#Input: =A=B
+#1-0 float: =1=0.9=0.8=0.7=0.6=0.5=0.4=0.3=0.2=0.1=0
+#-1-1 float: =-1=-0.9=-0.8=-0.7=-0.6=-0.5=-0.4=-0.3=-0.2=-0.1=0=0.1=0.2=0.3=0.4=0.5=0.6=0.7=0.8=0.9=1
+#ModelName: =TriggerVolumeTest
+
+#trigger volumes
+AirBurstTriggerVolume=ModelName=TriggerVolumeTest,DieOnTrigger=False=True,Strength=1=2=3=4=5=6=7=8=9=10
+
+ButtonPushTriggerVolume=ModelName=TriggerVolumeTest,DieOnTrigger=False=True,InputAction=A
+
+HealthTriggerVolume=ModelName=TriggerVolumeTest,DieOnTrigger=False=True,Heal=100,KillOnButtonPush=True=False,InputAction=A
+
+TextToScreenTriggerVolume=ModelName=TriggerVolumeTest,DieOnTrigger=False=True
+
+PlaySoundTriggerVolume=Type=OneShot=Zone,ModelName=TriggerVolumeTest,DieOnTrigger=True=False,Volume=1=0.9=0.8=0.7=0.6=0.5=0.4=0.3=0.2=0.1=0,Pitch=0=1=0.9=0.8=0.7=0.6=0.5=0.4=0.3=0.2=0.1,Pan=0=-1=-0.9=-0.8=-0.7=-0.6=-0.5=-0.4=-0.3=-0.2=-0.1=0=0.1=0.2=0.3=0.4=0.5=0.6=0.7=0.8=0.9=1,SoundName=bassandbeat=bassdrum=bassdrumpLOOP=bassloop=beat4loop=Beat4track=cymbal=Guitarandbeat=Guitarandbeat2=guitarslide=Hihat=snare
+
+SpawnActorTriggerVolume=ModelName=TriggerVolumeTest,DieOnTrigger=True=False,ActorType=EnemyWeak,SpawnPos=0 0 0,Count=1,Freq=1,SpawnInWaves=False=True
+
+LockOnCameraTriggerVolume=ModelName=TriggerVolumeTest,DieOnTrigger=True=False,Position=0 0 0 
+
+
+
+#AI
+AIWeak=none

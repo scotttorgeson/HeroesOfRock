@@ -1,0 +1,4 @@
+ModelName=sLevel\sLevel1
+Mass=-1
+PhysicsType=StaticMesh
+Texture=sLevel\Ground_Texture

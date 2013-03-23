@@ -1,0 +1,8 @@
+ModelName=Explosion\explosion
+PhysicsType=None
+Texture=Explosion\explosion_texture
+ModelType=Skinned
+AlphaBlend=true
+Agents=Explosion
+
+# currently not working because its not skinned...and it scales. we don't support unskinned animation and scaling...

@@ -1,0 +1,5 @@
+ModelName=sLevel\sLevel1Backdrop
+PhysicsType=None
+Texture=sLevel\BackdropTexture
+ReceivesShadows=false
+CastsShadows=false

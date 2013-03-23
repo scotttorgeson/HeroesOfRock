@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<XnaContent>
+  <Asset Type="GameLib.Engine.AttackSystem.Move[]">
+    <Item>
+      <Name>Quick Melee</Name>
+      <ButtonSequence>B</ButtonSequence>
+      <TimeBeforeAttack>0.66</TimeBeforeAttack>
+      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <Damage>30</Damage>
+      <StunTime>0</StunTime>
+      <Disarming>false</Disarming>
+      <RockMeterIncrease>2</RockMeterIncrease>
+      <FlowStart>.075</FlowStart>
+      <FlowDuration>.175</FlowDuration>
+      <FrontArea>3</FrontArea>
+      <BackArea>-.25</BackArea>
+      <Force Type="Microsoft.Xna.Framework.Vector2">0 0</Force>
+      <ParticleEffect>test</ParticleEffect>
+      <Movement>5</Movement>
+      <Animation>WeakAttack</Animation>
+      <Sound_hit>Melee1_16</Sound_hit>
+      <Sound_shield>ShieldHit1_16</Sound_shield>
+      <AOE>false</AOE>
+    </Item>
+    <Item>
+      <Name>Medium Melee</Name>
+      <ButtonSequence>Y</ButtonSequence>
+      <TimeBeforeAttack>0.66</TimeBeforeAttack>
+      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <Damage>15</Damage>
+      <StunTime>1.0</StunTime>
+      <Disarming>true</Disarming>
+      <RockMeterIncrease>0.0</RockMeterIncrease>
+      <FlowStart>.175</FlowStart>
+      <FlowDuration>.25</FlowDuration>
+      <FrontArea>4</FrontArea>
+      <BackArea>-.25</BackArea>
+      <Force Type="Microsoft.Xna.Framework.Vector2">2 18</Force>
+      <ParticleEffect>test</ParticleEffect>
+      <Movement>10</Movement>
+      <Animation>MediumAttack</Animation>
+      <Sound_hit>Melee2_16</Sound_hit>
+      <Sound_shield>ShieldDisarm_16</Sound_shield>
+      <AOE>false</AOE>
+    </Item>
+    <Item>
+      <Name>Heavy Melee</Name>
+      <ButtonSequence>X</ButtonSequence>
+      <TimeBeforeAttack>0.66</TimeBeforeAttack>
+      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <Damage>110</Damage>
+      <StunTime>0</StunTime>
+      <Disarming>false</Disarming>
+      <RockMeterIncrease>1</RockMeterIncrease>
+      <FlowStart>.175</FlowStart>
+      <FlowDuration>.35</FlowDuration>
+      <FrontArea>4</FrontArea>
+      <BackArea>-.25</BackArea>
+      <Force Type="Microsoft.Xna.Framework.Vector2">0 0</Force>
+      <ParticleEffect>test</ParticleEffect>
+      <Movement>15</Movement>
+      <Animation>HeavyAttack</Animation>
+      <Sound_hit>Melee3_16</Sound_hit>
+      <Sound_shield>ShieldHit2_16</Sound_shield>
+      <AOE>false</AOE>
+    </Item>
+    <Item>
+      <Name>Smash</Name>
+      <ButtonSequence>B | Y | X</ButtonSequence>
+      <TimeBeforeAttack>0.66</TimeBeforeAttack>
+      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <Damage>60</Damage>
+      <StunTime>2.0</StunTime>
+      <Disarming>true</Disarming>
+      <RockMeterIncrease>0.0</RockMeterIncrease>
+      <FlowStart>.5</FlowStart>
+      <FlowDuration>.3</FlowDuration>
+      <FrontArea>4</FrontArea>
+      <BackArea>4</BackArea>
+      <Force Type="Microsoft.Xna.Framework.Vector2">15 15</Force>
+      <ParticleEffect>test</ParticleEffect>
+      <Movement>0</Movement>
+      <Animation>SmashAttack</Animation>
+      <Sound_hit>Melee4_16</Sound_hit>
+      <Sound_shield>ShieldHit3_16</Sound_shield>
+      <AOE>true</AOE>
+    </Item>
+  </Asset>
+</XnaContent>

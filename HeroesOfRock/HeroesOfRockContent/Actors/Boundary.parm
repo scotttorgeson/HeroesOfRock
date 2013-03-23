@@ -1,0 +1,5 @@
+ModelName=TriggerVolume
+PhysicsType=Box
+Mass=-1
+Hidden=True
+//Texture=Buildings\Building01_Texture

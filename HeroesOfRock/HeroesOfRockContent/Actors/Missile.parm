@@ -1,0 +1,8 @@
+ModelName=HORMissileStandIn
+Mass=2
+Agents=AIMissile
+PhysicsType=Box
+Speed=10
+AttackDamage=1.0
+Lifetime = 5.0
+TimeBeforeAttack=.1

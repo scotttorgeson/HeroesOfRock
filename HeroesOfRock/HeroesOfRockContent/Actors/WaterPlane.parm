@@ -1,0 +1,5 @@
+ModelName=Grid\Grid
+PhysicsType=None
+ModelType=Water
+SpecularPower = 256.0
+Shininess = 2.5

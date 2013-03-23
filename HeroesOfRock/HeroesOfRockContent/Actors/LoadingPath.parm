@@ -1,0 +1,4 @@
+ModelName=LevelLoadingPath\LevelLoadingPath
+Mass=-1
+PhysicsType=StaticMesh
+Texture=LevelLoadingPath\LevelLoadingPathTexture

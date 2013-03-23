@@ -1,0 +1,27 @@
+﻿Enemies immune to stun/knockback for short time after being stunned/knocked back.
+tune attack speeds/damage/stun times
+old jump
+gaps in the level that you can knock enemies into
+death fields that you can knock them into or kite them into
+
+
+
+current list
+------------
+reset spawn actor trigger if player dies without killing everything.
+shadows.
+
+
+old list
+--------
+use Dispose/Unload content to clean up when we change levels
+Quarterback - UnloadContent/Cleanup
+Create actor from editor (define an actor.parm file)
+Edit actor from editor (edit an actor.parm file)
+Add actor to world from editor (better support)
+skybox - clear back buffer by drawing skybox?
+multiple colliders on one actor (ie. 3 boxes instead of one box)
+
+
+Play chord to do one attack.
+Attack enough times per second to turn the multiplier dial. Higher the dial is, the better the music sounds.

@@ -1,0 +1,4 @@
+ModelName=Buildings\SmallStoreModel
+PhysicsType=Box
+Mass=-1
+Texture=Buildings\SmallStoreDiffuse

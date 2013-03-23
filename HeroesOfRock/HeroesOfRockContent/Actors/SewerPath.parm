@@ -1,0 +1,3 @@
+ModelName=Sewer\sewer
+Mass=-1
+PhysicsType=StaticMesh

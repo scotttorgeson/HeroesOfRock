@@ -1,0 +1,7 @@
+ModelName=parkbench
+Mass=-1
+Agents=AIDumb,HealthAgent
+PhysicsType=Box
+Health=200
+AddToAIQB=true
+Platform=true

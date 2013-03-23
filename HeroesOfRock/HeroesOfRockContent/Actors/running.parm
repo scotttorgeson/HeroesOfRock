@@ -1,0 +1,4 @@
+ModelName=RunningAnimation
+Agents=Animated
+Mass=60
+PhysicsType=Box

@@ -1,0 +1,15 @@
+ModelName=StandardEnemy\StandardEnemy_AttackAnimation
+Mass=-1
+Agents=AIDumb,HealthAgent
+PhysicsType=Box
+Health=200
+InfiniteHealth=true
+Speed=0
+AttackDamage=0.0
+PointsForKilling=50
+AttackRange=0.0
+TimeBeforeAttack=1.0
+TimeAfterAttack=.5
+Texture=StandardEnemy\StandardEnemyDiffuse
+BumpMap=StandardEnemy\StandardEnemyNormal
+ModelType=Skinned

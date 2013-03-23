@@ -1,0 +1,4 @@
+ModelName=dumpster
+Mass=-1
+PhysicsType=Box
+Texture=dumpster_diffuse

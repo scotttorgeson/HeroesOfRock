@@ -1,0 +1,5 @@
+ModelName=Backdrop\Backdrop
+PhysicsType=None
+Texture=Backdrop\BackdropTexture_v02
+ReceivesShadows=false
+CastsShadows=false

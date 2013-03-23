@@ -1,0 +1,7 @@
+ModelName=HOR2-1
+Mass=-1
+PhysicsType=StaticMesh
+Texture=ASPHALT
+//BumpMap=ASPHALT-bump
+SpecularPower=4.0
+Shininess=0.1

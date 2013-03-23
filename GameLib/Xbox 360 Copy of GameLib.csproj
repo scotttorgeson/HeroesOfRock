@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{6A3B3956-4850-4441-9C01-BCFC19947CB3}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameLib</RootNamespace>
+    <AssemblyName>GameLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <XnaPlatform>Xbox 360</XnaPlatform>
+    <XnaProfile>HiDef</XnaProfile>
+    <XnaCrossPlatformGroupID>b9cf04ec-8710-4610-b1c0-9e301e28ae6d</XnaCrossPlatformGroupID>
+    <XnaOutputType>Library</XnaOutputType>
+    <Thumbnail Condition="$(XnaOutputType)=='Game'">GameThumbnail.png</Thumbnail>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
+    <OutputPath>bin\Xbox 360\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
+    <OutputPath>bin\Xbox 360\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;XBOX;XBOX360</DefineConstants>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BEPUphysicsDrawer\Xbox 360 Copy %282%29 of BEPUphysicsDrawer.csproj">
+      <Project>{4B33C460-BB6A-4DFA-A1B4-86248ECB84E6}</Project>
+      <Name>Xbox 360 Copy %282%29 of BEPUphysicsDrawer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BEPUphysics\Xbox 360 Copy (3) of BEPUphysics.csproj">
+      <Project>{18ad00ee-4898-4b18-baae-c24d3afd999b}</Project>
+      <Name>Xbox 360 Copy (3) of BEPUphysics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\AI\AI.cs" />
+    <Compile Include="Engine\AI\AIQB.cs" />
+    <Compile Include="Engine\AI\AIWeak.cs" />
+    <Compile Include="Engine\AI\AIHeavy.cs" />
+    <Compile Include="Engine\AI\AIRanged.cs" />
+    <Compile Include="Engine\AI\AIDumb.cs" />
+    <Compile Include="Engine\AI\AIMissile.cs" />
+    <Compile Include="Engine\AI\SimpleCharacterController.cs" />
+    <Compile Include="Engine\Animation\AnimationClip.cs" />
+    <Compile Include="Engine\Animation\AnimationClipReader.cs" />
+    <Compile Include="Engine\Animation\AnimationPlayer.cs" />
+    <Compile Include="Engine\Animation\Bone.cs" />
+    <Compile Include="Engine\Animation\EnemyAnimationAgent.cs" />
+    <Compile Include="Engine\Animation\HeavyEnemyAnimationAgent.cs" />
+    <Compile Include="Engine\Animation\ModelExtra.cs" />
+    <Compile Include="Engine\Animation\ModelExtraReader.cs" />
+    <Compile Include="Engine\Animation\PlayerAnimationAgent.cs" />
+    <Compile Include="Engine\Animation\RangedEnemyAnimationAgent.cs" />
+    <Compile Include="Engine\Animation\WeakEnemyAnimationAgent.cs" />
+    <Compile Include="Engine\AttackSystem\ComboSystem.cs" />
+    <Compile Include="Engine\AttackSystem\Flow.cs" />
+    <Compile Include="Engine\AttackSystem\HealthAgent.cs" />
+    <Compile Include="Engine\AttackSystem\Move.cs" />
+    <Compile Include="Engine\AttackSystem\PlayerAttackSystemQB.cs" />
+    <Compile Include="Engine\AttackSystem\RockMeter.cs" />
+    <Compile Include="Engine\Audio\AudioQB.cs" />
+    <Compile Include="Engine\Camera\Camera.cs" />
+    <Compile Include="Engine\Camera\CameraQB.cs" />
+    <Compile Include="Engine\Camera\FreeCamera.cs" />
+    <Compile Include="Engine\Camera\PlayerCamera.cs" />
+    <Compile Include="Engine\Core\Actor.cs" />
+    <Compile Include="Engine\Core\ActorQB.cs" />
+    <Compile Include="Engine\Core\Agent.cs" />
+    <Compile Include="Engine\Core\DebugQB.cs" />
+    <Compile Include="Engine\Core\GlobalGameParms.cs" />
+    <Compile Include="Engine\Core\LoadingQB.cs" />
+    <Compile Include="Engine\Core\Quarterback.cs" />
+    <Compile Include="Engine\Core\Stage.cs" />
+    <Compile Include="Engine\Decals\Decal.cs" />
+    <Compile Include="Engine\Decals\DecalQB.cs" />
+    <Compile Include="Engine\FileIO\ParameterSet.cs" />
+    <Compile Include="Engine\FileIO\ParameterSetReader.cs" />
+    <Compile Include="Engine\FileIO\ThreadSafeContentManager.cs" />
+    <Compile Include="Engine\Input\ControlsQB.cs" />
+    <Compile Include="Engine\Input\InputAction.cs" />
+    <Compile Include="Engine\MenuSystem\GameMenu.cs" />
+    <Compile Include="Engine\MenuSystem\HUD\HudComponents\HealthKnob.cs" />
+    <Compile Include="Engine\MenuSystem\HUD\HudComponents\OldEqualizer.cs" />
+    <Compile Include="Engine\MenuSystem\HUD\HudScreen.cs" />
+    <Compile Include="Engine\MenuSystem\MenuSystemQB.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\CreditsMenu.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\EndLevelMenu.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\MenuComponents\LevelMenuEntry.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\MenuComponents\MenuEntry.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\MenuComponents\MenuGraphic.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\MenuComponents\MenuInput.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\PauseMenu.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\SplashMenu.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\TutorialMenu.cs" />
+    <Compile Include="Engine\MenuSystem\PopUpScreen.cs" />
+    <Compile Include="Engine\MenuSystem\PopUps\ConceptArtPopUp.cs" />
+    <Compile Include="Engine\MenuSystem\PopUps\ExtrasPopUp.cs" />
+    <Compile Include="Engine\MenuSystem\PopUps\MessageBox.cs" />
+    <Compile Include="Engine\MenuSystem\PopUps\OptionPopUp.cs" />
+    <Compile Include="Engine\MenuSystem\Screens\BackgroundScreen.cs" />
+    <Compile Include="Engine\MenuSystem\Screens\BepuPhysicsLogoScreen.cs" />
+    <Compile Include="Engine\MenuSystem\Screens\ColoredBackgroundScreen.cs" />
+    <Compile Include="Engine\MenuSystem\Screens\ElevenTenLogoScreen.cs" />
+    <Compile Include="Engine\MenuSystem\Screens\LoadingScreen.cs" />
+    <Compile Include="Engine\Particles\Particle.cs" />
+    <Compile Include="Engine\Particles\ParticleEmitter.cs" />
+    <Compile Include="Engine\Particles\ParticleQB.cs" />
+    <Compile Include="Engine\Particles\Quad.cs" />
+    <Compile Include="Engine\MenuSystem\MenuSystem.cs" />
+    <Compile Include="Engine\MenuSystem\GameScreen.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\LevelMenu.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\MainMenu.cs" />
+    <Compile Include="Engine\Physics\CylinderCharacter\CylinderCharacterController.cs" />
+    <Compile Include="Engine\Physics\CylinderCharacter\HorizontalMotionConstraint.cs" />
+    <Compile Include="Engine\Physics\CylinderCharacter\QueryManager.cs" />
+    <Compile Include="Engine\Physics\CylinderCharacter\SupportFinder.cs" />
+    <Compile Include="Engine\Physics\CylinderCharacter\VerticalMotionConstraint.cs" />
+    <Compile Include="Engine\Physics\PhysicsHelpers.cs" />
+    <Compile Include="Engine\Physics\PhysicsObject.cs" />
+    <Compile Include="Engine\Physics\PhysicsQB.cs" />
+    <Compile Include="Engine\Physics\Triggers\ButtonPushTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\EndLevelTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\HealthTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\AirBurstTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\PlaySoundTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\RotateCameraTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\SpawnActorTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\TextToScreenTriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\TriggerQB.cs" />
+    <Compile Include="Engine\Physics\Triggers\TriggerVolume.cs" />
+    <Compile Include="Engine\Physics\Triggers\TutorialStopTriggerVolume.cs" />
+    <Compile Include="Engine\Renderer\Bloom.cs" />
+    <Compile Include="Engine\Renderer\Effects\BaseEffect.cs" />
+    <Compile Include="Engine\Renderer\Effects\BumpedEffect.cs" />
+    <Compile Include="Engine\Renderer\Effects\BumpedSpecularEffect.cs" />
+    <Compile Include="Engine\Renderer\Effects\DecalEffect.cs" />
+    <Compile Include="Engine\Renderer\Effects\SkinnedBumpedEffect.cs" />
+    <Compile Include="Engine\Renderer\Effects\SkinnedBumpedSpecularEffect.cs" />
+    <Compile Include="Engine\Renderer\Effects\SkinnedEffect.cs" />
+    <Compile Include="Engine\Renderer\Effects\Water.cs" />
+    <Compile Include="Engine\Renderer\Renderer.cs" />
+    <Compile Include="Engine\Renderer\RModel\EditorManipulatorRModel.cs" />
+    <Compile Include="Engine\Renderer\RModel\RModel.cs" />
+    <Compile Include="Engine\Renderer\RModel\RModelInstance.cs" />
+    <Compile Include="Engine\Renderer\RModel\SkinnedRModel.cs" />
+    <Compile Include="Engine\Renderer\RModel\SkinnedRModelInstance.cs" />
+    <Compile Include="Engine\Renderer\RModel\StaticRModel.cs" />
+    <Compile Include="Engine\Renderer\RModel\WaterRModel.cs" />
+    <Compile Include="Engine\Renderer\Sun.cs" />
+    <Compile Include="Engine\Tempo\TempoQB.cs" />
+    <Compile Include="Engine\Utilities\FastFrustum.cs" />
+    <Compile Include="Gameplay\BloodSplatter\BloodSplatter.cs" />
+    <Compile Include="Gameplay\BloodSplatter\BloodSplatterQB.cs" />
+    <Compile Include="Gameplay\Explosion\ExplosionAgent.cs" />
+    <Compile Include="Gameplay\GuitarControl\CharacterController.cs" />
+    <Compile Include="Gameplay\GuitarControl\CharacterControllerInput.cs" />
+    <Compile Include="Gameplay\GuitarControl\HorizontalMotionConstraint.cs" />
+    <Compile Include="Gameplay\GuitarControl\ICharacterTag.cs" />
+    <Compile Include="Gameplay\GuitarControl\PlayerAgent.cs" />
+    <Compile Include="Gameplay\GuitarControl\QueryManager.cs" />
+    <Compile Include="Gameplay\GuitarControl\StanceManager.cs" />
+    <Compile Include="Gameplay\GuitarControl\StepManager.cs" />
+    <Compile Include="Gameplay\GuitarControl\SupportFinder.cs" />
+    <Compile Include="Gameplay\GuitarControl\VerticalMotionConstraint.cs" />
+    <Compile Include="Gameplay\MainMenu\MainMenuQB.cs" />
+    <Compile Include="Gameplay\RockLevelOneQB.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Avatar" />
+    <Reference Include="Microsoft.Xna.Framework.Game" />
+    <Reference Include="Microsoft.Xna.Framework.GamerServices" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics" />
+    <Reference Include="Microsoft.Xna.Framework.Net" />
+    <Reference Include="Microsoft.Xna.Framework.Storage" />
+    <Reference Include="Microsoft.Xna.Framework.Video" />
+    <Reference Include="Microsoft.Xna.Framework.Xact" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\DeferredRenderer\Lights\" />
+    <Folder Include="Engine\ForwardRenderer\Effects\" />
+    <Folder Include="Engine\ForwardRenderer\RModel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>

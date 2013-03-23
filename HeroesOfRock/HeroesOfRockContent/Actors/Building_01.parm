@@ -1,0 +1,4 @@
+ModelName=Buildings\Building_01
+PhysicsType=Box
+Mass=-1
+Texture=Buildings\Building01_Texture

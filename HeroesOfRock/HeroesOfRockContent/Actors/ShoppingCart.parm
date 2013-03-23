@@ -1,0 +1,4 @@
+ModelName=Environment\ShoppingCart
+PhysicsType=None
+Texture=Environment\ShoppingCartDiffuse
+AlphaBlend=true
