@@ -110,7 +110,7 @@ namespace GameLib.Engine.AttackSystem {
                 Stage.ActiveStage.GetQB<Engine.Decals.DecalQB>().CreateDecal(new Ray(center, Vector3.Down), 10.0f, "Decals/crack", 10.0f, 20.0f, Decals.DecalLayers.CracksLayer);
 
                 Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, mainCharacter.PhysicsObject.Position + new Vector3(0.0f, -3.0f, 0.0f), true, -1f, 50,
-                                                            75, 1.0f, 1.5f, new Vector2(4.0f), new Vector2(5.0f), new Vector3(3.0f, 0.0f, 3.0f),
+                                                            75, 1.0f, 1.5f, new Vector2(2.0f), new Vector2(2.5f), new Vector3(3.0f, 0.0f, 3.0f),
                                                             Vector3.Up, new Vector3(8.4f, 0.3f, 8.4f), "dust2");
 
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("WeakAOE_16", 0.6f, 0.0f, 0.0f);
@@ -168,7 +168,7 @@ namespace GameLib.Engine.AttackSystem {
                                                             10, .25f, .5f, Vector2.One, Vector2.One * 2.0f,
                                                             Vector3.Zero, bloodDir, 2 * Vector3.One, "blood1");
                             Stage.ActiveStage.GetQB<Gameplay.BloodSplatterQB>().SplatBlood();
-                            Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(actorPos, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
+                            Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(actorPos, new BoundingBox(new Vector3(-10.0f, -10.0f, -10.0f), new Vector3(10.0f, 10.0f, 10.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
                             //Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(new Ray(actor.PhysicsObject.Position, Vector3.Down), 10.0f, "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
                         }
 
@@ -282,7 +282,7 @@ namespace GameLib.Engine.AttackSystem {
                                                             10, .25f, .5f, Vector2.One, Vector2.One * 2.0f, Vector3.Zero, 
                                                             bloodDir, 2 * Vector3.One, "blood1");
                     Stage.ActiveStage.GetQB<Gameplay.BloodSplatterQB>().SplatBlood();
-                    Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(mainCharacter.PhysicsObject.Position, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
+                    Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(mainCharacter.PhysicsObject.Position, new BoundingBox(new Vector3(-10.0f, -10.0f, -10.0f), new Vector3(10.0f, 10.0f, 10.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
                     //Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(new Ray(mainCharacter.PhysicsObject.Position, Vector3.Down), 10.0f, "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
 
                     playerRockMeter.RockLevelDownDueToDamage(dmg);

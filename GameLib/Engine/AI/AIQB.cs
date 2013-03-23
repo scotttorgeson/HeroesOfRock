@@ -93,6 +93,8 @@ namespace GameLib.Engine.AI
 
             for(int i = 0; i < num; i++)
                 PreLoad("EnemyHeavy", ref zero, ref zero);
+
+            ShutdownAll();
         }
 
         public override void PostLoadInit(ParameterSet Parm)
@@ -170,27 +172,37 @@ namespace GameLib.Engine.AI
                         LinkedListNode<AI> temp = curr;
 
                         aliveEnemies.Remove(temp);
-                        switch (curr.Value.type)
+                        if (temp.Value.spawnedFromTrigger)
                         {
-                            case EnemyType.Heavy:
-                                availableHeavyAI.AddLast(temp);
-                                break;
-                            case EnemyType.HeavyAOE:
-                                availableHeavyAI.AddLast(temp);
-                                break;
-                            case EnemyType.Ranged:
-                                availableRangedAI.AddLast(temp);
-                                break;
-                            case EnemyType.RangedPogo:
-                                availableRangedAI.AddLast(temp);
-                                break;
-                            case EnemyType.Weak:
-                                availableWeakAI.AddLast(temp);
-                                break;
-                            case EnemyType.WeakShielded:
-                                availableWeakAI.AddLast(temp);
-                                break;
+                            switch (curr.Value.type)
+                            {
+                                case EnemyType.Heavy:
+                                    availableHeavyAI.AddLast(temp);
+                                    break;
+                                case EnemyType.HeavyAOE:
+                                    availableHeavyAI.AddLast(temp);
+                                    break;
+                                case EnemyType.Ranged:
+                                    availableRangedAI.AddLast(temp);
+                                    break;
+                                case EnemyType.RangedPogo:
+                                    availableRangedAI.AddLast(temp);
+                                    break;
+                                case EnemyType.Weak:
+                                    availableWeakAI.AddLast(temp);
+                                    break;
+                                case EnemyType.WeakShielded:
+                                    availableWeakAI.AddLast(temp);
+                                    break;
+                            }
                         }
+                        else if(Stage.Editor)
+                        {
+                            //statically placed enemy, we have to turn shutdown and return to spawn position so that he 
+                            //will be saved if we are in the editor
+                            temp.Value.actor.PhysicsObject.Position = temp.Value.spawnPos;
+                        }
+
                         if (temp.Value.spawnerIndex >= 0 && temp.Value.spawnerIndex < spawners.Count)
                             spawners[temp.Value.spawnerIndex].aliveEnemyCount--;
                     }
@@ -336,7 +348,6 @@ namespace GameLib.Engine.AI
 
         public void Spawn(string enemyType, ref Vector3 basePos, ref Vector3 rot, int spawnerIndex)
         {
-            
             Vector3 pos = RandomizeSpawn(ref basePos);
 
             AI temp = null;
@@ -464,8 +475,12 @@ namespace GameLib.Engine.AI
                     aliveEnemies.AddLast(temp);
                     break;
             }
+
             if (temp != null)
+            {
                 temp.spawnerIndex = spawnerIndex;
+                temp.spawnedFromTrigger = true;
+            }
         }
 
         public void Spawn(char enemyType, ref Vector3 basePos, ref Vector3 rot, int spawnerIndex)
@@ -592,7 +607,10 @@ namespace GameLib.Engine.AI
                     break;
             }
             if (temp != null)
+            {
                 temp.spawnerIndex = spawnerIndex;
+                temp.spawnedFromTrigger = true;
+            }
         }
 
         public void PreLoad(string enemyType, ref Vector3 basePos, ref Vector3 rot)
@@ -603,26 +621,29 @@ namespace GameLib.Engine.AI
 
             ActorQB aQB = Stage.LoadingStage.GetQB<ActorQB>();
             Actor a;
+            AI ai = null;
 
             switch (enemyType)
             {
                 case "EnemyWeak":
                     a = aQB.CreateActor("EnemyWeak", "EnemyWeak", ref pos, ref rot, Stage.LoadingStage);
-                    a.ShutDown();
-                    availableWeakAI.AddLast(a.GetAgentByBaseType<AI>());
+                    ai = a.GetAgentByBaseType<AI>();
+                    aliveEnemies.AddLast(ai);
                     break;
                 case "EnemyRanged":
                     a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.LoadingStage);
                     //Actor a = aQB.CreateActor(enemyType, enemyType, ref basePos, ref rot, Stage.ActiveStage); //no offset if the enemy is on a platform
-                    a.ShutDown();
-                    availableRangedAI.AddLast(a.GetAgentByBaseType<AI>());
+                    ai = a.GetAgentByBaseType<AI>();
+                    aliveEnemies.AddLast(ai);
                     break;
                 case "EnemyHeavy":
                     a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.LoadingStage);
-                    a.ShutDown();
-                    availableHeavyAI.AddLast(a.GetAgentByBaseType<AI>());
+                    ai = a.GetAgentByBaseType<AI>();
+                    aliveEnemies.AddLast(ai);
                     break;
             }
+            if (ai != null)
+                ai.spawnedFromTrigger = true;
 
         }
 

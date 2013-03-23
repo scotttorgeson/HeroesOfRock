@@ -157,6 +157,7 @@ namespace WinFormsGraphicsDevice
             timer = Stopwatch.StartNew();
 
             Stage.Content = content;
+            Stage.Editor = true;
             Stage.LoadStage(parms, true);
 
             Stage.renderer.LoadContent();

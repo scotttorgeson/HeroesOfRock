@@ -118,13 +118,28 @@ namespace GameLib.Engine.AI
                     case AIState.Moving:
                         
                         float distance = AIQB.DistanceSquared(actor.PhysicsObject.Position, targetPos);
+                        Vector3 enemyPos = actor.PhysicsObject.Position;
+                        bool onScreen = AIQB.OnScreen(ref targetPos, ref enemyPos);
+
+                        if(!onScreen)
+                        {
+                            if (spawnedFromTrigger)
+                            {
+                                timer += dt;
+                                if (timer >= 5.0f)
+                                {
+                                    this.actor.PhysicsObject.CylinderCharController.Body.LinearVelocity = Vector3.Zero;
+                                    this.actor.PhysicsObject.Position = spawnPos;
+                                    timer = 0;
+                                }
+                            }
+                        }
 
                         if (!shouldAttack && disarmed)
                         {
                             if (reachedRunawayPos)
                             {
-                                Vector3 enemyPos = actor.PhysicsObject.Position;
-                                if (!AIQB.OnScreen(ref targetPos, ref enemyPos))
+                                if (!onScreen)
                                 {
                                     runAwayDir = -runAwayDir;
                                     runAwayPos = AIQB.PosOnSideOfScreen(actor.PhysicsObject.Position, runAwayDir, 4.0f);

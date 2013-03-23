@@ -41,6 +41,8 @@ namespace GameLib.Engine.AI
         public bool bloodOnDamage { get; protected set; }
         public AIState state { get; protected set; }
         public EnemyType type { get; protected set; }
+        public bool spawnedFromTrigger;
+        public Vector3 spawnPos { get; protected set; }
 
         protected bool stunnable = true;
 
@@ -87,6 +89,7 @@ namespace GameLib.Engine.AI
 
         public override void Initialize(Stage stage)
         {
+            spawnedFromTrigger = false;
             bloodOnDamage = true;
             if (actor.Parm.HasParm("Speed"))
                 speed = actor.Parm.GetFloat("Speed");
@@ -103,37 +106,6 @@ namespace GameLib.Engine.AI
             if (actor.Parm.HasParm("PointsForKilling"))
                 pointsForKilling = actor.Parm.GetInt("PointsForKilling");
             spawnerIndex = -1;
-        }
-
-
-        /// <summary>
-        /// this should only be called after the enemy is recast as a different type of enemy
-        /// </summary>
-        /// <param name="stage"></param>
-        public void ReInit(Stage stage)
-        {
-            if (actor.Parm.HasParm("Speed"))
-                speed = actor.Parm.GetFloat("Speed");
-            if (actor.Parm.HasParm("AttackDamage"))
-                attackDmg = actor.Parm.GetInt("AttackDamage");
-
-            pointsForKilling = 50;
-            if (actor.Parm.HasParm("PointsForKilling"))
-                pointsForKilling = actor.Parm.GetInt("PointsForKilling");
-
-            if (actor.PhysicsObject.physicsType == PhysicsObject.PhysicsType.CylinderCharacter)
-            {
-                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.Speed = speed;
-                actor.PhysicsObject.CylinderCharController.JumpSpeed = 10;
-            }
-
-            shouldAttack = true;
-            target = PlayerAgent.Player;
-
-            //face player
-            FaceTargetSnappedToPlane();
-
-            state = AIState.Moving;
         }
 
         protected void FaceTargetSnappedToPlane()
@@ -196,6 +168,7 @@ namespace GameLib.Engine.AI
             shouldAttack = true;
             target = PlayerAgent.Player;
             state = AIState.Moving;
+            spawnPos = this.actor.PhysicsObject.Position;
             FaceTargetSnappedToPlane();
         }
 

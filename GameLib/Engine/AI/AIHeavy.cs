@@ -178,7 +178,22 @@ namespace GameLib.Engine.AI
                         animatedAgent.PlayAnimation(HeavyEnemyAnimationAgent.AnimationTypes.Walk, -1.0f);
                         
                         float distance = AIQB.DistanceSquared(actor.PhysicsObject.Position, targetPos);
+                        Vector3 enemyPos = actor.PhysicsObject.Position;
+                        bool onScreen = AIQB.OnScreen(ref targetPos, ref enemyPos);
 
+                        if(!onScreen)
+                        {
+                            if (spawnedFromTrigger)
+                            {
+                                timer += dt;
+                                if (timer >= 7.0f)
+                                {
+                                    this.actor.PhysicsObject.CylinderCharController.Body.LinearVelocity = Vector3.Zero;
+                                    this.actor.PhysicsObject.Position = spawnPos;
+                                    timer = 0;
+                                }
+                            }
+                        }
 
                         if (distance < attackRange)
                         {

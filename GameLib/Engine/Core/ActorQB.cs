@@ -151,8 +151,13 @@ namespace GameLib
         public override void Serialize(ParameterSet parms)
         {
             int index = 0;
+            AI ai;
             foreach (Actor actor in Stage.ActiveStage.GetQB<ActorQB>().Actors)
-                 actor.SerializeStage("Actor" + index++, parms);
+            {
+                ai = actor.GetAgentByBaseType<AI>();
+                if(ai==null || !ai.spawnedFromTrigger)
+                    actor.SerializeStage("Actor" + index++, parms);
+            }
         }
 
         public void EditorKillActor(Actor actor)

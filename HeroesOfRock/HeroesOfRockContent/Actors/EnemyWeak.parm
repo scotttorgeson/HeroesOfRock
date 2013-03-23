@@ -1,4 +1,4 @@
-ModelName=StandardEnemy\StandardEnemy_AttackAnimation
+ModelName=StandardEnemy\StandardEnemy_WalkAnimation
 Mass=1
 Agents=AIWeak,HealthAgent,WeakEnemyAnimationAgent
 PhysicsType=CylinderCharacter

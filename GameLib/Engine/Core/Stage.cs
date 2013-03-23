@@ -32,6 +32,7 @@ namespace GameLib
         public static ThreadSafeContentManager Content;
 
         public static bool GameRunning = false;
+        public static bool Editor = false;
 
         public float Time { get; private set; }
 
