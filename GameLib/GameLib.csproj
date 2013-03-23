@@ -109,6 +109,7 @@
     <Compile Include="Engine\Decals\Decal.cs" />
     <Compile Include="Engine\Decals\DecalQB.cs" />
     <Compile Include="Engine\FileIO\ThreadSafeContentManager.cs" />
+    <Compile Include="Engine\Renderer\DrawList.cs" />
     <Compile Include="Engine\Renderer\Effects\SkinnedEffect.cs" />
     <Compile Include="Engine\Renderer\RModel\EditorManipulatorRModel.cs" />
     <Compile Include="Engine\Renderer\RModel\RModelInstance.cs" />

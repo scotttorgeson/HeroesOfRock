@@ -149,6 +149,7 @@
     <Compile Include="Engine\Physics\Triggers\TriggerVolume.cs" />
     <Compile Include="Engine\Physics\Triggers\TutorialStopTriggerVolume.cs" />
     <Compile Include="Engine\Renderer\Bloom.cs" />
+    <Compile Include="Engine\Renderer\DrawList.cs" />
     <Compile Include="Engine\Renderer\Effects\BaseEffect.cs" />
     <Compile Include="Engine\Renderer\Effects\BumpedEffect.cs" />
     <Compile Include="Engine\Renderer\Effects\BumpedSpecularEffect.cs" />
@@ -202,11 +203,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\DeferredRenderer\Lights\" />
-    <Folder Include="Engine\ForwardRenderer\Effects\" />
-    <Folder Include="Engine\ForwardRenderer\RModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
