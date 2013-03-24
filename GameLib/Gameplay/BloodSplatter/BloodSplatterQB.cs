@@ -42,8 +42,11 @@ namespace GameLib.Gameplay
 
         public override void Update(float dt)
         {
-            for (int i = 0; i < bloodSplatter.Length; i++)
-                bloodSplatter[i].Update(dt);
+            if (!IsPaused)
+            {
+                for (int i = 0; i < bloodSplatter.Length; i++)
+                    bloodSplatter[i].Update(dt);
+            }
         }
 
         public override void DrawUI(float dt)

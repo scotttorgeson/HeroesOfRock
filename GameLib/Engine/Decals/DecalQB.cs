@@ -209,13 +209,16 @@ namespace GameLib.Engine.Decals
             //    Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(position, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
             //}
 
-            for (int i = decals.Count - 1; i >= 0; i--)
+            if (!IsPaused)
             {
-                decals[i].Lifetime -= dt;
-                if (decals[i].Lifetime <= 0.0f)
+                for (int i = decals.Count - 1; i >= 0; i--)
                 {
-                    decals[i].Actors.Clear(); // just in case
-                    decals.RemoveAt(i);
+                    decals[i].Lifetime -= dt;
+                    if (decals[i].Lifetime <= 0.0f)
+                    {
+                        decals[i].Actors.Clear(); // just in case
+                        decals.RemoveAt(i);
+                    }
                 }
             }
         }
