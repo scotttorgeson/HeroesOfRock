@@ -160,7 +160,7 @@ namespace GameLib
         }
 
 #if TUNE_DEPTH_BIAS
-        public static float DepthBias = 0.00262f;
+        public static float DepthBias = 0.00166996f;
 #endif
 
         public void CreateShadowMap()

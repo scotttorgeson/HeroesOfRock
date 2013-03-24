@@ -25,7 +25,7 @@ bool receivesShadows = true;
 float4 LightColor;
 float4 AmbientLightColor;
 float3 theLightDirection;
-float DepthBias = 0.00262f;
+float DepthBias = 0.00166996f;
 float SMAP_SIZE = 1024.0f;
 float texelSize;
 float4x4 LightViewProj;
