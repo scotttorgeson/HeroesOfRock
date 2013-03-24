@@ -1,4 +1,8 @@
 ﻿
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +11,36 @@ using Microsoft.Xna.Framework;
 using GameLib.Engine.Particles;
 
 
-namespace GameLib.Engine.AttackSystem {
-    class PlayerAttackSystemQB : Quarterback {
-
-        
+namespace GameLib.Engine.AttackSystem
+{
+    class PlayerAttackSystemQB : Quarterback
+    {
         Microsoft.Xna.Framework.Graphics.SpriteFont font; //remove once we get an actual gui
 
         //main character
         Actor mainCharacter;
         RockMeter playerRockMeter;
 
-        public PlayerAttackSystemQB () {
-           
+        Random rand;
+
+        public PlayerAttackSystemQB()
+        {
+
         }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        public override void LoadContent () {
+        public override void LoadContent()
+        {
             //moveList = new MoveList(Stage.Content.Load<Move[]>("MoveList"));
             //inputManager = new InputManager(moveList.LongestMoveLength);
             mainCharacter = PlayerAgent.Player;
             playerRockMeter = mainCharacter.GetAgent<RockMeter>();
-            
+
             font = Stage.Content.Load<Microsoft.Xna.Framework.Graphics.SpriteFont>("DefaultFont");
+            rand = new Random();
         }
 
 
@@ -40,12 +49,14 @@ namespace GameLib.Engine.AttackSystem {
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public override void Update (float dt) {
+        public override void Update(float dt)
+        {
             //if (IsPaused) return;
         }
 
         public void PerformAttack(Vector3 position, PlayerDirection facing, Move newMove, float increase)
         {
+            bool shieldHit = false;
             string soundName = null;
 
             if (newMove.Sound_hit != String.Empty)
@@ -110,15 +121,16 @@ namespace GameLib.Engine.AttackSystem {
                 Stage.ActiveStage.GetQB<Engine.Decals.DecalQB>().CreateDecal(new Ray(center, Vector3.Down), 10.0f, "Decals/crack", 10.0f, 20.0f, Decals.DecalLayers.CracksLayer);
 
                 Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, mainCharacter.PhysicsObject.Position + new Vector3(0.0f, -3.0f, 0.0f), true, -1f, 50,
-                                                            75, 1.0f, 1.5f, new Vector2(2.0f), new Vector2(2.5f), new Vector3(3.0f, 0.0f, 3.0f),
+                                                            75, 1.0f, 1.5f, new Vector2(4.0f), new Vector2(5.0f), new Vector3(3.0f, 0.0f, 3.0f),
                                                             Vector3.Up, new Vector3(8.4f, 0.3f, 8.4f), "dust2");
 
-                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("WeakAOE_16", 0.6f, 0.0f, 0.0f);
-                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("asphaltsmash_16", 0.3f, 0.0f, 0.0f);
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("WeakAOE_16", 1.0f, 0.0f, 0.0f);
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("asphaltsmash_16", 0.7f, 0.0f, 0.0f);
             }
 
             Actor actor;
-            foreach (GameLib.Engine.AI.AI ai in Stage.ActiveStage.GetQB<GameLib.Engine.AI.AIQB>().aliveEnemies) {
+            foreach (GameLib.Engine.AI.AI ai in Stage.ActiveStage.GetQB<GameLib.Engine.AI.AIQB>().aliveEnemies)
+            {
                 actor = ai.actor;
                 if (hitbox.Intersects(actor.PhysicsObject.CollisionInformation.BoundingBox))
                 {
@@ -133,11 +145,11 @@ namespace GameLib.Engine.AttackSystem {
                     {
                         if (newMove.Force != Vector2.Zero && remainingHealth > 0)
                         {
-                            Vector3 f = force * (actorPos - position);
-                            f.Normalize();
+                            force *= (actorPos - position);
+                            force.Normalize();
 
-                            f.X *= newMove.Force.X + newMove.Force.X * increase;
-                            f.Z *= newMove.Force.X + newMove.Force.X * increase;
+                            force.X *= newMove.Force.X + newMove.Force.X * increase;
+                            force.X *= newMove.Force.X + newMove.Force.X * increase;
                             float jumpVal = newMove.Force.Y + newMove.Force.Y * increase;
 
                             if (actor.PhysicsObject.physicsType == PhysicsObject.PhysicsType.CylinderCharacter)
@@ -148,7 +160,7 @@ namespace GameLib.Engine.AttackSystem {
                                     actor.PhysicsObject.CylinderCharController.Jump(jumpVal / actor.PhysicsObject.CylinderCharController.Body.Mass);
                                 }
                                 if (force != Vector3.Zero)
-                                    actor.PhysicsObject.CylinderCharController.Body.ApplyLinearImpulse(ref f);
+                                    actor.PhysicsObject.CylinderCharController.Body.ApplyLinearImpulse(ref force);
                             }
                         }
 
@@ -168,7 +180,7 @@ namespace GameLib.Engine.AttackSystem {
                                                             10, .25f, .5f, Vector2.One, Vector2.One * 2.0f,
                                                             Vector3.Zero, bloodDir, 2 * Vector3.One, "blood1");
                             Stage.ActiveStage.GetQB<Gameplay.BloodSplatterQB>().SplatBlood();
-                            Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(actorPos, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
+                            Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(actorPos, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f,                                                                                                         Decals.DecalLayers.BloodLayer);
                             //Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(new Ray(actor.PhysicsObject.Position, Vector3.Down), 10.0f, "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
                         }
 
@@ -186,16 +198,21 @@ namespace GameLib.Engine.AttackSystem {
                         }
                     }
                     else //you hit an enemy but dealt no damage 
+                    {
+                        shieldHit = true;
                         soundName = newMove.Sound_shield;
+                    }
 
-                    if(!newMove.AOE)
+                    if (!newMove.AOE)
                         break; //only hit one enemy
                 }
             }
 
-            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 0.6f, 0.0f, 0.0f);
-
-           
+            //play a random sound
+            if (shieldHit)
+                playRandomShieldHitSound(newMove.Disarming);
+            else
+                playRandomHitSound();
         }
 
         public void EnemyAttack(float dmg, float force, Vector3 v, Actor attacker, PlayerDirection facing)
@@ -278,14 +295,17 @@ namespace GameLib.Engine.AttackSystem {
                     bloodDir.Normalize();
                     bloodDir *= 10;
 
-                    Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, mainCharacter.PhysicsObject.Position, true, -1, 5, 
-                                                            10, .25f, .5f, Vector2.One, Vector2.One * 2.0f, Vector3.Zero, 
+                    Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, mainCharacter.PhysicsObject.Position, true, -1, 5,
+                                                            10, .25f, .5f, Vector2.One, Vector2.One * 2.0f, Vector3.Zero,
                                                             bloodDir, 2 * Vector3.One, "blood1");
                     Stage.ActiveStage.GetQB<Gameplay.BloodSplatterQB>().SplatBlood();
-                    Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(mainCharacter.PhysicsObject.Position, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
+                    Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(mainCharacter.PhysicsObject.Position, new BoundingBox(new Vector3(-20.0f, -20.0f, -20.0f), new Vector3(20.0f, 20.0f, 20.0f)), "Decals/blood", 10.0f, 5.0f,                                                                             Decals.DecalLayers.BloodLayer);
                     //Stage.ActiveStage.GetQB<Decals.DecalQB>().CreateDecal(new Ray(mainCharacter.PhysicsObject.Position, Vector3.Down), 10.0f, "Decals/blood", 10.0f, 5.0f, Decals.DecalLayers.BloodLayer);
 
                     playerRockMeter.RockLevelDownDueToDamage(dmg);
+
+                    //play a random take damage sound
+                    playRandomTakeDamageSound();
                 }
             }
             else
@@ -296,7 +316,7 @@ namespace GameLib.Engine.AttackSystem {
 
         public void EnemyAttackStun(int dmg, float stun, Vector2 v, Actor attacker)
         {
-            if (mainCharacter.PhysicsObject.CharacterController.Dashing)  
+            if (mainCharacter.PhysicsObject.CharacterController.Dashing)
             {
                 BoundingBox hitbox = attacker.PhysicsObject.CollisionInformation.BoundingBox;
 
@@ -317,9 +337,89 @@ namespace GameLib.Engine.AttackSystem {
             }
         }
 
-        public override string Name () {
+        public override string Name()
+        {
             return "PlayerAttackSystemQB";
+        }
+
+        private void playRandomShieldHitSound(bool isDisarming)
+        {
+            string soundName = null;
+            if (isDisarming)
+            {
+                //disarming sound
+                const int NUM_SHIELD_DISARM_SOUND = 2;
+                if (rand.Next(NUM_SHIELD_DISARM_SOUND) == NUM_SHIELD_DISARM_SOUND - 1)
+                {
+                    soundName = "ShieldDisarm_16";
+                }
+                else
+                {
+                    soundName = "ShieldDisarm2_16";
+                }
+            }
+            else
+            {
+                //shield hit sound
+                const int NUM_SHIELD_HIT_SOUND = 3;
+                switch (rand.Next(NUM_SHIELD_HIT_SOUND))
+                {
+                    case 0:
+                        soundName = "ShieldHit1_16";
+                        break;
+                    case 1:
+                        soundName = "ShieldHit2_16";
+                        break;
+                    case 2:
+                        soundName = "ShieldHit3_16";
+                        break;
+                }
+            }
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 0.6f, 0.0f, 0.0f);
+        }
+
+        private void playRandomHitSound()
+        {
+            const int NUM_HIT_SOUND = 4;
+            string soundName = null;
+
+            switch (rand.Next(NUM_HIT_SOUND))
+            {
+                case 0:
+                    soundName = "Melee1_16";
+                    break;
+                case 1:
+                    soundName = "Melee2_16";
+                    break;
+                case 2:
+                    soundName = "Melee3_16";
+                    break;
+                case 3:
+                    soundName = "Melee4_16";
+                    break;
+            }
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 0.6f, 0.0f, 0.0f);
+
+        }
+
+        private void playRandomTakeDamageSound()
+        {
+            string sound = null;
+            const int NUM_HIT_SOUND = 3;
+            switch (rand.Next(NUM_HIT_SOUND))
+            {
+                case 0:
+                    sound = "HiHat";
+                    break;
+                case 1:
+                    sound = "HiHat";
+                    break;
+                case 2:
+                    sound = "HiHat";
+                    break;
+            }
+
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(sound, 1, 0, 0);
         }
     }
 }
-
