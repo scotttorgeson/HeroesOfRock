@@ -210,19 +210,13 @@ namespace GameLib
         {
             foreach (RModel rModel in RModels)
             {
-                for ( int i = 0; i < rModel.DrawList.Count; i++)
-                {
-                    rModel.DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
-                }
+                rModel.DrawInstances(technique);
             }
 
             graphicsDevice.BlendState = BlendState.AlphaBlend;
             foreach (RModel rModel in AlphaBlendRModels)
             {
-                for ( int i = 0; i < rModel.DrawList.Count; i++)
-                {
-                    rModel.DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
-                }
+                rModel.DrawInstances(technique);
             }
             // graphicsDevice.BlendState = BlendState.Opaque; // we want alpha blend for the next thing we draw
         }
