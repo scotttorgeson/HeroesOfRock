@@ -109,9 +109,8 @@ namespace HeroesOfRock
         {
             Stage.Content = new ThreadSafeContentManager(Content.ServiceProvider, Content.RootDirectory);
 
-            Stage.LoadStage("StartGame", true); // load the main menu stage here
+            Stage.LoadStartingStage();
             Stage.renderer.LoadContent();
-
         }
 
         /// <summary>
@@ -217,7 +216,7 @@ namespace HeroesOfRock
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            CheckLoadGame(  );
+            CheckLoadGame();
             CheckSaveGame();
 
 #if XBOX360
@@ -234,9 +233,8 @@ namespace HeroesOfRock
                         this.Exit();
                     }
 
-                    if (Stage.GameRunning) {
+                    if (Stage.GameRunning)
                         Stage.ActiveStage.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-                    }
                 }
 #if XBOX360
             }

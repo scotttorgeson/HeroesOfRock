@@ -56,21 +56,28 @@ namespace GameLib
             LoadStage( Content.Load<ParameterSet>("Worlds/" + file), blockingLoad );
         }
 
-        public static bool DoneLoading { get; private set; }
-        
-        private static Stage loadingStage = null;
-        
+        public static bool DoneLoading { get; private set; }        
+        private static Stage loadingStage = null;        
         public static Stage LoadingStage { get { return loadingStage; } }
-
         public static bool WaitOnLoadFinish = false;
+
+        public static bool DoLoadStage = false;
+        public static ParameterSet LoadStageParm = null;
 
         public static void LoadStage(ParameterSet parm, bool blockingLoad)
         {
-            if (loadingStage != null) // don't load more than one stage at a time...
-                return;
+            DoLoadStage = true;
+            LoadStageParm = parm;
+        }
 
-            if (blockingLoad)
-            {
+        private static void LoadStage()
+        {
+            // not supporting async loads right now. commented out all the async load stuff.
+            //if (loadingStage != null) // don't load more than one stage at a time...
+            //    return;
+
+            //if (blockingLoad)
+            //{
                 if (activeStage != null)
                 {
                     foreach (Quarterback qb in activeStage.QBTable.Values)
@@ -85,7 +92,7 @@ namespace GameLib
                 Stage.Content.Unload();
                 Renderer.Instance.LoadContent();
 
-                loadingStage = new Stage(parm);
+                loadingStage = new Stage(LoadStageParm);
                 activeStage = loadingStage;
                 loadingStage.Initialize();
                 loadingStage.LoadContent();
@@ -98,33 +105,40 @@ namespace GameLib
                 GC.Collect();
 
                 GameRunning = true;
-            }
-            else
-            {
-                System.Threading.Thread thread = new Thread((_) =>
-                    {
-                        loadingStage = new Stage(parm);
-                        loadingStage.Initialize();
-                        loadingStage.LoadContent();
-                        Stage.DoneLoading = true;
+                DoLoadStage = false;
+            //}
+            //else
+            //{
+            //    System.Threading.Thread thread = new Thread((_) =>
+            //        {
+            //            loadingStage = new Stage(parm);
+            //            loadingStage.Initialize();
+            //            loadingStage.LoadContent();
+            //            Stage.DoneLoading = true;
 
-                        //if (activeStage == null)
-                        //{
-                        //    activeStage = loadingStage;
-                        //    loadingStage = null;
-                        //    DoneLoading = false;
-                        //    GameRunning = true;
-                        //}
-                    });
+            //            //if (activeStage == null)
+            //            //{
+            //            //    activeStage = loadingStage;
+            //            //    loadingStage = null;
+            //            //    DoneLoading = false;
+            //            //    GameRunning = true;
+            //            //}
+            //        });
 
-                thread.Name = "ResourceThread";
-                thread.Start();
-            }
+            //    thread.Name = "ResourceThread";
+            //    thread.Start();
+            //}
         }
 
         public static void ReloadStage(bool blockingLoad)
         {
             LoadStage(ActiveStage.Parm, blockingLoad);
+        }
+
+        public static void LoadStartingStage()
+        {
+            LoadStage("StartGame", true);
+            LoadStage();
         }
 
         private Stage(ParameterSet parm)
@@ -201,16 +215,16 @@ namespace GameLib
                 }
             }
 
-            foreach (Quarterback qb in activeStage.QBTable.Values)
+            foreach (Quarterback qb in QBTable.Values)
                 qb.PreLoadInit(Parm);
         }
 
         public void LoadContent()
         {
-            foreach (Quarterback qb in activeStage.QBTable.Values)
+            foreach (Quarterback qb in QBTable.Values)
                 qb.LoadContent();
 
-            foreach (Quarterback qb in activeStage.QBTable.Values)
+            foreach (Quarterback qb in QBTable.Values)
                 qb.PostLoadInit(Parm);
             
             //if (Parm.HasParm("Raining") && Parm.GetBool("Raining"))
@@ -227,32 +241,34 @@ namespace GameLib
         {
             Time += dt;
 
-            if (FinishLoad)
-            {
-                foreach (Quarterback qb in activeStage.QBTable.Values)
-                    qb.KillInstance();
+            //if (FinishLoad)
+            //{
+            //    foreach (Quarterback qb in activeStage.QBTable.Values)
+            //        qb.KillInstance();
 
-                activeStage = loadingStage;
-                loadingStage = null;
-                DoneLoading = false;
-                FinishLoad = false;
+            //    activeStage = loadingStage;
+            //    loadingStage = null;
+            //    DoneLoading = false;
+            //    FinishLoad = false;
 
-                foreach (Quarterback qb in activeStage.QBTable.Values)
-                    qb.LevelLoaded();
+            //    foreach (Quarterback qb in activeStage.QBTable.Values)
+            //        qb.LevelLoaded();
 
-                GC.Collect();
+            //    GC.Collect();
 
-                return;
-            }
+            //    return;
+            //}
 
-            if (!WaitOnLoadFinish && DoneLoading)
-            {
-                FinishLoad = true;                
-            }
+            //if (!WaitOnLoadFinish && DoneLoading)
+            //{
+            //    FinishLoad = true;                
+            //}
+
+            
 
             Renderer.Instance.UpdateStart();
 
-            foreach(Quarterback qb in activeStage.QBTable.Values)
+            foreach(Quarterback qb in QBTable.Values)
                 qb.Update(dt);
 
             Renderer.Instance.UpdateEnd();
@@ -272,17 +288,20 @@ namespace GameLib
                 }
             }
 #endif
+
+            if (DoLoadStage)
+                LoadStage();
         }
 
         public void PauseGame()
         {
-            foreach (Quarterback qb in activeStage.QBTable.Values)
+            foreach (Quarterback qb in QBTable.Values)
                 qb.PauseQB();
         }
 
         public void ResumeGame()
         {
-            foreach (Quarterback qb in activeStage.QBTable.Values)
+            foreach (Quarterback qb in QBTable.Values)
                 qb.UnPauseQB();
         }
 
@@ -291,7 +310,7 @@ namespace GameLib
             // all 3d models handled by renderer, don't try to draw them here
             renderer.SpriteBatch.Begin();
 
-            foreach (Quarterback qb in activeStage.QBTable.Values)
+            foreach (Quarterback qb in QBTable.Values)
                 qb.DrawUI(dt);
 
             renderer.SpriteBatch.End();

@@ -66,13 +66,13 @@ namespace GameLib
             if (cqb.CurrentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter) && cqb.LastKeyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Enter))
             {
                 LoadingQB.LoadLevel = levels[index];
-                Stage.LoadStage("LoadingLevel", false);
+                Stage.LoadStage("LoadingLevel", true);
             }
 #endif
             if (cqb.CurrentGamePadState.IsButtonDown(Microsoft.Xna.Framework.Input.Buttons.A) && cqb.LastGamePadState.IsButtonUp(Microsoft.Xna.Framework.Input.Buttons.A))
             {
                 LoadingQB.LoadLevel = levels[index];
-                Stage.LoadStage("LoadingLevel", false);
+                Stage.LoadStage("LoadingLevel", true);
             }
         }
 
