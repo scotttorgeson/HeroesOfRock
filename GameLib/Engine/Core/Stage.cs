@@ -36,11 +36,10 @@ namespace GameLib
 
         public float Time { get; private set; }
 
-        public static PlayerIndex PlayerIndex { 
+        public static PlayerIndex PlayerIndex
+        { 
             get { return playerIndex; } 
-            set {
-                playerIndex = value;
-            }
+            set { playerIndex = value; }
         }
 
         public static void LoadStage(string file, bool blockingLoad)
@@ -74,8 +73,8 @@ namespace GameLib
             {
                 if (activeStage != null)
                 {
-                    foreach (KeyValuePair<Type, Quarterback> qb in activeStage.QBTable)
-                        qb.Value.KillInstance();
+                    foreach (Quarterback qb in activeStage.QBTable.Values)
+                        qb.KillInstance();
                     activeStage.QBTable = null;
                     activeStage = null;
                 }
@@ -93,8 +92,8 @@ namespace GameLib
                 
                 loadingStage = null;
 
-                foreach (KeyValuePair<Type, Quarterback> qb in activeStage.QBTable)
-                    qb.Value.LevelLoaded();
+                foreach (Quarterback qb in activeStage.QBTable.Values)
+                    qb.LevelLoaded();
 
                 GC.Collect();
 
@@ -202,17 +201,17 @@ namespace GameLib
                 }
             }
 
-            foreach (KeyValuePair<Type, Quarterback> qb in QBTable)
-                qb.Value.PreLoadInit(Parm);
+            foreach (Quarterback qb in activeStage.QBTable.Values)
+                qb.PreLoadInit(Parm);
         }
 
         public void LoadContent()
         {
-            foreach (KeyValuePair<Type, Quarterback> qb in QBTable)
-                qb.Value.LoadContent();
+            foreach (Quarterback qb in activeStage.QBTable.Values)
+                qb.LoadContent();
 
-            foreach (KeyValuePair<Type, Quarterback> qb in QBTable)
-                qb.Value.PostLoadInit(Parm);
+            foreach (Quarterback qb in activeStage.QBTable.Values)
+                qb.PostLoadInit(Parm);
             
             //if (Parm.HasParm("Raining") && Parm.GetBool("Raining"))
             //{
@@ -229,17 +228,17 @@ namespace GameLib
             Time += dt;
 
             if (FinishLoad)
-            {                
-                foreach (KeyValuePair<Type, Quarterback> qb in activeStage.QBTable)
-                    qb.Value.KillInstance();
+            {
+                foreach (Quarterback qb in activeStage.QBTable.Values)
+                    qb.KillInstance();
 
                 activeStage = loadingStage;
                 loadingStage = null;
                 DoneLoading = false;
                 FinishLoad = false;
 
-                foreach (KeyValuePair<Type, Quarterback> qb in activeStage.QBTable)
-                    qb.Value.LevelLoaded();
+                foreach (Quarterback qb in activeStage.QBTable.Values)
+                    qb.LevelLoaded();
 
                 GC.Collect();
 
@@ -253,26 +252,38 @@ namespace GameLib
 
             Renderer.Instance.UpdateStart();
 
-            for (int i = 0; i < activeStage.QBTable.Count; i++)
-            {
-                activeStage.QBTable.Values.ElementAt(i).Update(dt);
-            }
-            //foreach (KeyValuePair<Type, Quarterback> qb in QBTable)
-                //qb.Value.Update(dt);
+            foreach(Quarterback qb in activeStage.QBTable.Values)
+                qb.Update(dt);
 
             Renderer.Instance.UpdateEnd();
+
+#if DEBUG && DRAW_MODEL_BOUNDING_SPHERES
+            if (activeStage.QBTable != null && activeStage.QBTable.ContainsKey(typeof(ControlsQB)))
+            {
+                if (activeStage.GetQB<ControlsQB>().CurrentKeyboardState.IsKeyDown(Keys.B) && activeStage.GetQB<ControlsQB>().LastKeyboardState.IsKeyUp(Keys.B))
+                {
+                    foreach (RModelInstance rmodelInstance in Renderer.Instance.RModelInstances)
+                    {
+                        var e = new BEPUphysics.Entities.Entity(new BEPUphysics.CollisionShapes.ConvexShapes.SphereShape(rmodelInstance.model.boundingSphere.Radius));
+                        e.Position = rmodelInstance.physicsObject.Position + rmodelInstance.model.boundingSphere.Center;
+                        e.Orientation = rmodelInstance.physicsObject.Orientation;
+                        Renderer.Instance.collisionDebugDrawer.Add(e);
+                    }
+                }
+            }
+#endif
         }
 
         public void PauseGame()
         {
-            foreach (KeyValuePair<Type, Quarterback> qb in QBTable)
-                qb.Value.PauseQB();
+            foreach (Quarterback qb in activeStage.QBTable.Values)
+                qb.PauseQB();
         }
 
         public void ResumeGame()
         {
-            foreach (KeyValuePair<Type, Quarterback> qb in QBTable)
-                qb.Value.UnPauseQB();
+            foreach (Quarterback qb in activeStage.QBTable.Values)
+                qb.UnPauseQB();
         }
 
         public void Draw(float dt)
@@ -280,12 +291,8 @@ namespace GameLib
             // all 3d models handled by renderer, don't try to draw them here
             renderer.SpriteBatch.Begin();
 
-            for (int i = 0; i < activeStage.QBTable.Count; i++)
-            {
-                activeStage.QBTable.Values.ElementAt(i).DrawUI(dt);
-            }
-            //foreach (KeyValuePair<Type, Quarterback> qb in QBTable)
-                //qb.Value.DrawUI(dt);
+            foreach (Quarterback qb in activeStage.QBTable.Values)
+                qb.DrawUI(dt);
 
             renderer.SpriteBatch.End();
         }

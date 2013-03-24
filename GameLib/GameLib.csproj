@@ -212,6 +212,7 @@
     <Compile Include="Engine\Physics\Triggers\TutorialStopTriggerVolume.cs" />
     <Compile Include="Engine\Tempo\TempoQB.cs" />
     <Compile Include="Engine\Utilities\FastFrustum.cs" />
+    <Compile Include="Engine\Utilities\FastList.cs" />
     <Compile Include="Gameplay\BloodSplatter\BloodSplatter.cs" />
     <Compile Include="Gameplay\BloodSplatter\BloodSplatterQB.cs" />
     <Compile Include="Gameplay\Explosion\ExplosionAgent.cs" />

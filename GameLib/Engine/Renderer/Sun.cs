@@ -26,7 +26,7 @@ namespace GameLib
         // cascade parameters
         private Matrix[] LightViewProjectionMatrices = new Matrix[NUM_CASCADES];
         private Vector2[] LightClipPlanes = new Vector2[NUM_CASCADES]; // x stores near, y stores far. this is sent to the shader.
-        private List<RModelInstance>[] DrawLists = new List<RModelInstance>[NUM_CASCADES];
+        private FastList<RModelInstance>[] DrawLists = new FastList<RModelInstance>[NUM_CASCADES];
         private float[] splitDepthsTmp = new float[NUM_CASCADES + 1];
         private Vector3[] frustumCornersWS = new Vector3[8];
         private Vector3[] frustumCornersVS = new Vector3[8];
@@ -48,7 +48,7 @@ namespace GameLib
             SetSunDirectionFromSphericalCoords(sunAngles.X, sunAngles.Y);
 
             for (int i = 0; i < NUM_CASCADES; i++)
-                DrawLists[i] = new List<RModelInstance>();
+                DrawLists[i] = new FastList<RModelInstance>();
         }
 
         public Sun(Vector4 lightColor, Vector4 ambientLightColor, float theta, float phi)
@@ -60,7 +60,7 @@ namespace GameLib
             this.ambientLightColor = ambientLightColor;
 
             for (int i = 0; i < NUM_CASCADES; i++)
-                DrawLists[i] = new List<RModelInstance>();
+                DrawLists[i] = new FastList<RModelInstance>();
         }
 
         public static void UnloadContent()
@@ -76,7 +76,7 @@ namespace GameLib
         {
             for (int i = 0; i < NUM_CASCADES; i++)
             {
-                DrawLists[i].Clear();
+                DrawLists[i].ClearReferences();
             }
         }
 
@@ -216,9 +216,9 @@ namespace GameLib
 
                 Engine.Utilities.FastFrustum frustum = new Engine.Utilities.FastFrustum(ref lightViewProjectionMatrix);
 
-                foreach (RModelInstance modelInstance in DrawLists[i])
+                for ( int j = 0; j < DrawLists[i].Count; j++ )
                 {
-                    modelInstance.Draw(ref graphicsDevice, Renderer.DrawType.CreateShadowMap);
+                    DrawLists[i].Data[j].Draw(ref graphicsDevice, Renderer.DrawType.CreateShadowMap);
                 }
             }
 

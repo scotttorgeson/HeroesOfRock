@@ -22,8 +22,9 @@ namespace GameLib
         protected override TRead Read(ContentReader input, TRead existingInstance)
         {
             //System.Diagnostics.Debugger.Launch(); // uncomment this line if you want to debug this while its building assets
-            TRead Parm = new TRead();
-            Parm.AddParm("AssetName", System.IO.Path.GetFileNameWithoutExtension(input.AssetName));
+            if (existingInstance == null)
+                existingInstance = new TRead();
+            existingInstance.AddParm("AssetName", System.IO.Path.GetFileNameWithoutExtension(input.AssetName));
 
             int count = input.ReadInt32();
 
@@ -31,10 +32,10 @@ namespace GameLib
             {
                 string key = input.ReadString();
                 string value = input.ReadString();
-                Parm.AddParm(key, value);
+                existingInstance.AddParm(key, value);
             }
 
-            return Parm;
+            return existingInstance;
         }
     }
 }

@@ -211,14 +211,14 @@ namespace GameLib
             int i = 0;
             for ( ; i < DrawList.Count; i++)
             {
-                if (DrawList[i].model.AlphaBlend)
+                if (DrawList.Data[i].model.AlphaBlend)
                     break;
-                DrawList[i].Draw(ref graphicsDevice, DrawType.Draw);
+                DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
             }
             graphicsDevice.BlendState = BlendState.AlphaBlend;
             for ( ; i < DrawList.Count; i++)
             {
-                DrawList[i].Draw(ref graphicsDevice, DrawType.Draw);
+                DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
             }
             graphicsDevice.BlendState = BlendState.Opaque;
         }
@@ -321,7 +321,7 @@ namespace GameLib
             DrawList.Sort();
         }
 
-        public void DoShadowsCulling(ref Engine.Utilities.FastFrustum frustum, ref List<RModelInstance> drawList)
+        public void DoShadowsCulling(ref Engine.Utilities.FastFrustum frustum, ref FastList<RModelInstance> drawList)
         {
             drawList.Clear();
             foreach (RModelInstance modelInstance in RModelInstances)
@@ -329,11 +329,10 @@ namespace GameLib
                 if (modelInstance.Shown && modelInstance.model.CastsShadows && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
                     drawList.Add(modelInstance);
             }
-            drawList.Sort();
         }
 
-        List<RModelInstance> RModelInstances = new List<RModelInstance>();
-        public List<RModelInstance> DrawList = new List<RModelInstance>();
+        public List<RModelInstance> RModelInstances = new List<RModelInstance>();
+        public FastList<RModelInstance> DrawList = new FastList<RModelInstance>();
 
         public void AddRModelInstance(RModelInstance modelInstance)
         {
@@ -348,7 +347,7 @@ namespace GameLib
         public void ClearRModelInstances()
         {
             RModelInstances.Clear();
-            DrawList.Clear();
+            DrawList.ClearReferences();
             if (sun != null)
                 sun.ClearRModelInstances();
         }
