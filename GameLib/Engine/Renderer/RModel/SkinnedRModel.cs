@@ -169,5 +169,9 @@ namespace GameLib
                 modelMesh.Draw();
             }
         }
+
+        public override void DrawInstances(Renderer.DrawType technique)
+        {
+        }
     }
 }

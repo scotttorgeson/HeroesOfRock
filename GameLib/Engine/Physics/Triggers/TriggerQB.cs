@@ -161,9 +161,9 @@ namespace GameLib
             foreach (Actor trigger in triggers)
             {
                 if ( show )
-                    Renderer.Instance.AddRModelInstance(trigger.modelInstance);
+                    trigger.modelInstance.model.Instances.Add(trigger.modelInstance);
                 else
-                    Renderer.Instance.RemoveRModelInstance(trigger.modelInstance);
+                    trigger.modelInstance.model.Instances.Remove(trigger.modelInstance);
             }
         }
 

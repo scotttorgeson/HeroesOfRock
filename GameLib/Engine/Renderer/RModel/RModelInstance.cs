@@ -13,7 +13,7 @@ namespace GameLib
         public PhysicsObject physicsObject;
         public RModel model;
         public bool Shown { get; set; }
-        private bool dontDraw = false;
+        private readonly bool dontDraw = false;
 
         public static RModelInstance GetRModelInstance(ParameterSet parm)
         {
@@ -38,13 +38,13 @@ namespace GameLib
         public virtual void FinishLoad()
         {
             if (!dontDraw)
-                Renderer.Instance.AddRModelInstance(this);
+                model.Instances.Add(this);
         }
 
         public virtual void Kill()
         {
             if (!dontDraw)
-                Renderer.Instance.RemoveRModelInstance(this);
+                model.Instances.Remove(this);
         }
 
         public void SetPhysicsObject(PhysicsObject physicsObject)

@@ -30,6 +30,9 @@ namespace GameLib
 
         protected bool contentLoaded = false;
 
+        public List<RModelInstance> Instances = new List<RModelInstance>();
+        public FastList<RModelInstance> DrawList = new FastList<RModelInstance>();  
+
         private static Dictionary<string, RModel> modelDictionary = new Dictionary<string, RModel>();
         public static void UnloadContent()
         {
@@ -91,6 +94,7 @@ namespace GameLib
                 AlphaBlend = parm.GetBool("AlphaBlend");
 
             modelDictionary.Add(Name, this);
+            Renderer.Instance.AddRModel(this);
         }
 
         // used by skinnedrmodel, staticrmodel, waterrmodel to load basic parameters
@@ -133,6 +137,10 @@ namespace GameLib
         }
 
         public virtual void Draw(ref GraphicsDevice graphics, ref Matrix world, Renderer.DrawType technique)
+        {
+        }
+
+        public virtual void DrawInstances(Renderer.DrawType technique)
         {
         }
     }

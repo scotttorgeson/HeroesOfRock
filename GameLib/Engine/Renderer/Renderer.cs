@@ -88,7 +88,7 @@ namespace GameLib
             DrawModels(DrawType.Draw);
 
             //BLEND STATE NEEDS TO BE ALPHA BLEND AND DEPTHSTENCIL NEEDS TO BE DEPTHREAD FOR TRANSPARANCIES
-            graphicsDevice.BlendState = BlendState.AlphaBlend;
+            // graphicsDevice.BlendState = BlendState.AlphaBlend; // set by DrawModels
             graphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
 
             DrawDecals();
@@ -208,19 +208,23 @@ namespace GameLib
 
         private void DrawModels(DrawType technique)
         {
-            int i = 0;
-            for ( ; i < DrawList.Count; i++)
+            foreach (RModel rModel in RModels)
             {
-                if (DrawList.Data[i].model.AlphaBlend)
-                    break;
-                DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
+                for ( int i = 0; i < rModel.DrawList.Count; i++)
+                {
+                    rModel.DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
+                }
             }
+
             graphicsDevice.BlendState = BlendState.AlphaBlend;
-            for ( ; i < DrawList.Count; i++)
+            foreach (RModel rModel in AlphaBlendRModels)
             {
-                DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
+                for ( int i = 0; i < rModel.DrawList.Count; i++)
+                {
+                    rModel.DrawList.Data[i].Draw(ref graphicsDevice, DrawType.Draw);
+                }
             }
-            graphicsDevice.BlendState = BlendState.Opaque;
+            // graphicsDevice.BlendState = BlendState.Opaque; // we want alpha blend for the next thing we draw
         }
 
         private void DrawDecals()
@@ -305,58 +309,113 @@ namespace GameLib
 
         public void DoCulling(ref Engine.Utilities.FastFrustum frustum)
         {
-            DrawList.Clear();
-            foreach (RModelInstance modelInstance in RModelInstances)
+            foreach (RModel rModel in RModels)
             {
-                if (modelInstance.Shown && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
+                rModel.DrawList.Clear();
+                foreach (RModelInstance modelInstance in rModel.Instances)
                 {
-                    DrawList.Add(modelInstance);
-                    if (modelInstance is SkinnedRModelInstance)
+                    if (modelInstance.Shown && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
                     {
-                        SkinnedRModelInstance smodelInstance = (SkinnedRModelInstance)modelInstance;
-                        smodelInstance.UpdateBones();
+                        rModel.DrawList.Add(modelInstance);
+                        if (modelInstance is SkinnedRModelInstance)
+                        {
+                            SkinnedRModelInstance smodelInstance = (SkinnedRModelInstance)modelInstance;
+                            smodelInstance.UpdateBones();
+                        }
                     }
                 }
             }
-            DrawList.Sort();
+
+            foreach (RModel rModel in AlphaBlendRModels)
+            {
+                rModel.DrawList.Clear();
+                foreach (RModelInstance modelInstance in rModel.Instances)
+                {
+                    if (modelInstance.Shown && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
+                    {
+                        rModel.DrawList.Add(modelInstance);
+                        if (modelInstance is SkinnedRModelInstance)
+                        {
+                            SkinnedRModelInstance smodelInstance = (SkinnedRModelInstance)modelInstance;
+                            smodelInstance.UpdateBones();
+                        }
+                    }
+                }
+            }
         }
 
         public void DoShadowsCulling(ref Engine.Utilities.FastFrustum frustum, ref FastList<RModelInstance> drawList)
         {
             drawList.Clear();
-            foreach (RModelInstance modelInstance in RModelInstances)
+            foreach (RModel rModel in RModels)
             {
-                if (modelInstance.Shown && modelInstance.model.CastsShadows && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
-                    drawList.Add(modelInstance);
+                foreach (RModelInstance modelInstance in rModel.Instances)
+                {
+                    if (modelInstance.Shown && modelInstance.model.CastsShadows && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
+                        drawList.Add(modelInstance);
+                }
+            }
+
+            foreach (RModel rModel in AlphaBlendRModels)
+            {
+                foreach (RModelInstance modelInstance in rModel.Instances)
+                {
+                    if (modelInstance.Shown && modelInstance.model.CastsShadows && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
+                        drawList.Add(modelInstance);
+                }
             }
         }
 
-        public List<RModelInstance> RModelInstances = new List<RModelInstance>();
-        public FastList<RModelInstance> DrawList = new FastList<RModelInstance>();
+        public List<RModel> RModels = new List<RModel>();
+        public List<RModel> AlphaBlendRModels = new List<RModel>();
 
-        public void AddRModelInstance(RModelInstance modelInstance)
+        public void AddRModel(RModel model)
         {
-            RModelInstances.Add(modelInstance);
+            if (model.AlphaBlend)
+                AlphaBlendRModels.Add(model);
+            else
+                RModels.Add(model);
         }
 
-        public void RemoveRModelInstance(RModelInstance modelInstance)
+        public void RemoveRModel(RModel model)
         {
-            RModelInstances.Remove(modelInstance);
+            if (model.AlphaBlend)
+                AlphaBlendRModels.Remove(model);
+            else
+                RModels.Remove(model);
         }
 
         public void ClearRModelInstances()
         {
-            RModelInstances.Clear();
-            DrawList.ClearReferences();
+            foreach (RModel rModel in RModels)
+            {
+                rModel.Instances.Clear();
+                rModel.DrawList.ClearReferences();
+            }
+            foreach (RModel rModel in AlphaBlendRModels)
+            {
+                rModel.Instances.Clear();
+                rModel.DrawList.ClearReferences();
+            }
             if (sun != null)
                 sun.ClearRModelInstances();
         }
 
         public void EditorUpdate()
         {
-            foreach (RModelInstance modelInstance in RModelInstances)
+            foreach (RModel rModel in RModels)
             {
-                modelInstance.SaveRenderData();
+                foreach (RModelInstance modelInstance in rModel.Instances)
+                {
+                    modelInstance.SaveRenderData();
+                }
+            }
+            foreach (RModel rModel in AlphaBlendRModels)
+            {
+                foreach (RModelInstance modelInstance in rModel.Instances)
+                {
+                    modelInstance.SaveRenderData();
+                }
             }
 
             view = CameraQB.ViewMatrix;
@@ -385,9 +444,19 @@ namespace GameLib
 
         public void UpdateStart()
         {
-            foreach (RModelInstance modelInstance in RModelInstances)
+            foreach (RModel rModel in RModels)
             {
-                modelInstance.SaveRenderData();
+                foreach (RModelInstance modelInstance in rModel.Instances)
+                {
+                    modelInstance.SaveRenderData();
+                }
+            }
+            foreach (RModel rModel in AlphaBlendRModels)
+            {
+                foreach (RModelInstance modelInstance in rModel.Instances)
+                {
+                    modelInstance.SaveRenderData();
+                }
             }
 
             view = CameraQB.ViewMatrix;
