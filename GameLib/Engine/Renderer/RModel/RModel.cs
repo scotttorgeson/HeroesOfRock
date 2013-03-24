@@ -118,10 +118,16 @@ namespace GameLib
 
         public virtual void LoadContent(ContentManager content, ParameterSet parm, Stage stage)
         {
+            Matrix[] transforms = new Matrix[model.Bones.Count];
+            model.CopyAbsoluteBoneTransformsTo(transforms);
+
             boundingSphere = new BoundingSphere();
             foreach (ModelMesh mesh in Model.Meshes)
-                boundingSphere = BoundingSphere.CreateMerged(boundingSphere, mesh.BoundingSphere);
-            boundingSphere.Radius *= 5.0f;
+            {
+                BoundingSphere meshBoundingSphere;
+                mesh.BoundingSphere.Transform(ref transforms[mesh.ParentBone.Index], out meshBoundingSphere);
+                boundingSphere = BoundingSphere.CreateMerged(boundingSphere, meshBoundingSphere);
+            }
 
             contentLoaded = true;
         }

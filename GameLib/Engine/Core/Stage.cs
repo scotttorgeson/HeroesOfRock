@@ -261,6 +261,22 @@ namespace GameLib
                 //qb.Value.Update(dt);
 
             Renderer.Instance.UpdateEnd();
+
+#if DEBUG && DRAW_MODEL_BOUNDING_SPHERES
+            if (activeStage.QBTable != null && activeStage.QBTable.ContainsKey(typeof(ControlsQB)))
+            {
+                if (activeStage.GetQB<ControlsQB>().CurrentKeyboardState.IsKeyDown(Keys.B) && activeStage.GetQB<ControlsQB>().LastKeyboardState.IsKeyUp(Keys.B))
+                {
+                    foreach (RModelInstance rmodelInstance in Renderer.Instance.RModelInstances)
+                    {
+                        var e = new BEPUphysics.Entities.Entity(new BEPUphysics.CollisionShapes.ConvexShapes.SphereShape(rmodelInstance.model.boundingSphere.Radius));
+                        e.Position = rmodelInstance.physicsObject.Position + rmodelInstance.model.boundingSphere.Center;
+                        e.Orientation = rmodelInstance.physicsObject.Orientation;
+                        Renderer.Instance.collisionDebugDrawer.Add(e);
+                    }
+                }
+            }
+#endif
         }
 
         public void PauseGame()

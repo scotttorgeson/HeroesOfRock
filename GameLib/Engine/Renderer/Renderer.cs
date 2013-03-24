@@ -332,7 +332,7 @@ namespace GameLib
             drawList.Sort();
         }
 
-        List<RModelInstance> RModelInstances = new List<RModelInstance>();
+        public List<RModelInstance> RModelInstances = new List<RModelInstance>();
         public List<RModelInstance> DrawList = new List<RModelInstance>();
 
         public void AddRModelInstance(RModelInstance modelInstance)
