@@ -59,7 +59,7 @@ namespace GameLib.Engine.AI
 
             state = AIState.Moving;
             type = EnemyType.Missile;
-
+            spawnedFromTrigger = true;
             actor.RegisterUpdateFunction(Update);
             timer = lifeTime;
         }
