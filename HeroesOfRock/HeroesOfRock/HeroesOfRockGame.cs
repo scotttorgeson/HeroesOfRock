@@ -109,7 +109,7 @@ namespace HeroesOfRock
         {
             Stage.Content = new ThreadSafeContentManager(Content.ServiceProvider, Content.RootDirectory);
 
-            Stage.LoadStartingStage();
+            Stage.LoadStartingStage("StartGame");
             Stage.renderer.LoadContent();
         }
 

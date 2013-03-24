@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameLib
 {
-    public class RModelInstance : IComparable<RModelInstance>
+    public class RModelInstance
     {
         public PhysicsObject physicsObject;
         public RModel model;
@@ -50,38 +50,6 @@ namespace GameLib
         public void SetPhysicsObject(PhysicsObject physicsObject)
         {
             this.physicsObject = physicsObject;
-        }
-
-        public virtual void Draw(ref GraphicsDevice graphics, Renderer.DrawType technique)
-        {
-            model.Draw(ref graphics, ref RenderTransform, technique);
-        }
-
-        public int CompareTo(RModelInstance other)
-        {
-            // < 0 means we are less than other
-            // 0 means we are equal to other
-            // 1 means we are greater than other
-            if (other.model.AlphaBlend != model.AlphaBlend)
-            {
-                if (model.AlphaBlend)
-                    return 1;
-                else
-                    return -1;
-            }
-
-            // same alpha blend
-            if (model.AlphaBlend)
-            {
-                // both alpha blend
-                // todo: sort by depth
-                return 0;
-            }
-            else
-            {
-                // both not alpha blend
-                return 0;
-            }
         }
 
         /// <summary>

@@ -141,10 +141,6 @@ namespace GameLib
             contentLoaded = true;
         }
 
-        public virtual void Draw(ref GraphicsDevice graphics, ref Matrix world, Renderer.DrawType technique)
-        {
-        }
-
         public virtual void DrawInstances(Renderer.DrawType technique)
         {
         }

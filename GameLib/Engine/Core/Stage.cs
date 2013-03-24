@@ -136,9 +136,27 @@ namespace GameLib
             LoadStage(ActiveStage.Parm, blockingLoad);
         }
 
-        public static void LoadStartingStage()
+        public static void LoadStartingStage(string stageName)
         {
-            LoadStage("StartGame", true);
+            LoadStage(stageName, true);
+            LoadStage();
+        }
+
+        public static void LoadStartingStage(ParameterSet parms)
+        {
+            LoadStage(parms, true);
+            LoadStage();
+        }
+
+        public static void EditorLoadStage(ParameterSet parms)
+        {
+            LoadStage(parms, true);
+            LoadStage();
+        }
+
+        public static void EditorReloadStage()
+        {
+            LoadStage(activeStage.Parm, true);
             LoadStage();
         }
 

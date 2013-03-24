@@ -360,8 +360,6 @@ namespace WinFormsGraphicsDevice
             // showTriggersCheckBox
             // 
             this.showTriggersCheckBox.AutoSize = true;
-            this.showTriggersCheckBox.Checked = true;
-            this.showTriggersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showTriggersCheckBox.Location = new System.Drawing.Point(943, 8);
             this.showTriggersCheckBox.Name = "showTriggersCheckBox";
             this.showTriggersCheckBox.Size = new System.Drawing.Size(94, 17);

@@ -92,6 +92,7 @@ namespace WinFormsGraphicsDevice
             if (result == System.Windows.Forms.DialogResult.OK)
             {
                 stageControl.LoadStage(openFileDialog.FileName);
+                showTriggersCheckBox.Checked = false;
             }
         }
 

@@ -82,8 +82,7 @@ namespace WinFormsGraphicsDevice
                     // save then load stage
                     //SaveStage(worldFile); //uncomment this line if we want to save to file everytime we start a level in the editor
                     reloadStage();
-                    Stage.LoadStage(parms, true);
-
+                    Stage.EditorLoadStage(parms);
                 }
                 else
                 {
@@ -103,15 +102,14 @@ namespace WinFormsGraphicsDevice
             {
                 // stop game
                 playState = PlayState.Stopped;
-                activeManipulator = new Manipulator();
-                activeManipulator.Initialize(content, GraphicsDevice);
-
                 PhysicsObject.ForceStaticMesh = true;
                 PhysicsObject.DisableMass = true;
 
                 // reload world
-                Stage.ReloadStage(true);
-                content = new ThreadSafeContentManager(Services, "Content");
+                Stage.EditorReloadStage();
+
+                activeManipulator = new Manipulator();
+                activeManipulator.Initialize(content, GraphicsDevice);
 
                 //stop the theme song cause that is annoying
                 AudioQB aQB = Stage.ActiveStage.GetQB<AudioQB>();
@@ -146,35 +144,25 @@ namespace WinFormsGraphicsDevice
         protected override void Initialize()
         {
             content = new ThreadSafeContentManager(Services, "Content");
-            //currentActor = null;
+            playState = PlayState.Stopped;
 
             Stage.renderer = new Renderer(GraphicsDevice);
             Stage.renderer.Initialize();
             GameLib.Renderer.DrawTriggers = true;
 
-            parms = ParameterSet.FromFile(worldFile);
-
             timer = Stopwatch.StartNew();
 
             Stage.Content = content;
             Stage.Editor = true;
-            Stage.LoadStage(parms, true);
 
             Stage.renderer.LoadContent();
 
             font = content.Load<SpriteFont>("DefaultFont");
-            
 
             Mouse.WindowHandle = this.Handle;
             Application.Idle += delegate { Invalidate(); };
             SlowMotion = false;
             SlowAmount = 2.0f;
-
-            playState = PlayState.Playing;
-            Stop();
-
-            activeManipulator = new Manipulator();
-            activeManipulator.Initialize(content, GraphicsDevice);
 
             dispatcherService = new XNAFrameworkDispatcherService();
         }
@@ -223,48 +211,53 @@ namespace WinFormsGraphicsDevice
 #endif
             try
             {
-                //if (Stage.LoadingStage != null) return;
-                float dt = (float)(timer.Elapsed.TotalSeconds - lastTime);
-                lastTime = timer.Elapsed.TotalSeconds;
-
-                if (playState == PlayState.Playing && SlowMotion)
-                    dt /= SlowAmount;
-
-                Renderer.Instance.EditorUpdate();
-
-                if (playState == PlayState.Playing)
-                    Stage.ActiveStage.Update(dt);
-                else if (playState == PlayState.Stopped || playState == PlayState.Paused)
+                if (Stage.ActiveStage != null)
                 {
-                    Stage.ActiveStage.GetQB<ControlsQB>().Update(dt);
-                    Stage.ActiveStage.GetQB<CameraQB>().Update(dt);
+                    //if (Stage.LoadingStage != null) return;
+                    float dt = (float)(timer.Elapsed.TotalSeconds - lastTime);
+                    lastTime = timer.Elapsed.TotalSeconds;
 
-                    // physics run while stopped so we can update actor positions
-                    // doesn't run while paused, so things stay still
-                    if (playState == PlayState.Stopped) Stage.ActiveStage.GetQB<PhysicsQB>().Update(dt);
-                }
+                    if (playState == PlayState.Playing && SlowMotion)
+                        dt /= SlowAmount;
 
-                if (Stage.ActiveStage.GetQB<ControlsQB>().CurrentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete)
-                    && activeManipulator.selectedActor != null)
-                {
-                    if (activeManipulator.selectedActor.Name.Contains("Trigger"))
-                        Stage.ActiveStage.GetQB<TriggerQB>().triggers.Remove(activeManipulator.selectedActor);
-                    Stage.ActiveStage.GetQB<ActorQB>().EditorKillActor(activeManipulator.selectedActor);
-                    activeManipulator.selectedActor = null;
-                }
-
-                GraphicsDevice.Clear(Color.CornflowerBlue);
-
-                Stage.renderer.Draw(dt);
-                Stage.ActiveStage.Draw(dt);
-
-                if (activeManipulator != null)
-                {
-                    activeManipulator.Draw(dt, GraphicsDevice);
-                    if (activeManipulator.selectedActor != null)
+                    if (playState == PlayState.Playing)
+                        Stage.ActiveStage.Update(dt);
+                    else if (playState == PlayState.Stopped || playState == PlayState.Paused)
                     {
-                        mf.AddProperties(activeManipulator.selectedActor);
+                        Renderer.Instance.EditorUpdate();
+
+                        Stage.ActiveStage.GetQB<ControlsQB>().Update(dt);
+                        Stage.ActiveStage.GetQB<CameraQB>().Update(dt);
+
+                        // physics run while stopped so we can update actor positions
+                        // doesn't run while paused, so things stay still
+                        if (playState == PlayState.Stopped) Stage.ActiveStage.GetQB<PhysicsQB>().Update(dt);
                     }
+
+                    if (Stage.ActiveStage.GetQB<ControlsQB>().CurrentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete)
+                        && activeManipulator.selectedActor != null)
+                    {
+                        if (activeManipulator.selectedActor.Name.Contains("Trigger"))
+                            Stage.ActiveStage.GetQB<TriggerQB>().triggers.Remove(activeManipulator.selectedActor);
+                        Stage.ActiveStage.GetQB<ActorQB>().EditorKillActor(activeManipulator.selectedActor);
+                        activeManipulator.selectedActor = null;
+                    }
+
+                    Stage.renderer.Draw(dt);
+                    Stage.ActiveStage.Draw(dt);
+
+                    if (activeManipulator != null)
+                    {
+                        activeManipulator.Draw(dt, GraphicsDevice);
+                        if (activeManipulator.selectedActor != null)
+                        {
+                            mf.AddProperties(activeManipulator.selectedActor);
+                        }
+                    }
+                }
+                else
+                {
+                    Renderer.Instance.EditorDrawNoStage();
                 }
             }
             catch (System.Exception e)
@@ -355,13 +348,18 @@ namespace WinFormsGraphicsDevice
 
         public void LoadStage(string filename)
         {
+            Stop();
             activeManipulator = null;
             worldFile = filename;
             parms = ParameterSet.FromFile(worldFile);
-            GameLib.Stage.LoadStage(parms, true);
+            GameLib.Stage.EditorLoadStage(parms);
             //stop the theme song cause that is annoying
             AudioQB aQB = Stage.ActiveStage.GetQB<AudioQB>();
             aQB.PauseTheme();
+
+            activeManipulator = new Manipulator();
+            activeManipulator.Initialize(content, GraphicsDevice);
+            Stage.ActiveStage.GetQB<CameraQB>().StartFreeCam();
         }
 
         public Manipulator activeManipulator;

@@ -55,32 +55,6 @@ namespace GameLib
             base.LoadContent(content, parm, stage);
         }
 
-        public override void Draw(ref GraphicsDevice graphics, ref Matrix world, Renderer.DrawType technique)
-        {
-            if (technique == Renderer.DrawType.Draw) // water dont cast no shadows
-            {
-                Matrix[] transforms = new Matrix[model.Bones.Count];
-                model.CopyAbsoluteBoneTransformsTo(transforms);
-
-                foreach (ModelMesh modelMesh in Model.Meshes)
-                {
-                    foreach (Water effect in modelMesh.Effects)
-                    {
-                        Matrix translation;
-                        Matrix.Multiply(ref transforms[modelMesh.ParentBone.Index], ref world, out translation);
-                        effect.World = translation;
-
-                        effect.View = Renderer.Instance.view;
-                        effect.Projection = Renderer.Instance.projection;
-                        Water water = effect;
-                        Renderer.Instance.sun.SetLights(ref water);
-                    }
-
-                    modelMesh.Draw();
-                }
-            }
-        }
-
         public override void DrawInstances(Renderer.DrawType technique)
         {
             if (technique == Renderer.DrawType.Draw)

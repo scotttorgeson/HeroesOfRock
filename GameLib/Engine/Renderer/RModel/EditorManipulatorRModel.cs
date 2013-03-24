@@ -25,7 +25,7 @@ namespace GameLib
  	        base.LoadContent(content, parm, stage);
         }
 
-        public override void Draw(ref GraphicsDevice graphics, ref Matrix world, Renderer.DrawType technique)
+        public override void DrawInstances(Renderer.DrawType technique)
         {
             // handled by the editor, we do nothing!
         }

@@ -41,6 +41,8 @@ namespace GameLib
 
         private DecalEffect decalEffect;
 
+        public SpriteFont defaultFont;
+
         public Renderer(GraphicsDevice graphicsDevice)
         {
             this.graphicsDevice = graphicsDevice;
@@ -55,6 +57,7 @@ namespace GameLib
         public virtual void LoadContent()
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
+            defaultFont = Stage.Content.Load<SpriteFont>("DefaultFont");
 
             particleEffect = new BasicEffect(graphicsDevice);
             //particleEffect.EnableDefaultLighting();
@@ -134,6 +137,11 @@ namespace GameLib
             
             particleEffect = null;
             decalEffect = null;
+
+            if ( defaultFont != null )
+            {
+                defaultFont = null;
+            }
 
             if (spriteBatch != null)
             {
@@ -386,6 +394,9 @@ namespace GameLib
                 rModel.Instances.Clear();
                 rModel.DrawList.ClearReferences();
             }
+
+            RModels.Clear();
+            AlphaBlendRModels.Clear();
         }
 
         public void EditorUpdate()
@@ -474,5 +485,12 @@ namespace GameLib
         BEPUphysics.Threading.SimpleThreadManager threadManager;
 
         Engine.Utilities.FastFrustum fastCameraBoundingFrustum;
+
+        public void EditorDrawNoStage()
+        {
+            SpriteBatch.Begin();
+            SpriteBatch.DrawString(defaultFont, "Please load a level", new Vector2(20, 20), Color.White);
+            SpriteBatch.End();
+        }
     }
 }

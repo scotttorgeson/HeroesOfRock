@@ -168,12 +168,6 @@ namespace GameLib
             UpdateBones();
         }
 
-        public override void Draw(ref GraphicsDevice graphics, Renderer.DrawType technique)
-        {
-            ((SkinnedRModel)model).SetupDraw(ref boneTransforms, ref skeleton);
-            base.Draw(ref graphics, technique);
-        }
-
         private float RenderPosition = 0.0f;
         public override void SaveRenderData()
         {
