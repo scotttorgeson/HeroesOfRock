@@ -149,7 +149,6 @@
     <Compile Include="Engine\Physics\Triggers\TriggerVolume.cs" />
     <Compile Include="Engine\Physics\Triggers\TutorialStopTriggerVolume.cs" />
     <Compile Include="Engine\Renderer\Bloom.cs" />
-    <Compile Include="Engine\Renderer\DrawList.cs" />
     <Compile Include="Engine\Renderer\Effects\BaseEffect.cs" />
     <Compile Include="Engine\Renderer\Effects\BumpedEffect.cs" />
     <Compile Include="Engine\Renderer\Effects\BumpedSpecularEffect.cs" />
