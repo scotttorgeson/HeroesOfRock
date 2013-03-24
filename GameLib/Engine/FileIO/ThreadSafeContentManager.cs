@@ -23,10 +23,7 @@ namespace GameLib
         public override T Load<T>(string assetName)
         {
 #if DEBUG
-            if (Stage.ActiveStage != null)
-                System.Diagnostics.Debug.WriteLine(Stage.ActiveStage.Time + " Loading: " + assetName);
-            else if ( Stage.LoadingStage != null )
-                System.Diagnostics.Debug.WriteLine(Stage.LoadingStage.Time + " Loading: " + assetName);
+                System.Diagnostics.Debug.WriteLine(Stage.GlobalTime + " Loading: " + assetName);
 #endif
 
             lock (locker)

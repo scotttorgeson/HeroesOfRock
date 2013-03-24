@@ -35,6 +35,7 @@ namespace GameLib
         public static bool Editor = false;
 
         public float Time { get; private set; }
+        public static float GlobalTime { get; private set; }
 
         public static PlayerIndex PlayerIndex
         { 
@@ -148,6 +149,12 @@ namespace GameLib
             Time = 0.0f;
         }
 
+        // called the first time a stage is created
+        static Stage()
+        {
+            GlobalTime = 0.0f;
+        }
+
         public void Initialize()
         {
 #if DEBUG
@@ -235,11 +242,12 @@ namespace GameLib
             //}
         }
 
-        bool FinishLoad = false;
+        //bool FinishLoad = false;
 
         public void Update(float dt)
         {
             Time += dt;
+            GlobalTime += dt;
 
             //if (FinishLoad)
             //{
