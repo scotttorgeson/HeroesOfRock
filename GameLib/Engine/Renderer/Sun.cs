@@ -291,8 +291,27 @@ namespace GameLib
             effect.LightViewProjection = this.lightViewProjectionMatrix;
         }
 
+        public void SetLightViewProjection(ref SkinnedEffect effect)
+        {
+            effect.LightViewProjection = this.lightViewProjectionMatrix;
+        }
+
         // called when drawing for real
         public void SetLights(ref BaseEffect effect)
+        {
+            effect.LightColor = lightColor;
+            effect.AmbientLightColor = ambientLightColor;
+            effect.LightDirection = directionToSun;
+            effect.ShadowMap = shadowMap;
+            effect.TexelSize = TexelSize;
+            effect.LightViewProjections = this.LightViewProjectionMatrices;
+            effect.ClipPlanes = this.LightClipPlanes;
+#if TUNE_DEPTH_BIAS
+            effect.Parameters["DepthBias"].SetValue(DepthBias);
+#endif
+        }
+
+        public void SetLights(ref SkinnedEffect effect)
         {
             effect.LightColor = lightColor;
             effect.AmbientLightColor = ambientLightColor;
