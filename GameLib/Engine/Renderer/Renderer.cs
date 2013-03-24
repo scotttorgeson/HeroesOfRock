@@ -190,14 +190,6 @@ namespace GameLib
             }
         }
 
-        public static bool ShouldDrawModel(RModel model, ref Matrix transform, ref Engine.Utilities.FastFrustum camFrustum)
-        {
-            BoundingSphere boundingSphere;
-            model.boundingSphere.Transform(ref transform, out boundingSphere);
-
-            return camFrustum.Intersects(ref boundingSphere);
-        }
-
         public enum DrawType
         {
             Draw,
@@ -241,7 +233,7 @@ namespace GameLib
                         {
                             Actor actor = decal.Actors[i];
                             Matrix world = actor.modelInstance.RenderTransform;
-                            if (ShouldDrawModel(actor.modelInstance.model, ref world, ref fastCameraBoundingFrustum))
+                            if (fastCameraBoundingFrustum.Intersects(ref actor.modelInstance.boundingSphere))
                             {
                                 Model model = actor.modelInstance.model.Model;
 
@@ -308,7 +300,7 @@ namespace GameLib
                 rModel.DrawList.Clear();
                 foreach (RModelInstance modelInstance in rModel.Instances)
                 {
-                    if (modelInstance.Shown && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
+                    if (modelInstance.Shown && frustum.Intersects(ref modelInstance.boundingSphere))
                     {
                         rModel.DrawList.Add(modelInstance);
                         if (modelInstance is SkinnedRModelInstance)
@@ -325,7 +317,7 @@ namespace GameLib
                 rModel.DrawList.Clear();
                 foreach (RModelInstance modelInstance in rModel.Instances)
                 {
-                    if (modelInstance.Shown && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
+                    if (modelInstance.Shown && frustum.Intersects(ref modelInstance.boundingSphere))
                     {
                         rModel.DrawList.Add(modelInstance);
                         if (modelInstance is SkinnedRModelInstance)
@@ -338,24 +330,27 @@ namespace GameLib
             }
         }
 
-        public void DoShadowsCulling(ref Engine.Utilities.FastFrustum frustum, ref FastList<RModelInstance> drawList)
+        public void DoShadowsCulling(Engine.Utilities.FastFrustum[] frustums)
         {
-            drawList.Clear();
-            foreach (RModel rModel in RModels)
+            for (int i = 0; i < Sun.NUM_CASCADES; i++)
             {
-                foreach (RModelInstance modelInstance in rModel.Instances)
+                foreach (RModel rModel in RModels)
                 {
-                    if (modelInstance.Shown && modelInstance.model.CastsShadows && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
-                        drawList.Add(modelInstance);
+                    rModel.ShadowDrawLists[i].Clear();
+                    foreach (RModelInstance modelInstance in rModel.Instances)
+                    {
+                        if (modelInstance.Shown && modelInstance.model.CastsShadows && frustums[i].Intersects(ref modelInstance.boundingSphere))
+                            rModel.ShadowDrawLists[i].Add(modelInstance);
+                    }
                 }
-            }
 
-            foreach (RModel rModel in AlphaBlendRModels)
-            {
-                foreach (RModelInstance modelInstance in rModel.Instances)
+                foreach (RModel rModel in AlphaBlendRModels)
                 {
-                    if (modelInstance.Shown && modelInstance.model.CastsShadows && ShouldDrawModel(modelInstance.model, ref modelInstance.RenderTransform, ref frustum))
-                        drawList.Add(modelInstance);
+                    foreach (RModelInstance modelInstance in rModel.Instances)
+                    {
+                        if (modelInstance.Shown && modelInstance.model.CastsShadows && frustums[i].Intersects(ref modelInstance.boundingSphere))
+                            rModel.ShadowDrawLists[i].Add(modelInstance);
+                    }
                 }
             }
         }
@@ -391,8 +386,6 @@ namespace GameLib
                 rModel.Instances.Clear();
                 rModel.DrawList.ClearReferences();
             }
-            if (sun != null)
-                sun.ClearRModelInstances();
         }
 
         public void EditorUpdate()

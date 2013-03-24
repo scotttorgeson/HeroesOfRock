@@ -88,10 +88,12 @@ namespace GameLib
         /// For use by the renderer only!!! Does not contain current data!!
         /// </summary>
         public Matrix RenderTransform;
+        public BoundingSphere boundingSphere;
 
         public virtual void SaveRenderData()
         {
             RenderTransform = physicsObject.TransformMatrix;
+            model.boundingSphere.Transform(ref RenderTransform, out boundingSphere);
         }
     }
 }

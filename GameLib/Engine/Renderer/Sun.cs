@@ -20,13 +20,13 @@ namespace GameLib
         private const int SHADOW_MAP_WIDTH_HEIGHT = 1024;
         private const float TexelSize = 1.0f / (float)SHADOW_MAP_WIDTH_HEIGHT;
         private const float ShadowDistance = 1000.0f;
-        private const int NUM_CASCADES = 3;
+        public const int NUM_CASCADES = 3;
         private static readonly Vector3[] extraBackup = { new Vector3(0.0f, 0.0f, 140.0f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.0f, 0.0f) };
 
         // cascade parameters
         private Matrix[] LightViewProjectionMatrices = new Matrix[NUM_CASCADES];
+        private Engine.Utilities.FastFrustum[] LightFrustums = new Engine.Utilities.FastFrustum[NUM_CASCADES];
         private Vector2[] LightClipPlanes = new Vector2[NUM_CASCADES]; // x stores near, y stores far. this is sent to the shader.
-        private FastList<RModelInstance>[] DrawLists = new FastList<RModelInstance>[NUM_CASCADES];
         private float[] splitDepthsTmp = new float[NUM_CASCADES + 1];
         private Vector3[] frustumCornersWS = new Vector3[8];
         private Vector3[] frustumCornersVS = new Vector3[8];
@@ -46,9 +46,6 @@ namespace GameLib
             if ( shadowMap == null )
                 shadowMap = new RenderTarget2D(Renderer.Instance.GraphicsDevice, SHADOW_MAP_WIDTH_HEIGHT * NUM_CASCADES, SHADOW_MAP_WIDTH_HEIGHT, false, SurfaceFormat.Single, DepthFormat.Depth24);
             SetSunDirectionFromSphericalCoords(sunAngles.X, sunAngles.Y);
-
-            for (int i = 0; i < NUM_CASCADES; i++)
-                DrawLists[i] = new FastList<RModelInstance>();
         }
 
         public Sun(Vector4 lightColor, Vector4 ambientLightColor, float theta, float phi)
@@ -58,9 +55,6 @@ namespace GameLib
             SetSunDirectionFromSphericalCoords(theta, phi);
             this.lightColor = lightColor;
             this.ambientLightColor = ambientLightColor;
-
-            for (int i = 0; i < NUM_CASCADES; i++)
-                DrawLists[i] = new FastList<RModelInstance>();
         }
 
         public static void UnloadContent()
@@ -69,14 +63,6 @@ namespace GameLib
             {
                 shadowMap.Dispose();
                 shadowMap = null;
-            }
-        }
-
-        public void ClearRModelInstances()
-        {
-            for (int i = 0; i < NUM_CASCADES; i++)
-            {
-                DrawLists[i].ClearReferences();
             }
         }
 
@@ -214,11 +200,13 @@ namespace GameLib
                 splitViewport.Y = 0;
                 graphicsDevice.Viewport = splitViewport;
 
-                Engine.Utilities.FastFrustum frustum = new Engine.Utilities.FastFrustum(ref lightViewProjectionMatrix);
-
-                for ( int j = 0; j < DrawLists[i].Count; j++ )
+                foreach ( RModel rModel in Renderer.Instance.RModels )
                 {
-                    DrawLists[i].Data[j].Draw(ref graphicsDevice, Renderer.DrawType.CreateShadowMap);
+                    rModel.DrawInstances(Renderer.DrawType.CreateShadowMap);
+                }
+                foreach (RModel rModel in Renderer.Instance.AlphaBlendRModels)
+                {
+                    rModel.DrawInstances(Renderer.DrawType.CreateShadowMap);
                 }
             }
 
@@ -253,11 +241,11 @@ namespace GameLib
                 LightClipPlanes[i].Y = (splitDepthsTmp[i + 1] - nearClip) / clipRange;
 
                 // Create the view projection matrix for this cascade
-                LightViewProjectionMatrices[i] = CreateLightViewProjectionMatrix(directionToSun, far, splitDepthsTmp[i], splitDepthsTmp[i + 1], i);    
-
-                Engine.Utilities.FastFrustum frustum = new Engine.Utilities.FastFrustum(ref LightViewProjectionMatrices[i]);
-                Renderer.Instance.DoShadowsCulling(ref frustum, ref DrawLists[i]);
+                LightViewProjectionMatrices[i] = CreateLightViewProjectionMatrix(directionToSun, far, splitDepthsTmp[i], splitDepthsTmp[i + 1], i);   
+                LightFrustums[i] = new Engine.Utilities.FastFrustum(ref LightViewProjectionMatrices[i]);
             }
+
+            Renderer.Instance.DoShadowsCulling(LightFrustums);
         }
 
         /// <summary>

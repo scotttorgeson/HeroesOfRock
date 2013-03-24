@@ -31,7 +31,8 @@ namespace GameLib
         protected bool contentLoaded = false;
 
         public List<RModelInstance> Instances = new List<RModelInstance>();
-        public FastList<RModelInstance> DrawList = new FastList<RModelInstance>();  
+        public FastList<RModelInstance> DrawList = new FastList<RModelInstance>();
+        public FastList<RModelInstance>[] ShadowDrawLists;
 
         private static Dictionary<string, RModel> modelDictionary = new Dictionary<string, RModel>();
         public static void UnloadContent()
@@ -77,6 +78,10 @@ namespace GameLib
         {
             string modelName = parm.GetString("ModelName");
             Name = modelName;
+
+            ShadowDrawLists = new FastList<RModelInstance>[Sun.NUM_CASCADES];
+            for (int i = 0; i < ShadowDrawLists.Length; i++)
+                ShadowDrawLists[i] = new FastList<RModelInstance>();
 
             if (parm.HasParm("BumpMap"))
                 IsBumpMapped = true;
