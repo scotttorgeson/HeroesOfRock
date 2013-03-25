@@ -42,7 +42,12 @@ Sound13=ShieldHit3_16
 Sound14=ShieldDisarm_16
 Sound15=ShieldDisarm2_16
 Sound16=asphaltsmash_16
-Sound16=WeakAOE_16
+Sound17=WeakAOE_16
+Sound18=Grunt1_16
+Sound19=Grunt2_16
+Sound20=Grunt3_16
+Sound21=GruntAOE_16
+Sound22=GruntMissile_16
 
 #AI soundFX eveutually move to the AI parm
-Sound18=bloodsplat_16
+Sound23=bloodsplat_16

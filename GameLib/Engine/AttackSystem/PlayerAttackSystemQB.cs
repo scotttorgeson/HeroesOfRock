@@ -375,7 +375,7 @@ namespace GameLib.Engine.AttackSystem
                         break;
                 }
             }
-            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 0.6f, 0.0f, 0.0f);
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 1.0f, 0.0f, 0.0f);
         }
 
         private void playRandomHitSound()
@@ -398,24 +398,30 @@ namespace GameLib.Engine.AttackSystem
                     soundName = "Melee4_16";
                     break;
             }
-            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 0.6f, 0.0f, 0.0f);
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 1.0f, 0.0f, 0.0f);
 
         }
 
         private void playRandomTakeDamageSound()
         {
             string sound = null;
-            const int NUM_HIT_SOUND = 3;
+            const int NUM_HIT_SOUND = 5;
             switch (rand.Next(NUM_HIT_SOUND))
             {
                 case 0:
-                    sound = "HiHat";
+                    sound = "Grunt1_16";
                     break;
                 case 1:
-                    sound = "HiHat";
+                    sound = "Grunt2_16";
                     break;
                 case 2:
-                    sound = "HiHat";
+                    sound = "Grunt3_16";
+                    break;
+                case 3:
+                    sound = "GruntAOE_16";
+                    break;
+                case 4:
+                    sound = "GruntMissile_16";
                     break;
             }
 
