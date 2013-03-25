@@ -178,22 +178,22 @@ namespace GameLib.Engine.AttackSystem
             switch (killStreak)
             {
                 case 5:
-                    sound = "DemonSlayer_16";
+                    sound = "DemonSlayerLoud";
                     break;
                 case 10:
-                    sound = "BloodBath_16";
-                    break;
-                case 15:
-                    sound = "Rampage_16";
+                    sound = "BloodBathLoud";
                     break;
                 case 20:
-                    sound = "Slaughterhouse_16";
-                    break;
-                case 25:
-                    sound = "BloodOrgy_16";
+                    sound = "RampageLoud";
                     break;
                 case 30:
-                    sound = "RockGod_16";
+                    sound = "SlaughterhouseLoud";
+                    break;
+                case 50:
+                    sound = "BloodOrgyLoud";
+                    break;
+                case 100:
+                    sound = "RockGodLoud";
                     break;
             }
 
