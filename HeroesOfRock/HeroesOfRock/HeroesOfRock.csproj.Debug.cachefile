@@ -154,6 +154,7 @@ Content\Models\Environment\TrashCan.xnb
 Content\Models\Environment\TV.xnb
 Content\Models\Explosion\explosion.xnb
 Content\Models\HORMissileStandIn.xnb
+Content\Models\RangedEnemy\rocket.xnb
 Content\Models\RotateRoll.xnb
 Content\Models\RotatePitch.xnb
 Content\Models\RotateYaw.xnb
@@ -289,6 +290,7 @@ Content\Models\Explosion\explosion_texture.xnb
 Content\UI\Menu\perfect.xnb
 Content\UI\BloodSplatter\BloodSplatter01.xnb
 Content\UI\BloodSplatter\BloodSplatter02.xnb
+Content\Models\RangedEnemy\RocketDiffuse.xnb
 Content\Controls.xnb
 Content\MoveList.xnb
 Content\Audio\A-heavy.xnb
@@ -345,10 +347,10 @@ Content\Audio\Rampage_16.xnb
 Content\Audio\RockGod_16.xnb
 Content\Audio\Slaughterhouse_16.xnb
 Content\Models\Grid\Grid_0.xnb
-Content\FBX\90232A0D\sLevel1.fbm\Ground_Texture_0.xnb
+Content\FBX\722729C6\sLevel1.fbm\Ground_Texture_0.xnb
 Content\Models\Buildings\LargeApartmentBuildingDiffuse_0.xnb
 Content\Models\Buildings\SmallStoreDiffuse_0.xnb
-Content\FBX\51002E66\cardboardbox.fbm\boxdiffuse_0.xnb
+Content\FBX\303E2E1F\cardboardbox.fbm\boxdiffuse_0.xnb
 Content\Models\Environment\powerLineDiffuse_0.xnb
 Content\Models\Environment\ShoppingCartDiffuse_0.xnb
 Content\Models\Environment\StopLightDiffuse_0.xnb

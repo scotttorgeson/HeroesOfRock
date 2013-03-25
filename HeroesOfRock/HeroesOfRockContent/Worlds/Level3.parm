@@ -708,3 +708,7 @@ TriggerVolume32Position=401.8357 13.41188 -114.2005
 TriggerVolume32ModelName=TriggerVolume
 TriggerVolume32DieOnTrigger=False
 FirstScreen=HudScreen
+EnemyWeakPoolSize=3
+EnemyRangedPoolSize=3
+EnemyHeavyPoolSize=3
+SoundTheme=HORredlight

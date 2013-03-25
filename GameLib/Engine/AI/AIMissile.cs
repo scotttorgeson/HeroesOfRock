@@ -49,13 +49,18 @@ namespace GameLib.Engine.AI
 
             sploded = false;
 
+            
+            BEPUphysics.MathExtensions.Matrix3X3 m = new BEPUphysics.MathExtensions.Matrix3X3(0,0,0,0,0,0,0,0,0);
+            //actor.PhysicsObject.CharacterController.
+            ((BEPUphysics.Entities.Entity)this.actor.PhysicsObject.SpaceObject).LocalInertiaTensor = m;
+
             Vector3 missileDir = PlayerAgent.Player.PhysicsObject.Position - actor.PhysicsObject.Position;
             missileDir.Normalize();
-
             //to do, determine if x or z axis
 
             //actor.PhysicsObject.SimpleCharController.MovementDirection = new Vector2(missileDir.X, missileDir.Y);
             actor.PhysicsObject.LinearVelocity = missileDir * speed;
+            AimInDir();
 
             state = AIState.Moving;
             type = EnemyType.Missile;
@@ -78,7 +83,7 @@ namespace GameLib.Engine.AI
             //to do, determine if x or z axis
             //TO DO have missiles dissapear after going so far without hitting anything
             actor.PhysicsObject.LinearVelocity = missileDir * speed;
-
+            AimInDir();
 
             state = AIState.Moving;
             timer = lifeTime;
@@ -87,6 +92,7 @@ namespace GameLib.Engine.AI
         public override void Update(float dt)
         {
             timer -= dt;
+
             if (timer <= 0)
             {
                 Vector3 place = actor.PhysicsObject.Position;
@@ -115,6 +121,31 @@ namespace GameLib.Engine.AI
             sploded = true;
             timer = attackDelay;
             return attackTime;
+        }
+
+        public void AimInDir()
+        {
+            Vector3 missileDir = this.actor.PhysicsObject.LinearVelocity;
+            if (missileDir == Vector3.Zero) return;
+            Vector3 crossVec = Vector3.Zero;
+            switch (AIQB.MoveDirection)
+            {
+                case PlayerDirection.Backward:
+                case PlayerDirection.Forward:
+                    crossVec = Vector3.Right;
+                    break;
+                case PlayerDirection.Left:
+                case PlayerDirection.Right:
+                    crossVec = Vector3.Backward;
+                    break;
+            }
+            missileDir.Normalize();
+            BEPUphysics.Entities.Entity e = ((BEPUphysics.Entities.Entity)this.actor.PhysicsObject.SpaceObject);
+            BEPUphysics.MathExtensions.Matrix3X3 o = e.OrientationMatrix;
+            o.Up = missileDir;
+            o.Forward = Vector3.Cross(missileDir, crossVec);
+            o.Right = crossVec;
+            e.OrientationMatrix = o;
         }
 
         //this is called when we hit something

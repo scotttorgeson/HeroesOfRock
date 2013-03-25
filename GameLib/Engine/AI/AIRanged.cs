@@ -460,7 +460,7 @@ namespace GameLib.Engine.AI
             Vector3 missilePos = this.actor.PhysicsObject.Position;
 
             //offset the missile to the rocket launcher
-            missilePos.Y += missileOffset.Y;
+            missilePos.Y -= 2;
             /*if (AIQB.MoveDirection == PlayerDirection.Left || AIQB.MoveDirection == PlayerDirection.Right)
             {
                 if (toPlayer.X > 0)
@@ -482,6 +482,7 @@ namespace GameLib.Engine.AI
             AIMissile m = _myMissile.GetAgent<AIMissile>();
             m.ReInit(ref missilePos);
             m.ChangeDir(Vector3.Down * 3);
+            m.AimInDir();
             _myMissile.WakeUp();
 
             if(pFX)

@@ -509,3 +509,7 @@ TriggerVolume21ConstantSpawns=False
 TriggerVolume21EnemyList=True
 TriggerVolume21DieOnTrigger=False
 FirstScreen=HudScreen
+EnemyWeakPoolSize=4
+EnemyRangedPoolSize=3
+EnemyHeavyPoolSize=2
+SoundTheme=HORtheme

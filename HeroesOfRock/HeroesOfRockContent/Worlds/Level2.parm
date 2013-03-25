@@ -573,3 +573,6 @@ TriggerVolume21ConstantSpawns=False
 TriggerVolume21EnemyList=True
 TriggerVolume21DieOnTrigger=False
 FirstScreen=HudScreen
+EnemyWeakPoolSize=3
+EnemyRangedPoolSize=3
+SoundTheme=HORcityday

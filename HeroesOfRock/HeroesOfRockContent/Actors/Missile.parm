@@ -1,4 +1,4 @@
-ModelName=HORMissileStandIn
+ModelName=RangedEnemy/rocket
 Mass=2
 Agents=AIMissile
 PhysicsType=Box
@@ -6,3 +6,4 @@ Speed=10
 AttackDamage=1.0
 Lifetime = 5.0
 TimeBeforeAttack=.1
+Texture=RangedEnemy/RocketDiffuse

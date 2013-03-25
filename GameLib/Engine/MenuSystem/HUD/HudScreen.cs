@@ -24,6 +24,9 @@ namespace GameLib.Engine.MenuSystem {
         private Rectangle fullScreenRec;
         private Rectangle crowdRec;
         private Rectangle skullRec;
+        //private Rectangle skullRec2;
+        //private Rectangle skullRec3;
+        //private Rectangle skullRec4;
         private HealthKnob health;
 
         private Texture2D crowd;
@@ -90,13 +93,21 @@ namespace GameLib.Engine.MenuSystem {
                 String kills = String.Format("x{0}", rockMeter.KillStreak);
                 Vector2 size = font.MeasureString(kills);
                 if (rockMeter.KillStreak >= 50)
+                {
                     Stage.renderer.SpriteBatch.Draw(skull4, skullRec, Color.White);
+                }
                 else if (rockMeter.KillStreak >= 20)
+                {
                     Stage.renderer.SpriteBatch.Draw(skull3, skullRec, Color.White);
+                }
                 else if (rockMeter.KillStreak >= 5)
+                {   
                     Stage.renderer.SpriteBatch.Draw(skull2, skullRec, Color.White);
+                }
                 else
+                {
                     Stage.renderer.SpriteBatch.Draw(skull1, skullRec, Color.White);
+                }
 
                 Stage.renderer.SpriteBatch.DrawString(font, kills, new Vector2(skullRec.Left + skullRec.Width * .6f, skullRec.Center.Y - size.Y * .45f), Color.White);
 
