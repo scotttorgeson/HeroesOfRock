@@ -1,4 +1,4 @@
-﻿//#define JAKESCOMP
+﻿#define JAKESCOMP
 #define Lerping
 using System;
 using System.Collections.Generic;
