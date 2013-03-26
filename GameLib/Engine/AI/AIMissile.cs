@@ -14,6 +14,8 @@ namespace GameLib.Engine.AI
         private float lifeTime;
         private float attackDelay;
 
+        Random rand;
+
         public AIMissile(Actor actor) :
             base(actor)
         {
@@ -67,6 +69,8 @@ namespace GameLib.Engine.AI
             spawnedFromTrigger = true;
             actor.RegisterUpdateFunction(Update);
             timer = lifeTime;
+
+            rand = new Random();
         }
 
         //reinits the missile to spawn again
@@ -87,6 +91,28 @@ namespace GameLib.Engine.AI
 
             state = AIState.Moving;
             timer = lifeTime;
+
+
+            //play a random missile firing sound
+            const int NUM_MISSILE_SOUNDS = 4;
+            string soundName = null;
+
+            switch (rand.Next(NUM_MISSILE_SOUNDS))
+            {
+                case 0:
+                    soundName = "Missile1_16";
+                    break;
+                case 1:
+                    soundName = "Missile2_16";
+                    break;
+                case 2:
+                    soundName = "Missile3_16";
+                    break;
+                case 3:
+                    soundName = "Missile4_16";
+                    break;
+            }
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 1.0f, 0.0f, 0.0f);
         }
 
         public override void Update(float dt)
@@ -116,6 +142,7 @@ namespace GameLib.Engine.AI
             //explosion particle FX
             Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, place, true, -1, 30, 40, .75f, 1.0f,
                 Vector2.One * 1.5f, Vector2.One * 2.0f, Vector3.Zero, Vector3.Zero, Vector3.One * 5, "explosion");
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound("MissileExplosion_16", 1.0f, 0.0f, 0.0f);
             actor.PhysicsObject.LinearVelocity = Vector3.Zero;
             actor.Shown = false;
             sploded = true;

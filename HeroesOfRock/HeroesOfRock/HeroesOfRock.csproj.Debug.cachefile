@@ -356,6 +356,11 @@ Content\Audio\DemonSlayerLoud.xnb
 Content\Audio\RampageLoud.xnb
 Content\Audio\RockGodLoud.xnb
 Content\Audio\SlaughterhouseLoud.xnb
+Content\Audio\Missile1_16.xnb
+Content\Audio\Missile2_16.xnb
+Content\Audio\Missile3_16.xnb
+Content\Audio\Missile4_16.xnb
+Content\Audio\MissileExplosion_16.xnb
 Content\Models\Grid\Grid_0.xnb
 Content\FBX\722729C6\sLevel1.fbm\Ground_Texture_0.xnb
 Content\Models\Buildings\LargeApartmentBuildingDiffuse_0.xnb

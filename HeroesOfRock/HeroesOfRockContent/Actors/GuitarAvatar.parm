@@ -48,6 +48,17 @@ Sound19=Grunt2_16
 Sound20=Grunt3_16
 Sound21=GruntAOE_16
 Sound22=GruntMissile_16
+Sound23=Missile1_16
+Sound24=Missile2_16
+Sound25=Missile3_16
+Sound26=Missile4_16
+Sound27=MissileExplosion_16
+Sound28=BloodbathLoud
+Sound29=BloodOrgyLoud
+Sound30=DemonSlayerLoud
+Sound31=RampageLoud
+Sound32=RockGodLoud
+Sound33=SlaughterhouseLoud
 
 #AI soundFX eveutually move to the AI parm
-Sound23=bloodsplat_16
+Sound34=bloodsplat_16

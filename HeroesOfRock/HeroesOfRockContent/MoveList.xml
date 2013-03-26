@@ -78,7 +78,7 @@
       <FlowDuration>.3</FlowDuration>
       <FrontArea>4</FrontArea>
       <BackArea>4</BackArea>
-      <Force Type="Microsoft.Xna.Framework.Vector2">15 15</Force>
+      <Force Type="Microsoft.Xna.Framework.Vector2">3 15</Force>
       <ParticleEffect>test</ParticleEffect>
       <Movement>0</Movement>
       <Animation>SmashAttack</Animation>
