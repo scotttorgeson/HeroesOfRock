@@ -165,6 +165,7 @@ namespace GameLib.Engine.AI
         /// </summary>
         public virtual void Revive()
         {
+            timer = 0;
             shouldAttack = true;
             target = PlayerAgent.Player;
             state = AIState.Moving;

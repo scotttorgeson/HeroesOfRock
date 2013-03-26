@@ -176,6 +176,11 @@ namespace GameLib.Engine.AI
                         aliveEnemies.Remove(temp);
                         if (temp.Value.spawnedFromTrigger)
                         {
+                            if (temp.Value.state == AI.AIState.Attacking &&
+                                (temp.Value.type != EnemyType.Ranged || temp.Value.type != EnemyType.RangedPogo))
+                            {
+                                if (attackDelayTimer > .5f) attackDelayTimer = .5f;
+                            }
                             switch (curr.Value.type)
                             {
                                 case EnemyType.Heavy:
@@ -639,6 +644,10 @@ namespace GameLib.Engine.AI
                     aliveEnemies.AddLast(ai);
                     break;
                 case "EnemyHeavy":
+                    if (MoveDirection == PlayerDirection.Left || MoveDirection == PlayerDirection.Right)
+                        pos.X = basePos.X;
+                    else
+                        pos.Z = basePos.Z;
                     a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.LoadingStage);
                     ai = a.GetAgentByBaseType<AI>();
                     aliveEnemies.AddLast(ai);
@@ -749,6 +758,7 @@ namespace GameLib.Engine.AI
         private static float boundBoxThickness = 1.0f;
         public static void BoundPlayerOnScreen(Vector3 center)
         {
+            
             if (!isBound)
             {
                 BEPUphysics.Entities.Prefabs.Box box1, box2;

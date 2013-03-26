@@ -92,6 +92,9 @@ namespace GameLib.Engine.AttackSystem
         private List<RockTier> tiers;
         private int tierIndex;
 
+        private const int baseRate = 900;
+        private int lerpRate;
+
         private bool dontKillActor = false; // for the loading level
 
         public RockMeter(Actor actor) : base(actor)
@@ -141,7 +144,7 @@ namespace GameLib.Engine.AttackSystem
         {
 
             if (score != goalScore)
-                Lerp(goalScore, ref score, (int)Math.Ceiling(900 * dt));
+                Lerp(goalScore, ref score, (int)Math.Ceiling(lerpRate * dt));
 
             if (rockLevelLocked) //don't cooldown our timer if we are locked
                 return;
@@ -164,12 +167,24 @@ namespace GameLib.Engine.AttackSystem
         public int IncreaseScore(int amount)
         {
             goalScore += amount * rockLevel;
+            if (goalScore - score > baseRate * 5)
+            {
+                lerpRate = (goalScore - score) / 5;
+            }
+            else
+                lerpRate = baseRate;
             return amount * rockLevel;
         }
 
         public int IncreaseScoreDueToKill(int amount)
         {
             goalScore += amount * rockLevel;
+            if (goalScore - score > baseRate * 5)
+            {
+                lerpRate = (goalScore - score) / 5;
+            }
+            else
+                lerpRate = baseRate;
             killStreak++;
             if (killStreak > highestKillStreak)
                 highestKillStreak = killStreak;
@@ -210,6 +225,12 @@ namespace GameLib.Engine.AttackSystem
         public void IncreaseScoreNoMultiplier(int amount)
         {
             goalScore += amount;
+            if (goalScore - score > baseRate * 5)
+            {
+                lerpRate = (goalScore - score) / 5;
+            }
+            else
+                lerpRate = baseRate;
         }
 
         public void IncreaseRockLevel(float amount)

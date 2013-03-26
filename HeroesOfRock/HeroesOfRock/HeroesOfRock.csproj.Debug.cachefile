@@ -158,6 +158,7 @@ Content\Models\HORMissileStandIn.xnb
 Content\Models\RangedEnemy\rocket.xnb
 Content\Models\StandardEnemy\ShieldEnemyPanicIdle.xnb
 Content\Models\StandardEnemy\ShieldEnemyPanicRunCycle.xnb
+Content\Models\StandardEnemy\ShieldedEnemy_RunCycle_v02.xnb
 Content\Models\RotateRoll.xnb
 Content\Models\RotatePitch.xnb
 Content\Models\RotateYaw.xnb
@@ -372,7 +373,6 @@ Content\Models\Environment\StopLightDiffuse_0.xnb
 Content\Models\Environment\StreetlightDiffuse_0.xnb
 Content\Models\Environment\TrashCanDiffuse_0.xnb
 Content\Models\Environment\TVDiffuse_0.xnb
-Content\Models\StandardEnemy\ShieldedEnemy_RunCycle_v02.xnb
 Content\Audio\banknote-counterSTOPPING.wma
 Content\Audio\banknote-counter_COUNTING.wma
 Content\Audio\crickets.wma

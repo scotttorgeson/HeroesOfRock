@@ -25,6 +25,7 @@ namespace GameLib.Engine.AI
         private float percAnimForSplat;
         
         private bool peaked;
+        private bool hasFoundSupport;
 
         RangedEnemyAnimationAgent enemyAnimationAgent;
 
@@ -97,7 +98,6 @@ namespace GameLib.Engine.AI
         public override void Revive()
         {
             base.Revive();
-            timer = 0;
             GetNumJumps();
         }
 
@@ -179,26 +179,35 @@ namespace GameLib.Engine.AI
 
                         if (numJumps != 0) //if jumping
                         {
-                            //if we are on the ground and aren't waiting jump
-                            if (timer < 0 && actor.PhysicsObject.CylinderCharController.SupportFinder.HasSupport)
+                            if (hasFoundSupport)
                             {
-                                actor.PhysicsObject.CylinderCharController.Jump(jumpSpeed);
-                                RocketJump();
-                                peaked = false;
-                                state = AIState.Jumping;
-                            }
-                            else if (timer < timeForPogoSkip) //shoot our rocket so it looks like we bounce
-                            {
-                                timer -= dt;
-                                if (!hasAttacked)
+                                //if we are on the ground and aren't waiting jump
+                                if (timer < 0 && actor.PhysicsObject.CylinderCharController.SupportFinder.HasSupport)
                                 {
-                                    ShootDown(false);
+                                    actor.PhysicsObject.CylinderCharController.Jump(jumpSpeed);
+                                    RocketJump();
+                                    peaked = false;
+                                    state = AIState.Jumping;
+                                }
+                                else if (timer < timeForPogoSkip) //shoot our rocket so it looks like we bounce
+                                {
+                                    timer -= dt;
+                                    if (!hasAttacked)
+                                    {
+                                        ShootDown(false);
+                                    }
+                                }
+                                else
+                                {
+                                    timer -= dt;
+                                    enemyAnimationAgent.PlayAnimation(RangedEnemyAnimationAgent.AnimationTypes.StartPogo, pogoStartTime);
                                 }
                             }
                             else
                             {
-                                timer -= dt;
-                                enemyAnimationAgent.PlayAnimation(RangedEnemyAnimationAgent.AnimationTypes.StartPogo, pogoStartTime);
+                                if (actor.PhysicsObject.CylinderCharController.SupportFinder.HasSupport)
+                                    hasFoundSupport = true;
+                                enemyAnimationAgent.PlayAnimation(RangedEnemyAnimationAgent.AnimationTypes.Idle, -1.0f);
                             }
                         }
                         else
@@ -511,6 +520,7 @@ namespace GameLib.Engine.AI
         //randomize the number of jumps we will do
         private void GetNumJumps()
         {
+            hasFoundSupport = false;
             if (minRocketJumps >= 0 && maxRocketJumps >= 0)
                 numJumps = AIQB.rand.Next(maxRocketJumps - minRocketJumps + 1) + minRocketJumps;
             else numJumps = -1;

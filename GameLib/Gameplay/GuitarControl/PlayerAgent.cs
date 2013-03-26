@@ -267,11 +267,11 @@ namespace GameLib
             {
                 //get attack from input
                 if (B.IsNewAction)
-                    input.Red = true;
+                    input.Blue = true;
                 if (Y.IsNewAction)
                     input.Yellow = true;
                 if (X.IsNewAction)
-                    input.Blue = true;
+                    input.Red = true;
 
                 if (triggers.IsNewAction)
                 {

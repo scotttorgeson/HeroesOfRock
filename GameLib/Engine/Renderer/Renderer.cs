@@ -486,6 +486,11 @@ namespace GameLib
 
         Engine.Utilities.FastFrustum fastCameraBoundingFrustum;
 
+        public Engine.Utilities.FastFrustum FastCameraBoundFrustrum
+        {
+            get { return fastCameraBoundingFrustum; }
+        }
+
         public void EditorDrawNoStage()
         {
             SpriteBatch.Begin();
