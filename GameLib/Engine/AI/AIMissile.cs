@@ -179,7 +179,7 @@ namespace GameLib.Engine.AI
         public void HitObject(BEPUphysics.Collidables.MobileCollidables.EntityCollidable sender, BEPUphysics.Collidables.Collidable other, 
             BEPUphysics.NarrowPhaseSystems.Pairs.CollidablePairHandler pair, BEPUphysics.CollisionTests.ContactData contact)
         {
-            if (!sploded)
+            if (!sploded && !actor.IsShutdown && !actor.MarkedForDeath)
             {
                 Vector3 mypos = actor.PhysicsObject.Position;
                 StartAttack(ref mypos);
