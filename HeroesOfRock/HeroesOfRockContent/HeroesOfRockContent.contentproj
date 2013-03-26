@@ -316,6 +316,10 @@
       <Name>Explosion1</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
+    <Compile Include="Actors\EnemyWeakShieldedScared.parm">
+      <Name>EnemyWeakShieldedScared</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
     <None Include="Actors\Level1Path.parm">
       <Name>Level1Path</Name>
       <Importer>ParameterSetImporter</Importer>
@@ -925,6 +929,29 @@
     </Compile>
     <Compile Include="Models\RangedEnemy\rocket.fbx">
       <Name>rocket</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>0.2</ProcessorParameters_Scale>
+    </Compile>
+    <Compile Include="Models\StandardEnemy\ShieldEnemyDiffuse.tga">
+      <Name>ShieldEnemyDiffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\StandardEnemy\ShieldEnemyPanicIdle.fbx">
+      <Name>ShieldEnemyPanicIdle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>0.3</ProcessorParameters_Scale>
+    </Compile>
+    <Compile Include="Models\StandardEnemy\ShieldEnemyPanicRunCycle.fbx">
+      <Name>ShieldEnemyPanicRunCycle</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>0.3</ProcessorParameters_Scale>
+    </Compile>
+    <Compile Include="Models\StandardEnemy\ShieldedEnemy_RunCycle_v02.fbx">
+      <Name>ShieldedEnemy_RunCycle_v02</Name>
       <Importer>FbxImporter</Importer>
       <Processor>AnimationProcessor</Processor>
       <ProcessorParameters_Scale>0.3</ProcessorParameters_Scale>

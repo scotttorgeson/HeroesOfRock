@@ -24,6 +24,14 @@ namespace GameLib.Engine.AI
         bool reachedRunawayPos;
         float wallOffset;
 
+        //model swap stuff
+        RModelInstance weakModel;
+        RModelInstance shieldModel;
+        RModelInstance scaredModel;
+        AnimationPlayer[] weakAnims;
+        AnimationPlayer[] shieldAnims;
+        AnimationPlayer[] scaredAnims;
+
         public override void Initialize(Stage stage)
         {
             base.Initialize(stage);
@@ -41,26 +49,97 @@ namespace GameLib.Engine.AI
                 actor.PhysicsObject.CollisionInformation.CollisionRules.Group = PhysicsQB.normalAIGroup;
             }
 
+            //if(actor.Name == "
+            type = EnemyType.Weak;
+
             shouldAttack = true;
             disarmed = false;
             target = PlayerAgent.Player;
             state = AIState.Moving;
-            type = EnemyType.Weak;
+            
             actor.RegisterUpdateFunction(Update);
             actor.RegisterDeathFunction(DieFX);
             actor.RegisterDisarmFunction(Disarmed);
 
             enemyAnimationAgent = actor.GetAgent<WeakEnemyAnimationAgent>();
+
+            //model stuff
+            if (type == EnemyType.Weak)
+            {
+                weakModel = actor.modelInstance;
+                weakAnims = enemyAnimationAgent.Animations;
+
+                AIQB aiQB = Stage.ActiveStage.GetQB<AIQB>();
+                ParameterSet p = aiQB.ShieldParm;
+
+                //shield enemy
+                shieldModel = RModelInstance.GetRModelInstance(p);
+                shieldModel.LoadContent(Stage.Content, p, Stage.ActiveStage);
+                shieldModel.SetPhysicsObject(this.actor.PhysicsObject);
+                shieldModel.FinishLoad();
+                shieldModel.Shown = false;
+                shieldAnims = WeakEnemyAnimationAgent.CreateAnimationList(stage, ref p, ref shieldModel);
+
+                //scared enemy
+                p = aiQB.ScaredShieldedParm;
+                scaredModel = RModelInstance.GetRModelInstance(p);
+                scaredModel.LoadContent(Stage.Content, p, Stage.ActiveStage);
+                scaredModel.SetPhysicsObject(this.actor.PhysicsObject);
+                scaredModel.FinishLoad();
+                scaredModel.Shown = false;
+
+                scaredAnims = WeakEnemyAnimationAgent.CreateAnimationList(stage, ref p, ref scaredModel);
+
+            }
+            else
+            {
+                shieldModel = actor.modelInstance;
+                shieldAnims = enemyAnimationAgent.Animations;
+
+                AIQB aiQB = Stage.ActiveStage.GetQB<AIQB>();
+                ParameterSet p = aiQB.WeakParm;
+                
+                //weak enemy
+                weakModel= RModelInstance.GetRModelInstance(p);
+                weakModel.LoadContent(Stage.Content, p, Stage.ActiveStage);
+                weakModel.SetPhysicsObject(this.actor.PhysicsObject);
+                weakModel.FinishLoad();
+                weakModel.Shown = false;
+                weakAnims = WeakEnemyAnimationAgent.CreateAnimationList(stage, ref p, ref weakModel);
+
+                //scared enemy
+                p = aiQB.ScaredShieldedParm;
+                scaredModel = RModelInstance.GetRModelInstance(p);
+                scaredModel.LoadContent(Stage.Content, p, Stage.ActiveStage);
+                scaredModel.SetPhysicsObject(this.actor.PhysicsObject);
+                scaredModel.FinishLoad();
+                scaredModel.Shown = false;
+
+                scaredAnims = WeakEnemyAnimationAgent.CreateAnimationList(stage, ref p, ref scaredModel);
+            }
+
             FaceTargetSnappedToPlane();
         }
 
         public override void ConvertTo(EnemyType e, ref ParameterSet parm) 
         {
-            if ((e != EnemyType.Weak && e != EnemyType.WeakShielded) || e == type)
+            //we can't return if we are a weak shielded cause we have to do models swaps and such.
+            if ((e != EnemyType.Weak && e != EnemyType.WeakShielded) || e == type && type == EnemyType.Weak)
                 return;
 
-            //actor.model = new RModel(parm);
-            //actor.model.LoadContent(Stage.Content, parm, Stage.ActiveStage);
+            actor.modelInstance.Shown = false;
+            if (e == EnemyType.Weak)
+            {
+                actor.modelInstance = weakModel;
+                enemyAnimationAgent.Animations = weakAnims;
+            }
+            else
+            {
+                actor.modelInstance = shieldModel;
+                enemyAnimationAgent.Animations = shieldAnims;
+            }
+            actor.modelInstance.Shown = true;
+
             bloodOnDamage = true;
             if (parm.HasParm("Speed"))
                 speed = parm.GetFloat("Speed");
@@ -137,76 +216,58 @@ namespace GameLib.Engine.AI
 
                         if (!shouldAttack && disarmed)
                         {
-                            if (reachedRunawayPos)
-                            {
-                                if (!onScreen)
-                                {
-                                    runAwayDir = -runAwayDir;
-                                    runAwayPos = AIQB.PosOnSideOfScreen(actor.PhysicsObject.Position, runAwayDir, 4.0f);
-                                    reachedRunawayPos = false;
 
-                                    Vector2 move = new Vector2(runAwayPos.X - actor.PhysicsObject.Position.X, runAwayPos.Z - actor.PhysicsObject.Position.Z);
-                                    move.Normalize();
-                                    actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = move;
-                                    FacePosSnappedToPlane(ref runAwayPos);
-                                }
-
-                                enemyAnimationAgent.PlayAnimation(WeakEnemyAnimationAgent.AnimationTypes.Idle, -1.0f);
-                            }
-                            else
+                            switch (AIQB.MoveDirection)
                             {
-                                switch (AIQB.MoveDirection)
-                                {
-                                    case PlayerDirection.Left:
-                                    case PlayerDirection.Right:
-                                        if (runAwayDir > 0)
+                                case PlayerDirection.Left:
+                                case PlayerDirection.Right:
+                                    if (runAwayDir > 0)
+                                    {
+                                        if (actor.PhysicsObject.Position.X >= runAwayPos.X)
                                         {
-                                            if (actor.PhysicsObject.Position.X >= runAwayPos.X)
-                                            {
-                                                reachedRunawayPos = true;
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
-                                            }
-                                            else
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.UnitX;
+                                            state = AIState.Idle;
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
                                         }
                                         else
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.UnitX;
+                                    }
+                                    else
+                                    {
+                                        if (actor.PhysicsObject.Position.X <= runAwayPos.X)
                                         {
-                                            if (actor.PhysicsObject.Position.X <= runAwayPos.X)
-                                            {
-                                                reachedRunawayPos = true;
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
-                                            }
-                                            else
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = -Vector2.UnitX;
-                                        }
-                                        break;
-                                    case PlayerDirection.Backward:
-                                    case PlayerDirection.Forward:
-                                        if (runAwayDir > 0)
-                                        {
-                                            if (actor.PhysicsObject.Position.Z >= runAwayPos.Z)
-                                            {
-                                                reachedRunawayPos = true;
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
-                                            }
-                                            else
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.UnitY;
+                                            state = AIState.Idle;
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
                                         }
                                         else
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = -Vector2.UnitX;
+                                    }
+                                    break;
+                                case PlayerDirection.Backward:
+                                case PlayerDirection.Forward:
+                                    if (runAwayDir > 0)
+                                    {
+                                        if (actor.PhysicsObject.Position.Z >= runAwayPos.Z)
                                         {
-                                            if (actor.PhysicsObject.Position.Z <= runAwayPos.Z)
-                                            {
-                                                reachedRunawayPos = true;
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
-                                            }
-                                            else
-                                                actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = -Vector2.UnitY;
+                                            state = AIState.Idle;
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
                                         }
-                                        break;
-                                }
-
-                                enemyAnimationAgent.PlayAnimation(WeakEnemyAnimationAgent.AnimationTypes.RunScared, -1.0f);
+                                        else
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.UnitY;
+                                    }
+                                    else
+                                    {
+                                        if (actor.PhysicsObject.Position.Z <= runAwayPos.Z)
+                                        {
+                                            state = AIState.Idle;
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
+                                        }
+                                        else
+                                            actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = -Vector2.UnitY;
+                                    }
+                                    break;
                             }
+
+                            enemyAnimationAgent.PlayAnimation(WeakEnemyAnimationAgent.AnimationTypes.Walk, -1.0f);
                         }
                         else
                         {
@@ -214,7 +275,10 @@ namespace GameLib.Engine.AI
                             {
                                 if (shouldAttack)
                                 {
-                                    state = AIState.WaitingToAttack;
+                                    if (type == EnemyType.Weak)
+                                        state = AIState.WaitingToAttack;
+                                    else
+                                        state = AIState.Idle;
                                 }
                                 else
                                 {
@@ -224,7 +288,7 @@ namespace GameLib.Engine.AI
                             else
                                 MoveTowards(ref targetPos);
 
-                                enemyAnimationAgent.PlayAnimation(WeakEnemyAnimationAgent.AnimationTypes.Walk, -1.0f);
+                            enemyAnimationAgent.PlayAnimation(WeakEnemyAnimationAgent.AnimationTypes.Walk, -1.0f);
                         }
 
                         break;
@@ -260,6 +324,39 @@ namespace GameLib.Engine.AI
                         enemyAnimationAgent.PauseAnimation();
                         //enemyAnimationAgent.PlayAnimation(WeakEnemyAnimationAgent.AnimationTypes.TakeDamage, animationTime);
 
+                        break;
+                    case AIState.Idle:
+                        this.actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
+                        
+                        if (type == EnemyType.WeakShielded)
+                        {
+                            if (disarmed)
+                            {
+                                Vector3 ePos = this.actor.PhysicsObject.Position;
+                                bool isOnScreen = AIQB.OnScreen(ref targetPos, ref ePos);
+
+                                if (!isOnScreen)
+                                {
+                                    runAwayDir = -runAwayDir;
+                                    runAwayPos = AIQB.PosOnSideOfScreen(actor.PhysicsObject.Position, runAwayDir, 4.0f);
+                                    reachedRunawayPos = false;
+
+                                    Vector2 move = new Vector2(runAwayPos.X - actor.PhysicsObject.Position.X, runAwayPos.Z - actor.PhysicsObject.Position.Z);
+                                    move.Normalize();
+                                    actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = move;
+                                    FacePosSnappedToPlane(ref runAwayPos);
+                                    state = AIState.Moving;
+                                }
+                            }
+                            else
+                            {
+                                float dist = AIQB.DistanceSquared(actor.PhysicsObject.Position, targetPos);
+
+                                if (dist > attackRange || !IsFacing(ref targetPos))
+                                    state = AIState.Moving;
+                            }
+                        }
+                        enemyAnimationAgent.PlayAnimation(WeakEnemyAnimationAgent.AnimationTypes.Idle, -1.0f);
                         break;
                 }
             }
@@ -356,6 +453,11 @@ namespace GameLib.Engine.AI
                 move.Normalize();
                 actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = move;
                 FacePosSnappedToPlane(ref runAwayPos);
+
+                actor.modelInstance.Shown = false;
+                actor.modelInstance = scaredModel;
+                enemyAnimationAgent.Animations = scaredAnims;
+                actor.modelInstance.Shown = true;
             }
         }
    } 

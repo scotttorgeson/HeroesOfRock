@@ -57,7 +57,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             killStreak = 0;
             skullToDraw = 0;
             bonusPoints = 0;
-            lerpRate = 5000;
+            lerpRate = 50000;
             skullCounters = new Texture2D[4];
         }
 

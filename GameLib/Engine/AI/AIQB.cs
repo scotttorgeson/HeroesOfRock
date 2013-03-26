@@ -27,12 +27,13 @@ namespace GameLib.Engine.AI
         private int enemyAttackIndex;
         public static Random rand;
 
-        private ParameterSet WeakParm;
-        private ParameterSet ShieldParm;
-        private ParameterSet PogoParm;
-        private ParameterSet RangedParm;
-        private ParameterSet HeavyParm;
-        private ParameterSet AOEParm;
+        public ParameterSet WeakParm;
+        public ParameterSet ShieldParm;
+        public ParameterSet PogoParm;
+        public ParameterSet RangedParm;
+        public ParameterSet HeavyParm;
+        public ParameterSet AOEParm;
+        public ParameterSet ScaredShieldedParm;
 
         public override string Name()
         {
@@ -60,6 +61,7 @@ namespace GameLib.Engine.AI
             RangedParm = Stage.Content.Load<ParameterSet>("Actors/EnemyRanged");
             HeavyParm = Stage.Content.Load<ParameterSet>("Actors/EnemyHeavy");
             AOEParm = Stage.Content.Load<ParameterSet>("Actors/EnemyHeavyAOE");
+            ScaredShieldedParm = Stage.Content.Load<ParameterSet>("Actors/EnemyWeakShieldedScared");
         }
 
         private void InitEnemyPools(ref ParameterSet Parm)

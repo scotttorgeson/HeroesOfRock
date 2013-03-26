@@ -38,6 +38,7 @@ Content\Actors\ShoppingCart.xnb
 Content\Actors\StreetLight.xnb
 Content\Actors\PowerLinePole.xnb
 Content\Actors\Explosion1.xnb
+Content\Actors\EnemyWeakShieldedScared.xnb
 Content\GameVariables.xnb
 Content\Worlds\AlphaLevel.xnb
 Content\Worlds\LoadingLevel.xnb
@@ -155,6 +156,8 @@ Content\Models\Environment\TV.xnb
 Content\Models\Explosion\explosion.xnb
 Content\Models\HORMissileStandIn.xnb
 Content\Models\RangedEnemy\rocket.xnb
+Content\Models\StandardEnemy\ShieldEnemyPanicIdle.xnb
+Content\Models\StandardEnemy\ShieldEnemyPanicRunCycle.xnb
 Content\Models\RotateRoll.xnb
 Content\Models\RotatePitch.xnb
 Content\Models\RotateYaw.xnb
@@ -198,6 +201,7 @@ Content\Models\Environment\StreetlightDiffuse.xnb
 Content\Models\Environment\TrashCanDiffuse.xnb
 Content\Models\Environment\TVDiffuse.xnb
 Content\Models\Environment\TVSpecular.xnb
+Content\Models\StandardEnemy\ShieldEnemyDiffuse.xnb
 Content\UI\bepu_physics_logo_big.xnb
 Content\UI\Menu\blank.xnb
 Content\UI\Menu\background.xnb
@@ -353,16 +357,17 @@ Content\Audio\RampageLoud.xnb
 Content\Audio\RockGodLoud.xnb
 Content\Audio\SlaughterhouseLoud.xnb
 Content\Models\Grid\Grid_0.xnb
-Content\FBX\CB98281D\sLevel1.fbm\Ground_Texture_0.xnb
+Content\FBX\722729C6\sLevel1.fbm\Ground_Texture_0.xnb
 Content\Models\Buildings\LargeApartmentBuildingDiffuse_0.xnb
 Content\Models\Buildings\SmallStoreDiffuse_0.xnb
-Content\FBX\79152C76\cardboardbox.fbm\boxdiffuse_0.xnb
+Content\FBX\303E2E1F\cardboardbox.fbm\boxdiffuse_0.xnb
 Content\Models\Environment\powerLineDiffuse_0.xnb
 Content\Models\Environment\ShoppingCartDiffuse_0.xnb
 Content\Models\Environment\StopLightDiffuse_0.xnb
 Content\Models\Environment\StreetlightDiffuse_0.xnb
 Content\Models\Environment\TrashCanDiffuse_0.xnb
 Content\Models\Environment\TVDiffuse_0.xnb
+Content\Models\StandardEnemy\ShieldedEnemy_RunCycle_v02.xnb
 Content\Audio\banknote-counterSTOPPING.wma
 Content\Audio\banknote-counter_COUNTING.wma
 Content\Audio\crickets.wma

@@ -16,9 +16,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
             //LevelMenuEntry FOUR = new LevelMenuEntry("Level4", "Level 4", "LevelBlank");
 
             //LevelMenuEntry TUTORIAL = new LevelMenuEntry("Tutorial", "Tutorial", "LevelAlpha", false);
-            LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 1", "LevelAlpha", false);
-            LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 2", "LevelAlpha", false);
-            LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 3", "LevelAlpha", false);
+            LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 2", "LevelAlpha", false);
+            LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 3", "LevelAlpha", false);
+            LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 4", "LevelAlpha", false);
 
             //TODO CHANGE ME this will need to be driven from the user profile
             //TUTORIAL.IsLocked = false;

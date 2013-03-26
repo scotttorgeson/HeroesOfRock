@@ -20,7 +20,6 @@ namespace GameLib
             Idle,
             Walk,
             Attack,
-            RunScared,
             Die,
             Block,
             TakeDamage,
@@ -29,6 +28,12 @@ namespace GameLib
         }
 
         private AnimationPlayer[] animations;
+
+        public AnimationPlayer[] Animations
+        {
+            get { return animations; }
+            set { animations = value; }
+        }
 
         public override void Initialize(Stage stage)
         {
@@ -46,8 +51,25 @@ namespace GameLib
                 animations[(int)AnimationTypes.Block] = new AnimationPlayer(AnimationClip.LoadClip(actor.Parm.GetString("BlockAnimation")), modelInstance);
             if (actor.Parm.HasParm("TakeDamageAnimation"))
                 animations[(int)AnimationTypes.TakeDamage] = new AnimationPlayer(AnimationClip.LoadClip(actor.Parm.GetString("TakeDamageAnimation")), modelInstance);
-            if (actor.Parm.HasParm("RunScaredAnimation"))
-                animations[(int)AnimationTypes.RunScared] = new AnimationPlayer(AnimationClip.LoadClip(actor.Parm.GetString("RunScaredAnimation")), modelInstance);
+        }
+
+        public static AnimationPlayer[] CreateAnimationList(Stage stage, ref ParameterSet parm, ref RModelInstance m)
+        {
+            SkinnedRModelInstance modelInstance = m as SkinnedRModelInstance;
+            AnimationPlayer[] anims = new AnimationPlayer[(int)AnimationTypes.COUNT];
+            if (parm.HasParm("AttackAnimation"))
+                anims[(int)AnimationTypes.Attack] = new AnimationPlayer(AnimationClip.LoadClip(parm.GetString("AttackAnimation")), modelInstance);
+            if (parm.HasParm("IdleAnimation"))
+                anims[(int)AnimationTypes.Idle] = new AnimationPlayer(AnimationClip.LoadClip(parm.GetString("IdleAnimation")), modelInstance);
+            if (parm.HasParm("DeathAnimation"))
+                anims[(int)AnimationTypes.Die] = new AnimationPlayer(AnimationClip.LoadClip(parm.GetString("DeathAnimation")), modelInstance);
+            if (parm.HasParm("WalkAnimation"))
+                anims[(int)AnimationTypes.Walk] = new AnimationPlayer(AnimationClip.LoadClip(parm.GetString("WalkAnimation")), modelInstance);
+            if (parm.HasParm("BlockAnimation"))
+                anims[(int)AnimationTypes.Block] = new AnimationPlayer(AnimationClip.LoadClip(parm.GetString("BlockAnimation")), modelInstance);
+            if (parm.HasParm("TakeDamageAnimation"))
+                anims[(int)AnimationTypes.TakeDamage] = new AnimationPlayer(AnimationClip.LoadClip(parm.GetString("TakeDamageAnimation")), modelInstance);
+            return anims;
         }
 
         float speed = 1.0f;
