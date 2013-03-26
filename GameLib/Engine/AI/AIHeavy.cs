@@ -334,7 +334,7 @@ namespace GameLib.Engine.AI
                     //no moving in the Y dimension yet
                     break;
                 case PlayerDirection.Forward:
-                    goto case PlayerDirection.Down;
+                    goto case PlayerDirection.Backward;
                 case PlayerDirection.Backward:
                     totalMovement.Y = (move.Z < 0) ? -1 : 1;
                     //position.X = track;
