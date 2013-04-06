@@ -12,6 +12,12 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameLib
 {
+    public struct ModelInfo
+    {
+        public string modelName;
+        public string textureName;
+    }
+
     public class RModel
     {
         protected Model model;
@@ -38,7 +44,7 @@ namespace GameLib
         public FastList<RModelInstance> DrawList = new FastList<RModelInstance>();
         public FastList<RModelInstance>[] ShadowDrawLists;
 
-        private static Dictionary<string, RModel> modelDictionary = new Dictionary<string, RModel>();
+        private static Dictionary<ModelInfo, RModel> modelDictionary = new Dictionary<ModelInfo, RModel>();
         public static void UnloadContent()
         {
             modelDictionary.Clear();
@@ -46,9 +52,13 @@ namespace GameLib
 
         public static RModel GetRModel(ParameterSet parm)
         {
-            string modelName = parm.GetString("ModelName");
-            if (modelDictionary.ContainsKey(modelName))
-                return modelDictionary[modelName];
+            ModelInfo m;
+            m.modelName = parm.GetString("ModelName");
+            m.textureName = "";
+            if (parm.HasParm("Texture"))
+                m.textureName = parm.GetString("Texture");
+            if (modelDictionary.ContainsKey(m))
+                return modelDictionary[m];
             else
                 return CreateRModel(parm);
         }
@@ -80,8 +90,9 @@ namespace GameLib
 
         public RModel(ParameterSet parm)
         {
-            string modelName = parm.GetString("ModelName");
-            Name = modelName;
+            ModelInfo m;
+            m.modelName = parm.GetString("ModelName");
+            Name = m.modelName;
 
             ShadowDrawLists = new FastList<RModelInstance>[Sun.NUM_CASCADES];
             for (int i = 0; i < ShadowDrawLists.Length; i++)
@@ -102,7 +113,11 @@ namespace GameLib
             if (parm.HasParm("AlphaBlend"))
                 AlphaBlend = parm.GetBool("AlphaBlend");
 
-            modelDictionary.Add(Name, this);
+            m.textureName = "";
+            if (parm.HasParm("Texture"))
+                m.textureName = parm.GetString("Texture");
+
+            modelDictionary.Add(m, this);
             Renderer.Instance.AddRModel(this);
         }
 

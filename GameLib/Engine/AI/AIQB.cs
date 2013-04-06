@@ -761,6 +761,12 @@ namespace GameLib.Engine.AI
             
             if (!isBound)
             {
+                /*Matrix proj = Stage.ActiveStage.GetQB<CameraQB>().ActiveCamera.ProjectionMatrix;
+                Matrix view = Stage.ActiveStage.GetQB<CameraQB>().ActiveCamera.ViewMatrix;
+                Vector3 leftCoord = Stage.renderer.GraphicsDevice.Viewport.Unproject(new Vector3(0,0,0), proj, view, CameraQB.WorldMatrix);
+                Vector3 rightCoord = Stage.renderer.GraphicsDevice.Viewport.Unproject(new Vector3(Stage.renderer.GraphicsDevice.Viewport.Width, 0, 0), 
+                    proj, view, CameraQB.WorldMatrix);*/
+                
                 BEPUphysics.Entities.Prefabs.Box box1, box2;
                 if (MoveDirection == PlayerDirection.Right || MoveDirection == PlayerDirection.Left)
                 {

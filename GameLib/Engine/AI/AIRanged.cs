@@ -373,8 +373,8 @@ namespace GameLib.Engine.AI
                     _myMissile.GetAgent<AIMissile>().ReInit(ref pos);
                     _myMissile.WakeUp();
                 }
-                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Zero, false, -1, 10,
-                                                15, .5f, .75f, Vector2.One * .9f, Vector2.One, Vector3.Zero, 
+                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Zero, false, -1, 10, 
+                                                15, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero, 
                                                 Vector3.Zero, Vector3.Zero, "smoke");
 
                 animationTime = 1.0f;
@@ -496,7 +496,7 @@ namespace GameLib.Engine.AI
 
             if(pFX)
                 Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Zero, false, -1, 10,
-                                            15, .5f, .75f, Vector2.One * .9f, Vector2.One, Vector3.Zero,
+                                            15, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero,
                                             Vector3.Zero, Vector3.Zero, "smoke");
             hasAttacked = true;
         }
@@ -511,7 +511,7 @@ namespace GameLib.Engine.AI
             }
 
             Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, actor.PhysicsObject.Position, true, -1, 20, 40, .25f, .5f,
-                                                            Vector2.One, Vector2.One * 2.0f, Vector3.Zero, Vector3.Zero, 
+                                                            0, 0, Vector2.One, Vector2.One * 2.0f, Vector3.Zero, Vector3.Zero, 
                                                             2*Vector3.One, "blood2");
             //play death sound
             Stage.ActiveStage.GetQB<AudioQB>().PlaySound("bloodsplat_16", 0.3f, 0.0f, 0.0f);

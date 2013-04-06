@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define INPUTREQUIRED
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,27 +12,30 @@ namespace GameLib
 {
     public class TutorialStopTriggerVolume : TriggerVolume
     {
-        InputAction[] unpauseInput;
+#if INPUTREQUIRED
+        InputAction[][] unpauseInput;
+        bool[] allInputsRequired;
+#else
+        InputAction Green;
+#endif
         InputAction strum;
-        bool strumRequired;
-        bool allInputsRequired;
-        bool killEnemies;
-        bool spawnEnemy;
-        bool delayNextTrigger;
-        float triggerDelay;
+        InputAction back;
+        bool[] killEnemies;
+        bool[] spawnEnemy;
+        float[] triggerDelay;
         bool finished;
-        bool performUpdate;
         bool returnToMenu;
+        ControlsQB cQB;
 
         //variables specifying the current progress
         bool triggered;
 
-        public int index { get; private set; }
-        public bool active;
+        int tutIndex;
+        int numTuts;
+        float timer;
 
-        public Microsoft.Xna.Framework.Graphics.Texture2D tutImg { get; private set; }
-        public Rectangle imgDim { get; private set; }
-        public bool moveHereSign { get; private set; }
+        public Microsoft.Xna.Framework.Graphics.Texture2D[] tutImg { get; private set; }
+        public Rectangle[] imgDim { get; private set; }
 
 
         /// <summary>
@@ -40,48 +45,58 @@ namespace GameLib
         /// <returns></returns>
         new public static void ParseParmSet(ref ParameterSet actorParm, ref ParameterSet worldParm)
         {
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerInput"), "TutorialStopTriggerVolume requires a ControllerInput!");
-            actorParm.AddParm("ControllerInput", worldParm.GetString("ControllerInput"));
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarInput"), "TutorialStopTriggerVolume requires a GuitarInput!");
-            actorParm.AddParm("GuitarInput", worldParm.GetString("GuitarInput"));
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("Index"), "TutorialStopTriggerVolume requires an index!");
-            actorParm.AddParm("Index", worldParm.GetInt("Index"));
+            //check for the bare minimum required parms
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerInput0"), "TutorialStopTriggerVolume requires a ControllerInput0!");
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarInput0"), "TutorialStopTriggerVolume requires a GuitarInput0!");
 
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerImage"), "TutorialStopTriggerVolume requires a ControllerImage!");
-            actorParm.AddParm("ControllerImage", worldParm.GetString("ControllerImage"));
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarImage"), "TutorialStopTriggerVolume requires a GuitarImage!");
-            actorParm.AddParm("GuitarImage", worldParm.GetString("GuitarImage"));
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerImage0"), "TutorialStopTriggerVolume requires a ControllerImage0!");
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarImage0"), "TutorialStopTriggerVolume requires a GuitarImage0!");
 
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerImagePos"), "TutorialStopTriggerVolume requires a ControllerImagePos!");
-            actorParm.AddParm("ControllerImagePos", worldParm.GetString("ControllerImagePos"));
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerImageSize"), "TutorialStopTriggerVolume requires a ControllerImageSize!");
-            actorParm.AddParm("ControllerImageSize", worldParm.GetString("ControllerImageSize"));
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarImagePos"), "TutorialStopTriggerVolume requires a GuitarImagePos!");
-            actorParm.AddParm("GuitarImagePos", worldParm.GetString("GuitarImagePos"));
-            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarImageSize"), "TutorialStopTriggerVolume requires a GuitarImageSize!");
-            actorParm.AddParm("GuitarImageSize", worldParm.GetString("GuitarImageSize"));
-            
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerImagePos0"), "TutorialStopTriggerVolume requires a ControllerImagePos0!");
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("ControllerImageSize0"), "TutorialStopTriggerVolume requires a ControllerImageSize0!");
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarImagePos0"), "TutorialStopTriggerVolume requires a GuitarImagePos0!");
+            System.Diagnostics.Debug.Assert(worldParm.HasParm("GuitarImageSize0"), "TutorialStopTriggerVolume requires a GuitarImageSize0!");
 
-            if (worldParm.HasParm("StrumRequired"))
-                actorParm.AddParm("StrumRequired",worldParm.GetBool("StrumRequired"));
+            int count = 0;
 
-            if (worldParm.HasParm("AllInputsRequired"))
-                actorParm.AddParm("AllInputsRequired", worldParm.GetBool("AllInputsRequired"));
+            while (worldParm.HasParm("ControllerInput"+count))
+            {
+                actorParm.AddParm("ControllerInput"+count, worldParm.GetString("ControllerInput"+count));
 
-            if(worldParm.HasParm("MoveHereSign"))
-                actorParm.AddParm("MoveHereSign", worldParm.GetBool("MoveHereSign"));
+                actorParm.AddParm("GuitarInput"+count, worldParm.GetString("GuitarInput"+count));
 
-            if(worldParm.HasParm("SpawnEnemy"))
-                actorParm.AddParm("SpawnEnemy", worldParm.GetBool("SpawnEnemy"));
+                actorParm.AddParm("ControllerImage"+count, worldParm.GetString("ControllerImage"+count));
 
-            if(worldParm.HasParm("KillEnemies"))
-                actorParm.AddParm("KillEnemies", worldParm.GetBool("KillEnemies"));
-            if (worldParm.HasParm("TriggerDelay"))
-                actorParm.AddParm("TriggerDelay", worldParm.GetFloat("TriggerDelay"));
-            if (worldParm.HasParm("PerformUpdate"))
-                actorParm.AddParm("PerformUpdate", worldParm.GetBool("PerformUpdate"));
+                actorParm.AddParm("GuitarImage"+count, worldParm.GetString("GuitarImage"+count));
+
+                actorParm.AddParm("ControllerImagePos"+count, worldParm.GetString("ControllerImagePos"+count));
+                actorParm.AddParm("ControllerImageSize"+count, worldParm.GetString("ControllerImageSize"+count));
+                actorParm.AddParm("GuitarImagePos"+count, worldParm.GetString("GuitarImagePos"+count));
+                actorParm.AddParm("GuitarImageSize"+count, worldParm.GetString("GuitarImageSize"+count));
+
+                //optional parms
+                if (worldParm.HasParm("StrumRequired"+count))
+                    actorParm.AddParm("StrumRequired"+count, worldParm.GetBool("StrumRequired"+count));
+
+                if (worldParm.HasParm("AllInputsRequired"+count))
+                    actorParm.AddParm("AllInputsRequired"+count, worldParm.GetBool("AllInputsRequired"+count));
+
+                if (worldParm.HasParm("SpawnEnemy"+count))
+                    actorParm.AddParm("SpawnEnemy"+count, worldParm.GetBool("SpawnEnemy"+count));
+
+                if (worldParm.HasParm("KillEnemies"+count))
+                    actorParm.AddParm("KillEnemies"+count, worldParm.GetBool("KillEnemies"+count));
+                if (worldParm.HasParm("TriggerDelay"+count))
+                    actorParm.AddParm("TriggerDelay"+count, worldParm.GetFloat("TriggerDelay"+count));
+
+                count++;
+            }
+
+
             if (worldParm.HasParm("EndLevel"))
                 actorParm.AddParm("EndLevel", worldParm.GetBool("EndLevel"));
+
+            actorParm.AddParm("Num", count);
         }
 
         public TutorialStopTriggerVolume(Actor actor)
@@ -92,102 +107,113 @@ namespace GameLib
 
         public override void Initialize(Stage stage)
         {
-            strumRequired = allInputsRequired = spawnEnemy = killEnemies = false;
-            index = actor.Parm.GetInt("Index");
-            if (index == 0)
-                active = true;
+            numTuts = actor.Parm.GetInt("Num");
+
+#if INPUTREQUIRED
+            unpauseInput = new InputAction[numTuts][];
+            allInputsRequired = new bool[numTuts];
+#endif
+
+            killEnemies = new bool[numTuts];
+            spawnEnemy = new bool[numTuts];
+            triggerDelay = new float[numTuts];
+            tutImg = new Microsoft.Xna.Framework.Graphics.Texture2D[numTuts];
+            imgDim = new Rectangle[numTuts];
 
             //get the control scheme
-            Microsoft.Xna.Framework.Input.GamePadType gamePadType = Stage.ActiveStage.GetQB<ControlsQB>().GetGamePadType();
+            cQB = stage.GetQB<ControlsQB>();
+
+#if !INPUTREQUIRED
+            Green = cQB.GetInputAction("A");
+            strum = cQB.GetInputAction("Strum");
+#endif
+
+            Microsoft.Xna.Framework.Input.GamePadType gp = cQB.GetGamePadType();
 
             Vector2 pos, size;
-            switch (gamePadType)
+            switch (gp)
             {
                 case Microsoft.Xna.Framework.Input.GamePadType.Guitar:
                 case Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar:
-                    tutImg = Stage.Content.Load<Microsoft.Xna.Framework.Graphics.Texture2D>("UI/Tutorial/" + actor.Parm.GetString("GuitarImage"));
-                    pos = actor.Parm.GetVector2("GuitarImagePos");
-                    size = actor.Parm.GetVector2("GuitarImageSize");
-                    imgDim = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
+                    for (int j = 0; j < numTuts; j++)
+                    {
+#if INPUTREQUIRED
+                        GetInput(j,actor.Parm.GetString("GuitarInput" + j), ref cQB);
+#endif
+                        tutImg[j] = Stage.Content.Load<Microsoft.Xna.Framework.Graphics.Texture2D>("UI/Tutorial/" + actor.Parm.GetString("GuitarImage" + j));
+                        pos = actor.Parm.GetVector2("GuitarImagePos" + j);
+                        size = actor.Parm.GetVector2("GuitarImageSize" + j);
+                        imgDim[j] = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
+                    }
                     break;
                 default:
-                    tutImg = Stage.Content.Load<Microsoft.Xna.Framework.Graphics.Texture2D>("UI/Tutorial/" + actor.Parm.GetString("ControllerImage"));
-                    pos = actor.Parm.GetVector2("ControllerImagePos");
-                    size = actor.Parm.GetVector2("ControllerImageSize");
-                    imgDim = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
+                    for (int j = 0; j < numTuts; j++)
+                    {
+#if INPUTREQUIRED
+                        GetInput(j, actor.Parm.GetString("ControllerInput" + j), ref cQB);
+#endif
+                        tutImg[j] = Stage.Content.Load<Microsoft.Xna.Framework.Graphics.Texture2D>("UI/Tutorial/" + actor.Parm.GetString("ControllerImage" + j));
+                        pos = actor.Parm.GetVector2("ControllerImagePos" + j);
+                        size = actor.Parm.GetVector2("ControllerImageSize" + j);
+                        imgDim[j] = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
+                    }
                     break;
             }
 
-            if(actor.Parm.HasParm("AllInputsRequired"))
-                allInputsRequired = actor.Parm.GetBool("AllInputsRequired");
-
-            if (actor.Parm.HasParm("SpawnEnemy"))
-                spawnEnemy = actor.Parm.GetBool("SpawnEnemy");
-            if (actor.Parm.HasParm("KillEnemies"))
-                killEnemies = actor.Parm.GetBool("KillEnemies");
-
-            if (actor.Parm.HasParm("MoveHereSign"))
-                moveHereSign = actor.Parm.GetBool("MoveHereSign");
-
-            if (actor.Parm.HasParm("TriggerDelay"))
+            for (int i = 0; i < numTuts; i++)
             {
-                delayNextTrigger = true;
-                triggerDelay = actor.Parm.GetFloat("TriggerDelay");
-            }
+#if INPUTREQUIRED
+                if (actor.Parm.HasParm("AllInputsRequired" + i))
+                    allInputsRequired[i] = actor.Parm.GetBool("AllInputsRequired" + i);
+                else
+                    allInputsRequired[i] = false;
+#endif
+                if (actor.Parm.HasParm("SpawnEnemy" + i))
+                    spawnEnemy[i] = actor.Parm.GetBool("SpawnEnemy" + i);
+                else
+                    spawnEnemy[i] = false;
 
-            if (actor.Parm.HasParm("PerformUpdate"))
-                performUpdate = actor.Parm.GetBool("PerformUpdate");
+                if (actor.Parm.HasParm("KillEnemies" + i))
+                    killEnemies[i] = actor.Parm.GetBool("KillEnemies" + i);
+                else
+                    killEnemies[i] = false;
+
+                if (actor.Parm.HasParm("TriggerDelay" + i))
+                    triggerDelay[i] = actor.Parm.GetFloat("TriggerDelay" + i);
+                else
+                    triggerDelay[i] = 0;
+            }
 
             if (actor.Parm.HasParm("EndLevel"))
                 returnToMenu = actor.Parm.GetBool("EndLevel");
 
-            ControlsQB cQB = stage.GetQB<ControlsQB>();
-            Microsoft.Xna.Framework.Input.GamePadType gp = cQB.GetGamePadType();
-            switch (gp)
-            {
-                case Microsoft.Xna.Framework.Input.GamePadType.GamePad:
-                    GetInput(actor.Parm.GetString("ControllerInput"), ref cQB);
-                    break;
-                case Microsoft.Xna.Framework.Input.GamePadType.Guitar:
-                    if (actor.Parm.HasParm("StrumRequired") && actor.Parm.GetBool("StrumRequired"))
-                    {
-                        strumRequired = true;
-                        strum = cQB.GetInputAction("Strum");
-                    }
-                    GetInput(actor.Parm.GetString("GuitarInput"), ref cQB);
-                    break;
-                case Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar:
-                    goto case Microsoft.Xna.Framework.Input.GamePadType.Guitar;
-                case Microsoft.Xna.Framework.Input.GamePadType.Unknown:
-                    goto case Microsoft.Xna.Framework.Input.GamePadType.GamePad;
-            }
-
             actor.RegisterUpdateFunction(Update);
 
             UsingOnTriggerEnter = true;
-            UsingOnTriggerStay = true;
-            UsingOnTriggerExit = true;
+            UsingOnTriggerStay = false;
+            UsingOnTriggerExit = false;
 
             base.Initialize(stage);
         }
 
-        private void GetInput(string input, ref ControlsQB cQB)
+        private void GetInput(int index, string input, ref ControlsQB cQB)
         {
-            
+#if INPUTREQUIRED
             if (input.Contains(','))
             {
                 string[] splitInput = input.Split(',');
-                unpauseInput = new InputAction[splitInput.Length];
+                unpauseInput[index] = new InputAction[splitInput.Length];
                 for (int i = 0; i < splitInput.Length; i++)
                 {
-                    unpauseInput[i] = cQB.GetInputAction(splitInput[i]);
+                    unpauseInput[index][i] = cQB.GetInputAction(splitInput[i]);
                 }
             }
             else
             {
-                unpauseInput = new InputAction[1];
-                unpauseInput[0] = cQB.GetInputAction(input);
+                unpauseInput[index] = new InputAction[1];
+                unpauseInput[index][0] = cQB.GetInputAction(input);
             }
+#endif
         }
 
         new public void Update(float dt)
@@ -195,63 +221,73 @@ namespace GameLib
             if (!triggered) return;
             if (finished)
             {
-                triggerDelay -= dt;
-                if (triggerDelay <= 0)
+                timer -= dt;
+                if (timer <= 0)
                 {
-                    active = false;
-                    Stage.ActiveStage.GetQB<TriggerQB>().ActivateNextTutorialTrigger(index);
-                    actor.MarkForDeath();
+                    Lock();
                 }
             }
+            
             bool metRequirements = false;
-            if (strumRequired)
+
+            Microsoft.Xna.Framework.Input.GamePadType gp = cQB.GetGamePadType();
+            if (gp == Microsoft.Xna.Framework.Input.GamePadType.Guitar ||
+                gp == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar)
             {
                 if (strum.IsNewAction)
                 {
-                    if (unpauseInput.Length == 1 && unpauseInput[0].IsNewAction)
+#if INPUTREQUIRED
+                    if (unpauseInput.Length == 1 && unpauseInput[tutIndex][0].IsNewAction)
                     {
                         UnLock(dt);
                         return;
                     }
-                    else if (allInputsRequired) //have to make sure all buttons are pressed
+                    else if (allInputsRequired[tutIndex]) //have to make sure all buttons are pressed
                     {
                         metRequirements = true;
                         for (int i = 0; i < unpauseInput.Length; i++)
-                            if (unpauseInput[i].value == 0) metRequirements = false;
+                            if (unpauseInput[tutIndex][i].value == 0) metRequirements = false;
                     }
                     else //we only care if any of the buttons are pressed
                     {
                         for (int i = 0; i < unpauseInput.Length; i++)
-                            if (unpauseInput[i].value != 0) metRequirements = true;
+                            if (unpauseInput[tutIndex][i].value != 0) metRequirements = true;
                     }
+#else
+                    metRequirements = (Green.value != 0);
+#endif
                     if (metRequirements) UnLock(dt);
                 }
             }
             else
             {
-                if (unpauseInput.Length == 1 && unpauseInput[0].IsNewAction)
+#if INPUTREQUIRED
+                if (unpauseInput.Length == 1 && unpauseInput[tutIndex][0].IsNewAction)
                 {
                     UnLock(dt);
                     return;
                 }
-                else if (allInputsRequired)
+                else if (allInputsRequired[tutIndex])
                 {
                     metRequirements = true;
                     for (int i = 0; i < unpauseInput.Length; i++)
-                        if (unpauseInput[i].value == 0) metRequirements = false;
+                        if (unpauseInput[tutIndex][i].value == 0) metRequirements = false;
                 }
                 else
                 {
                     for (int i = 0; i < unpauseInput.Length; i++)
-                        if (unpauseInput[i].value != 0) metRequirements = true;
+                        if (unpauseInput[tutIndex][i].value != 0) metRequirements = true;
                 }
+#else
+                metRequirements = Green.IsNewAction;
+#endif
                 if (metRequirements) UnLock(dt);
             }
         }
 
-        public override void OnTriggerStay(Actor triggeringActor)
+        public override void OnTriggerEnter(Actor triggeringActor)
         {
-            if (active && !triggered && triggeringActor.PhysicsObject.CollisionInformation.CollisionRules.Group == PhysicsQB.playerGroup)
+            if (!triggered && triggeringActor.PhysicsObject.CollisionInformation.CollisionRules.Group == PhysicsQB.playerGroup)
             {
                 triggered = true;
 
@@ -263,32 +299,16 @@ namespace GameLib
 
         private void UnLock(float dt)
         {
-            PlayerAgent c = PlayerAgent.Player.GetAgent<PlayerAgent>();
-            
-            if(performUpdate)
-                c.Update(dt); //call update again so that the move happens
 
-            if (delayNextTrigger)
-            {
-                if (triggerDelay == -1)
-                    triggerDelay = c.TimeLeftInCurrentAction() + .05f;
-                else if(triggerDelay == -2)
-                    triggerDelay = c.TimeToFlow() + .35f;
-                finished = true;
-            }
-            else
-            {
-                active = false;
-                Stage.ActiveStage.GetQB<TriggerQB>().ActivateNextTutorialTrigger(index);
-                actor.MarkForDeath();
-            }
-            Stage.ActiveStage.ResumeGame();
+            finished = true;
+            timer = triggerDelay[tutIndex];
+
             Stage.ActiveStage.GetQB<TriggerQB>().tutorialPic.showing = false;
 
-            if (killEnemies)
+            if (killEnemies[tutIndex])
                 Stage.ActiveStage.GetQB<AIQB>().KillAll();
 
-            if (returnToMenu)
+            if (++tutIndex >= numTuts && returnToMenu)
             {
                 Stage.LoadStage("MainMenu", true);
                 Stage.ActiveStage.GetQB<GameLib.Engine.MenuSystem.MenuSystemQB>().GoToLevelSelect();
@@ -297,11 +317,10 @@ namespace GameLib
 
         private void Lock()
         {
-            Stage.ActiveStage.PauseGame();
 
-            Stage.ActiveStage.GetQB<TriggerQB>().tutorialPic.changeImage(tutImg, imgDim, true);
+            Stage.ActiveStage.GetQB<TriggerQB>().tutorialPic.changeImage(tutImg[tutIndex], imgDim[tutIndex], true);
 
-            if (spawnEnemy)
+            if (spawnEnemy[tutIndex])
             {
                 Vector3 pos = actor.PhysicsObject.Position;
                 pos.Y += .5f;
@@ -315,15 +334,10 @@ namespace GameLib
         {
             parm.AddParm("ControllerInput", actor.Parm.GetString("ControllerInput"));
             parm.AddParm("GuitarInput", actor.Parm.GetString("GuitarInput"));
-            parm.AddParm("Index", index);
 
             parm.AddParm("GuitarImage", actor.Parm.GetString("GuitarImage"));
             parm.AddParm("ControllerImage", actor.Parm.GetString("ControllerImage"));
 
-            parm.AddParm("MoveHereSign", moveHereSign);
-
-            parm.AddParm("StrumRequired", strumRequired);
-            parm.AddParm("AllInputsRequired", allInputsRequired);
             parm.AddParm("SpawnEnemy", spawnEnemy);
             parm.AddParm("KillEnemies", killEnemies);
 

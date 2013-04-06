@@ -52,6 +52,8 @@ namespace GameLib.Engine.Particles
         public bool rndRotation;	 //If enabled, the particles will be spawned with random rotations.
         public Vector3 spawnRange; //the +/- dimensions that define where the particle can spawn
         public float lifeTime; //how long the emiter is alive for, if negative the particle emitter will have to be killed for it to stop
+        public float minScaleGrow; //the min rate the particle will grow in scale at
+        public float maxScaleGrow; //the max rate the particle will grow in scale at
 
         private float timer;
         private int numToSpawnThisSecond;
@@ -79,7 +81,7 @@ namespace GameLib.Engine.Particles
         private ParticleQB pQB;
 
         public ParticleEmitter(ParticleQB pqb, Actor a, Vector3 pos, bool isOneShot, float life, int minRate, int maxRate, 
-            float minLife, float maxLife, Vector2 minDim, Vector2 maxDim, 
+            float minLife, float maxLife, float minGrow, float maxGrow, Vector2 minDim, Vector2 maxDim, 
             Vector3 spawn, Vector3 defaultVel, Vector3 randVel, Texture2D t)
         {
             pQB = pqb;
@@ -95,6 +97,8 @@ namespace GameLib.Engine.Particles
             maxEnergy = maxLife;
             minSize = minDim;
             maxSize = maxDim;
+            minScaleGrow = minGrow;
+            maxScaleGrow = maxGrow;
             spawnRange = spawn;
             localVelocity = defaultVel;
             rndVelocity = randVel;
@@ -111,8 +115,9 @@ namespace GameLib.Engine.Particles
             numSpawnedThisSecond = 0;
         }
 
-        public void ReInit(Actor a, Vector3 pos, bool isOneShot, float life, int minRate, int maxRate, float minLife, float maxLife,
-            Vector2 minDim, Vector2 maxDim, Vector3 spawn, Vector3 defaultVel, Vector3 randVel, Texture2D t)
+        public void ReInit(Actor a, Vector3 pos, bool isOneShot, float life, int minRate, int maxRate, 
+            float minLife, float maxLife, float minGrow, float maxGrow, Vector2 minDim, Vector2 maxDim, 
+            Vector3 spawn, Vector3 defaultVel, Vector3 randVel, Texture2D t)
         {
             emit = true;
             MarkedDead = false;
@@ -126,6 +131,8 @@ namespace GameLib.Engine.Particles
             maxEnergy = maxLife;
             minSize = minDim;
             maxSize = maxDim;
+            minScaleGrow = minGrow;
+            maxScaleGrow = maxGrow;
             spawnRange = spawn;
             localVelocity = defaultVel;
             rndVelocity = randVel;
@@ -252,7 +259,6 @@ namespace GameLib.Engine.Particles
 
         private void spawnParticle(Particle p)
         {
-
             //random size
             float randSize = (float)rand.NextDouble() * (maxSize.X - minSize.X) + minSize.X;
             p.quad.Width = randSize;
@@ -273,7 +279,8 @@ namespace GameLib.Engine.Particles
             vel.Z += (rndVelocity.Z == 0) ? 0 : (float)rand.NextDouble() * (2 * rndVelocity.Z) - rndVelocity.Z;
 
             //spawn
-            p.Spawn(pos, vel, (float)rand.NextDouble() * (maxEnergy - minEnergy) + minEnergy);
+            p.Spawn(pos, vel, (float)rand.NextDouble() * (maxEnergy - minEnergy) + minEnergy, 
+                (float)rand.NextDouble() * (maxScaleGrow - minScaleGrow) + minScaleGrow);
         }
 
         private void spawnParticle(LinkedListNode<Particle> p)

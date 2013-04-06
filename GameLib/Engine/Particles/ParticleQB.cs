@@ -42,7 +42,7 @@ namespace GameLib.Engine.Particles
             availableEmitters = new LinkedList<ParticleEmitter>();
             for (int i = 0; i < 10; i++)
                 availableEmitters.AddLast(new ParticleEmitter(this, null, Vector3.Zero, false, 0, 0, 0, 
-                    0, 0, Vector2.Zero, Vector2.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero, null));
+                    0, 0, 0, 0, Vector2.Zero, Vector2.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero, null));
         }
 
         public override void LoadContent()
@@ -121,22 +121,22 @@ namespace GameLib.Engine.Particles
         /// <param name="randVel">the +/- random velocity that will be added to the defaultVel to get a particles velocity</param>
         /// <param name="texture">the name of the texture in the ParticleFX folder, if instantiating lots of particles with this
         /// texture it would be better to keep a local copy of the texture and call the version that has a texture2d parameter</param>
-        public void AddParticleEmitter(Actor a, Vector3 pos, bool isOneShot, float lifeSpan, int minRate, int maxRate, 
-                                        float minLife, float maxLife, Vector2 minDim, Vector2 maxDim, 
+        public void AddParticleEmitter(Actor a, Vector3 pos, bool isOneShot, float lifeSpan, int minRate, int maxRate,
+                                        float minLife, float maxLife, float minGrow, float maxGrow, Vector2 minDim, Vector2 maxDim, 
                                         Vector3 spawn, Vector3 defaultVel, Vector3 randVel, string texture)
         {
             Texture2D t = Stage.Content.Load<Texture2D>("ParticleFX/"+texture);
             if(availableEmitters.Count > 0)
             {
                 ParticleEmitter emitter = availableEmitters.First.Value;
-                emitter.ReInit(a, pos, isOneShot, lifeSpan, minRate, maxRate, minLife, maxLife,
+                emitter.ReInit(a, pos, isOneShot, lifeSpan, minRate, maxRate, minLife, maxLife, minGrow, maxGrow,
                     minDim, maxDim, spawn, defaultVel, randVel, t);
                 availableEmitters.RemoveFirst();
                 emitters.AddLast(emitter);
             }
             else
                 emitters.AddLast(new ParticleEmitter(this, a, pos, isOneShot, lifeSpan, minRate, maxRate, minLife, maxLife, 
-                    minDim, maxDim, spawn, defaultVel, randVel, t));
+                    minGrow, maxGrow, minDim, maxDim, spawn, defaultVel, randVel, t));
         }
 
         /// <summary>
@@ -159,20 +159,20 @@ namespace GameLib.Engine.Particles
         /// <param name="randVel">the +/- random velocity that will be added to the defaultVel to get a particles velocity</param>
         /// <param name="t">the texture the particles should have</param>
         public void AddParticleEmitter(Actor a, Vector3 pos, bool isOneShot, float lifeSpan, int minRate, int maxRate, 
-                                        float minLife, float maxLife, Vector2 minDim, Vector2 maxDim, 
+                                        float minLife, float maxLife, float minGrow, float maxGrow, Vector2 minDim, Vector2 maxDim, 
                                         Vector3 spawn, Vector3 defaultVel, Vector3 randVel, Texture2D t)
         {
             if (availableEmitters.Count > 0)
             {
                 ParticleEmitter emitter = availableEmitters.First.Value;
-                emitter.ReInit(a, pos, isOneShot, lifeSpan, minRate, maxRate, minLife, maxLife, 
+                emitter.ReInit(a, pos, isOneShot, lifeSpan, minRate, maxRate, minLife, maxLife, minGrow, maxGrow,
                     minDim, maxDim, spawn, defaultVel, randVel, t);
                 availableEmitters.RemoveFirst();
                 emitters.AddLast(emitter);
             }
             else
                 emitters.AddLast(new ParticleEmitter(this, a, pos, isOneShot, lifeSpan, minRate, maxRate, minLife, maxLife,
-                    minDim, maxDim, spawn, defaultVel, randVel, t));
+                    minGrow, maxGrow, minDim, maxDim, spawn, defaultVel, randVel, t));
         }
 
         public void AddFloatingText(Vector2 pos, Vector2 vel, float lifeTime, string text)

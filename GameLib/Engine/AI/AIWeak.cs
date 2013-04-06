@@ -418,7 +418,7 @@ namespace GameLib.Engine.AI
         public void DieFX()
         {
             Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, actor.PhysicsObject.Position, true, -1, 20, 40, .25f, .5f,
-                                                            Vector2.One, Vector2.One * 2.0f, Vector3.Zero, 
+                                                            0, 0, Vector2.One, Vector2.One * 2.0f, Vector3.Zero, 
                                                             Vector3.Zero, 2 * Vector3.One, "blood2");
 
             //play death sound

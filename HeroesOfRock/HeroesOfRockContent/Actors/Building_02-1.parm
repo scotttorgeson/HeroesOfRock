@@ -1,0 +1,4 @@
+ModelName=Buildings\Building_02
+PhysicsType=Box
+Mass=-1
+Texture=Buildings\Building02_Texture_Graffiti

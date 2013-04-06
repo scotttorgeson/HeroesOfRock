@@ -12,6 +12,14 @@ namespace GameLib
         
         public LinkedList<Actor> triggers = new LinkedList<Actor>();
         public List<textToScreen> ui = new List<textToScreen>();
+
+        /*public delegate void DrawFunc();
+        List<DrawFunc> drawList = new List<DrawFunc>();
+        public void RegisterDrawFunction(DrawFunc drawFunc)
+        {
+            drawList.Add(drawFunc);
+        }*/
+
         public tutorialTexture tutorialPic = new tutorialTexture();
         ParameterSet Parm;
         SpriteFont font;
@@ -118,18 +126,6 @@ namespace GameLib
             }
 #endif
 
-            if (IsPaused) //update the active tutorial volume if we have one
-            {
-                foreach (Actor a in triggers)
-                {
-                    TutorialStopTriggerVolume t = a.GetAgent<TutorialStopTriggerVolume>();
-
-                    if (t != null && t.active)
-                        t.Update(dt);
-                }
-                return;
-            }
-
 
             LinkedListNode<Actor> node = triggers.First;
             if (node == null)
@@ -226,28 +222,6 @@ namespace GameLib
             {
                 if (v.text == value.text)
                     ui.Remove(v);
-            }
-        }
-
-        public void ActivateNextTutorialTrigger(int currTutorialIndex)
-        {
-
-            tutorialPic.showing = false;
-            foreach(Actor a in triggers)
-            {
-                TutorialStopTriggerVolume t = a.GetAgent<TutorialStopTriggerVolume>();
-
-                if (t != null && t.index == currTutorialIndex + 1)
-                {
-                    t.active = true;
-                    if (t.moveHereSign)
-                    {
-                        Vector3 screenPos = Stage.renderer.GraphicsDevice.Viewport.Project(a.PhysicsObject.Position,
-                                CameraQB.ProjectionMatrix, CameraQB.ViewMatrix, Matrix.Identity);
-                        tutorialPic.changeImage(Stage.Content.Load<Texture2D>("UI/Tutorial/MoveHere"), 
-                            new Rectangle((int)screenPos.X - 50, (int)screenPos.Y - 300, 100, 200), true);
-                    }
-                }
             }
         }
     }

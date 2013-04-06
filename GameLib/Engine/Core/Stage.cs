@@ -255,7 +255,7 @@ namespace GameLib
             if (Parm.HasParm("Raining") && Parm.GetBool("Raining"))
             {
                 GetQB<Engine.Particles.ParticleQB>().AddParticleEmitter(PlayerAgent.Player, new Vector3(0, 25, 0), false, -1, 40, 48,
-                                                1.0f, 1.25f, new Vector2(5.0f,10.0f), new Vector2(10.0f,20.0f), 
+                                                1.0f, 1.25f, 0, 0, new Vector2(5.0f,10.0f), new Vector2(10.0f,20.0f), 
                                                 new Vector3(25, 2, 25), 50*Vector3.Down, Vector3.Zero, "rain");
             }
         }

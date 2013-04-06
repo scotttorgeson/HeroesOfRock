@@ -46,6 +46,7 @@ namespace GameLib
         public Renderer(GraphicsDevice graphicsDevice)
         {
             this.graphicsDevice = graphicsDevice;
+            
             instance = this;
         }
 
