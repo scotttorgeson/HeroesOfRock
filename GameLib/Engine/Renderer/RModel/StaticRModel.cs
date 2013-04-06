@@ -27,7 +27,7 @@ namespace GameLib
             Texture2D specularMap = null;
             bool initialized = false;
 
-            model = BasicModelLoad(parm, out initialized, out diffuse, out bumpMap, out specularMap);
+            model = BasicModelLoad(parm, out initialized);
 
             if (!initialized)
             {
@@ -38,9 +38,6 @@ namespace GameLib
                         if (IsBumpMapped && IsSpecularMapped)
                         {
                             BumpedSpecularEffect effect = new BumpedSpecularEffect(content.Load<Effect>("Effects/v2/BumpedWithSpecular"));
-                            effect.DiffuseTexture = diffuse;
-                            effect.NormalMapTexture = bumpMap;
-                            effect.SpecularMapTexture = specularMap;
                             effect.Shininess = Shininess;
                             effect.SpecularPower = SpecularPower;
                             part.Effect = effect;
@@ -48,8 +45,6 @@ namespace GameLib
                         else if (IsBumpMapped && !IsSpecularMapped)
                         {
                             BumpedEffect effect = new BumpedEffect(content.Load<Effect>("Effects/v2/Bumped"));
-                            effect.DiffuseTexture = diffuse;
-                            effect.NormalMapTexture = bumpMap;
                             effect.Shininess = Shininess;
                             effect.SpecularPower = SpecularPower;
                             part.Effect = effect;
@@ -57,7 +52,6 @@ namespace GameLib
                         else if (!IsBumpMapped && !IsSpecularMapped)
                         {
                             BaseEffect effect = new BaseEffect(content.Load<Effect>("Effects/v2/Basic"));
-                            effect.DiffuseTexture = diffuse;
                             effect.Shininess = Shininess;
                             effect.SpecularPower = SpecularPower;
                             part.Effect = effect;
@@ -91,8 +85,14 @@ namespace GameLib
                     {
                         effect.View = Renderer.Instance.view;
                         effect.Projection = Renderer.Instance.projection;
+                        effect.DiffuseTexture = diffuse;
                         Renderer.Instance.sun.SetLights(ref effect);
                         effect.ReceivesShadows = ReceivesShadows;
+
+                        if (effect is BumpedEffect)
+                            ((BumpedEffect)effect).NormalMapTexture = bumpMap;
+                        if (effect is BumpedSpecularEffect)
+                            ((BumpedSpecularEffect)effect).SpecularMapTexture = specularMap;
                     }
                     else
                     {

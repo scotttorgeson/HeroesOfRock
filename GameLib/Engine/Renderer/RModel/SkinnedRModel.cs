@@ -24,12 +24,9 @@ namespace GameLib
             if (contentLoaded)
                 return;
 
-            Texture2D diffuse = null;
-            Texture2D bumpMap = null;
-            Texture2D specularMap = null;
             bool initialized = false;
 
-            model = BasicModelLoad(parm, out initialized, out diffuse, out bumpMap, out specularMap);
+            model = BasicModelLoad(parm, out initialized);
 
             this.modelExtra = model.Tag as ModelExtra;
             System.Diagnostics.Debug.Assert(modelExtra != null);
@@ -43,9 +40,6 @@ namespace GameLib
                         if (IsBumpMapped && IsSpecularMapped)
                         {
                             SkinnedBumpedSpecularEffect effect = new SkinnedBumpedSpecularEffect(content.Load<Effect>("Effects/v2/SkinnedWithSpecular"));
-                            effect.DiffuseTexture = diffuse;
-                            effect.NormalMapTexture = bumpMap;
-                            effect.SpecularMapTexture = specularMap;
                             effect.Shininess = Shininess;
                             effect.SpecularPower = SpecularPower;
                             part.Effect = effect;
@@ -53,8 +47,6 @@ namespace GameLib
                         else if (IsBumpMapped && !IsSpecularMapped)
                         {
                             SkinnedBumpedEffect effect = new SkinnedBumpedEffect(content.Load<Effect>("Effects/v2/SkinnedBumped"));
-                            effect.DiffuseTexture = diffuse;
-                            effect.NormalMapTexture = bumpMap;
                             effect.Shininess = Shininess;
                             effect.SpecularPower = SpecularPower;
                             part.Effect = effect;
@@ -62,7 +54,6 @@ namespace GameLib
                         else if (!IsBumpMapped && !IsSpecularMapped)
                         {
                             SkinnedEffect effect = new SkinnedEffect(content.Load<Effect>("Effects/v2/Skinned"));
-                            effect.DiffuseTexture = diffuse;
                             effect.Shininess = Shininess;
                             effect.SpecularPower = SpecularPower;
                             part.Effect = effect;
@@ -93,8 +84,19 @@ namespace GameLib
                     {
                         effect.View = Renderer.Instance.view;
                         effect.Projection = Renderer.Instance.projection;
+                        effect.DiffuseTexture = diffuse;
                         Renderer.Instance.sun.SetLights(ref effect);
                         effect.ReceivesShadows = ReceivesShadows;
+
+                        if (effect is SkinnedBumpedEffect)
+                        {
+                            ((SkinnedBumpedEffect)effect).NormalMapTexture = bumpMap;
+                        }
+
+                        if (effect is SkinnedBumpedSpecularEffect)
+                        {
+                            ((SkinnedBumpedSpecularEffect)effect).SpecularMapTexture = specularMap;
+                        }
                     }
                     else
                     {

@@ -22,12 +22,9 @@ namespace GameLib
             if (contentLoaded)
                 return;
 
-            Texture2D diffuse = null;
-            Texture2D bumpMap = null;
-            Texture2D specularMap = null;
             bool initialized = false;
 
-            model = BasicModelLoad(parm, out initialized, out diffuse, out bumpMap, out specularMap);
+            model = BasicModelLoad(parm, out initialized);
 
             if (!initialized)
             {

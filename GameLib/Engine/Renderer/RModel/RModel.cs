@@ -26,6 +26,10 @@ namespace GameLib
         public float Shininess = 0.3f;
         public float SpecularPower = 4.0f;
 
+        public Texture2D diffuse = null;
+        public Texture2D bumpMap = null;
+        public Texture2D specularMap = null;
+
         public BoundingSphere boundingSphere;
 
         protected bool contentLoaded = false;
@@ -103,7 +107,7 @@ namespace GameLib
         }
 
         // used by skinnedrmodel, staticrmodel, waterrmodel to load basic parameters
-        protected Model BasicModelLoad(ParameterSet parm, out bool initialized, out Texture2D diffuse, out Texture2D bumpMap, out Texture2D specularMap)
+        protected Model BasicModelLoad(ParameterSet parm, out bool initialized)
         {
             Microsoft.Xna.Framework.Graphics.Model model = Renderer.Instance.LookupModel("Models/" + Name, out initialized);
 
