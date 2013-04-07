@@ -45,7 +45,7 @@ namespace GameLib.Engine.MenuSystem {
         }
 
         public override void LoadContent () {
-            font = Stage.Content.Load<SpriteFont>("belligerent");
+            font = MenuSystem.Font;
             crowd = Stage.Content.Load<Texture2D>("UI/HUD/crowd");
             timeBG = Stage.Content.Load<Texture2D>("UI/HUD/time");
             scoreBG = Stage.Content.Load<Texture2D>("UI/HUD/score"); 

@@ -63,7 +63,7 @@ namespace GameLib.Engine.MenuSystem {
 		public void LoadContent(ContentManager content)
 		{
 			//spriteBatch = new SpriteBatch(Renderer.Instance.GraphicsDevice);
-			font = content.Load<SpriteFont>("DefaultFont");
+			font = content.Load<SpriteFont>("belligerent");
 			blankTexture = content.Load<Texture2D>("UI/Menu/blank");
 
 			foreach (GameScreen screen in menus)

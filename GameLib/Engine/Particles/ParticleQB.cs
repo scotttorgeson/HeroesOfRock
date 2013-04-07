@@ -47,7 +47,7 @@ namespace GameLib.Engine.Particles
 
         public override void LoadContent()
         {
-            floatingTextFont = Stage.Content.Load<SpriteFont>("DefaultFont");
+            floatingTextFont = Stage.Content.Load<SpriteFont>("belligerent");
         }
 
         public override void Update(float dt)
