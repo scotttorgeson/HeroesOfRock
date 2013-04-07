@@ -161,7 +161,7 @@ namespace GameLib
                                     if (split.Length > 1) // we should have at least the level name, and 1 score
                                     {
                                         string level = split[0];
-                                        levelsUnlocked.Add(level);
+                                        UnlockLevel(level);
                                         for (int i = 1; (i < HIGH_SCORES_PER_LEVEL) && (i < split.Length - 1); i++)
                                         {
                                             float score = 0.0f;
