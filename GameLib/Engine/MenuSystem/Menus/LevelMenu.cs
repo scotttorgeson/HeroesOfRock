@@ -16,20 +16,29 @@ namespace GameLib.Engine.MenuSystem.Menus {
             //LevelMenuEntry FOUR = new LevelMenuEntry("Level4", "Level 4", "LevelBlank");
 
             LevelMenuEntry TUTORIAL = new LevelMenuEntry("Tutorial", "Tutorial", "LevelAlpha", false);
+            LevelMenuEntry LEVEL1 = new LevelMenuEntry("Level1", "Level 1", "LevelAlpha", false);
             LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 2", "LevelAlpha", false);
             LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 3", "LevelAlpha", false);
             LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 4", "LevelAlpha", false);
 
             //TODO CHANGE ME this will need to be driven from the user profile
             TUTORIAL.IsLocked = false;
+            LEVEL1.IsLocked = false;
+#if RELEASE || TEST_SAVE_LOAD
+            LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
+            LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
+            LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
+#else
             LEVEL2.IsLocked = false;
             LEVEL3.IsLocked = false;
             LEVEL4.IsLocked = false;
+#endif
             //TEST.IsLocked = false;
 
 
             // Hook up menu event handlers.
             TUTORIAL.Selected += LoadLevel;
+            LEVEL1.Selected += LoadLevel;
             LEVEL2.Selected += LoadLevel;
             LEVEL3.Selected += LoadLevel;
             LEVEL4.Selected += LoadLevel;
@@ -42,6 +51,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             // Add entries to the menu.
             MenuEntries.Add(TUTORIAL);
+            MenuEntries.Add(LEVEL1);
             MenuEntries.Add(LEVEL2);
             MenuEntries.Add(LEVEL3);
             MenuEntries.Add(LEVEL4);

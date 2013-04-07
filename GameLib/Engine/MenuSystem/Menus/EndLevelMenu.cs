@@ -44,6 +44,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
             timer = 0f;
             checkForPerfect = true;
             Stage.ActiveStage.PauseGame();
+
+            // todo: update to save the real high score
+            Stage.SaveGame.AddHighScore(Stage.ActiveStage.Parm.GetString("AssetName"), baseScore);
+            if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
+                Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
+            Stage.SaveGame.SaveGameData();
         }
 
         private void GetScoreData () {
@@ -82,6 +88,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
             ExitScreen();
+            Stage.LoadStage(Stage.ActiveStage.Parm.GetString("NextLevel"), true);
         }
 
         void QuitGame (object sender, EventArgs e) {

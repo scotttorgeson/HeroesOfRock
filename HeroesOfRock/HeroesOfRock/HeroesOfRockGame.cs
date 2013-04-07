@@ -24,8 +24,6 @@ namespace HeroesOfRock
     {
         GraphicsDeviceManager graphics;
 
-        IAsyncSaveDevice saveDevice;
-
         public HeroesOfRockGame()
         {
             HORGame = this;
@@ -38,8 +36,6 @@ namespace HeroesOfRock
 //            this.Components.Add(new GamerServicesComponent(this));
 //#endif
         }
-
-        //public SaveGame saveGame = new SaveGame();
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -64,43 +60,12 @@ namespace HeroesOfRock
 #endif
             graphics.ApplyChanges();
 
-            // create the save device
-            SharedSaveDevice sharedSaveDevice = new SharedSaveDevice();
-            Components.Add(sharedSaveDevice);
-            saveDevice = sharedSaveDevice;
-
-            // create event hanlders that force the user to choose a new device
-            // if they cancel the device selector, or it they disconnect the storage
-            // device after selecting it
-            sharedSaveDevice.DeviceSelectorCanceled += (s, e) => e.Response = SaveDeviceEventResponse.Force;
-            sharedSaveDevice.DeviceDisconnected += (s, e) => e.Response = SaveDeviceEventResponse.Force;
-
-            // prompt for a device on the first update we can
-            sharedSaveDevice.PromptForDevice();
-
-#if XBOX
-            Components.Add(new GamerServicesComponent(this));
-#endif
-
-            saveDevice.SaveCompleted += new SaveCompletedEventHandler(saveDevice_SaveCompleted);
-            saveDevice.LoadCompleted += new LoadCompletedEventHandler(saveDevice_LoadCompleted);
-
+            Stage.InitSaveGame(this);
 
             Stage.renderer = new Renderer(graphics.GraphicsDevice);
             Stage.renderer.Initialize();
 
             base.Initialize();
-        }
-
-        void saveDevice_LoadCompleted(object sender, FileActionCompletedEventArgs args)
-        {
-            SaveDataLoaded = true;
-            System.Diagnostics.Debug.WriteLine("Load completed!");
-        }
-
-        void saveDevice_SaveCompleted(object sender, FileActionCompletedEventArgs args)
-        {
-            System.Diagnostics.Debug.WriteLine("Save completed!");
         }
 
         /// <summary>
@@ -126,91 +91,6 @@ namespace HeroesOfRock
 
         private static HeroesOfRockGame HORGame;
 
-        bool saveGameRequested = false;
-        public static void SaveGame()
-        {
-            HORGame.saveGameRequested = true;
-        }
-
-        public static Dictionary<string, int> highscores = new Dictionary<string, int>();
-        public static int levelsUnlocked = 1;
-
-        public static void AddHighScore(string level, int score)
-        {
-            if (highscores.ContainsKey(level))
-            {
-                if (highscores[level] < score)
-                    highscores[level] = score;
-            }
-            else
-                highscores[level] = score;
-        }
-
-        private void CheckSaveGame()
-        {
-            if (saveGameRequested)
-            {
-                if (saveDevice.IsReady)
-                {
-                    saveDevice.SaveAsync("HeroesOfRock", "HeroesOfRockSave.txt", stream =>
-                    {
-                        using (System.IO.StreamWriter writer = new System.IO.StreamWriter(stream))
-                        {
-                            writer.WriteLine(levelsUnlocked);
-                            foreach (KeyValuePair<string, int> kvp in highscores)
-                            {
-                                writer.WriteLine(kvp.Key);
-                                writer.WriteLine(kvp.Value);
-                            }
-                        }
-                    });
-                    saveGameRequested = false;
-                }
-            }
-        }
-
-        public static bool SaveDataLoaded { get; private set; }
-
-        public static void LoadGame()
-        {
-            if (!SaveDataLoaded)
-                loadGameRequested = true;
-        }
-        private static bool loadGameRequested = false;
-
-        private void CheckLoadGame()
-        {
-            if (loadGameRequested && !SaveDataLoaded)
-            {
-                if (saveDevice.IsReady)
-                {
-                    if (saveDevice.FileExists("HeroesOfRock", "HeroesOfRockSave.txt"))
-                    {
-                        saveDevice.LoadAsync("HeroesOfRock", "HeroesOfRockSave.txt", stream =>
-                            {
-                                using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
-                                {
-                                    levelsUnlocked = int.Parse(reader.ReadLine());
-
-                                    while (!reader.EndOfStream)
-                                    {
-                                        string key = reader.ReadLine();
-                                        int value = int.Parse(reader.ReadLine());
-                                        AddHighScore(key, value);
-                                    }
-                                }
-                            });
-
-                        loadGameRequested = false;
-                    }
-                    else
-                    {
-                        SaveDataLoaded = true;
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -218,8 +98,7 @@ namespace HeroesOfRock
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            CheckLoadGame();
-            CheckSaveGame();
+            Stage.UpdateSaveGame();
 
 #if XBOX360
             if((!Guide.IsVisible))

@@ -31,6 +31,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             //hack to makes sure press a is selected, fix.
             selectedEntry = 2;
+
+            Stage.SaveGame.LoadGameData();
         }
 
 

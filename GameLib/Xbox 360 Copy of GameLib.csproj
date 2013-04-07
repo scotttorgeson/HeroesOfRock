@@ -50,6 +50,10 @@
       <Project>{18ad00ee-4898-4b18-baae-c24d3afd999b}</Project>
       <Name>Xbox 360 Copy (3) of BEPUphysics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EasyStorage\EasyStorage [Xbox].csproj">
+      <Project>{46C81A1E-8509-4B35-AE33-121730BDD910}</Project>
+      <Name>EasyStorage [Xbox]</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\AI\AI.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="Engine\Decals\DecalQB.cs" />
     <Compile Include="Engine\FileIO\ParameterSet.cs" />
     <Compile Include="Engine\FileIO\ParameterSetReader.cs" />
+    <Compile Include="Engine\FileIO\SaveGame.cs" />
     <Compile Include="Engine\FileIO\ThreadSafeContentManager.cs" />
     <Compile Include="Engine\Input\ControlsQB.cs" />
     <Compile Include="Engine\Input\InputAction.cs" />

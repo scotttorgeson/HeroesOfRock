@@ -734,3 +734,4 @@ EnemyWeakPoolSize=3
 EnemyRangedPoolSize=3
 EnemyHeavyPoolSize=3
 SoundTheme=HORredlight
+NextLevel=Level4

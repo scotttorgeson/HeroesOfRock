@@ -598,3 +598,4 @@ FirstScreen=HudScreen
 EnemyWeakPoolSize=3
 EnemyRangedPoolSize=3
 SoundTheme=HORcityday
+NextLevel=Level3

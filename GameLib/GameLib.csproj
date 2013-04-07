@@ -108,6 +108,7 @@
     <Compile Include="Engine\Animation\WeakEnemyAnimationAgent.cs" />
     <Compile Include="Engine\Decals\Decal.cs" />
     <Compile Include="Engine\Decals\DecalQB.cs" />
+    <Compile Include="Engine\FileIO\SaveGame.cs" />
     <Compile Include="Engine\FileIO\ThreadSafeContentManager.cs" />
     <Compile Include="Engine\Renderer\Effects\SkinnedEffect.cs" />
     <Compile Include="Engine\Renderer\RModel\EditorManipulatorRModel.cs" />
@@ -237,6 +238,10 @@
     <ProjectReference Include="..\BEPUphysics\BEPUphysics.csproj">
       <Project>{2A9D2227-78D7-4804-B6D1-560BB43AE911}</Project>
       <Name>BEPUphysics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EasyStorage\EasyStorage [Windows].csproj">
+      <Project>{A89EB1D5-B286-48EB-A864-315ABCDAA024}</Project>
+      <Name>EasyStorage [Windows]</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

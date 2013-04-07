@@ -358,5 +358,20 @@ namespace GameLib
         public static bool QuitGame = false;
 
         public static bool HasDied { get; set; }
+
+
+        public static SaveGame SaveGame;
+
+        public static void InitSaveGame(Game game)
+        {
+            SaveGame = new SaveGame();
+            SaveGame.Initialize(game);
+        }
+
+        public static void UpdateSaveGame()
+        {
+            SaveGame.CheckLoadGame();
+            SaveGame.CheckSaveGame();
+        }
     }
 }
