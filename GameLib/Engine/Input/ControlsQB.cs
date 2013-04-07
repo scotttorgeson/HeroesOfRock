@@ -132,6 +132,13 @@ namespace GameLib {
                 currentGamePadState = GamePad.GetState(playerIndex);
             }
 
+#if XBOX || TEST_GAMEPAD
+            if (!currentGamePadState.IsConnected)
+            {
+                Stage.ActiveStage.GetQB<GameLib.Engine.MenuSystem.MenuSystemQB>().PauseGame();
+            }
+#endif
+
             lastGamePadState = currentGamePadState;
 
 #if WINDOWS

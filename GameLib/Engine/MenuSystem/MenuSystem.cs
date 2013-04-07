@@ -13,6 +13,14 @@ namespace GameLib.Engine.MenuSystem {
 
         LinkedList<GameScreen> menus = new LinkedList<GameScreen>();
 
+        public bool CanPause()
+        {
+            foreach (GameScreen screen in menus)
+                if (!screen.CanPause)
+                    return false;
+            return true;
+        }
+
         public int MenuCount
         {
             get { return menus.Count; }

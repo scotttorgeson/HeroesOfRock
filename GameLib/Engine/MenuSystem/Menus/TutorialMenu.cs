@@ -11,6 +11,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         public TutorialMenu ()
             : base("Tutorial") {
+            canPause = true;
             MenuEntry Back = new MenuEntry("Back");
 
             Back.Selected += OnCancel;

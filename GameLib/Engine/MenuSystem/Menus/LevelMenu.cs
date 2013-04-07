@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace GameLib.Engine.MenuSystem.Menus {
     public class LevelMenu : GameMenu {
@@ -15,25 +16,40 @@ namespace GameLib.Engine.MenuSystem.Menus {
             //LevelMenuEntry THREE = new LevelMenuEntry("Level3", "Level 3", "LevelBlank");
             //LevelMenuEntry FOUR = new LevelMenuEntry("Level4", "Level 4", "LevelBlank");
 
+            
+
             LevelMenuEntry TUTORIAL = new LevelMenuEntry("Tutorial", "Tutorial", "LevelAlpha", false);
             LevelMenuEntry LEVEL1 = new LevelMenuEntry("Level1", "Level 1", "LevelAlpha", false);
             LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 2", "LevelAlpha", false);
             LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 3", "LevelAlpha", false);
             LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 4", "LevelAlpha", false);
 
-            //TODO CHANGE ME this will need to be driven from the user profile
-            TUTORIAL.IsLocked = false;
-            LEVEL1.IsLocked = false;
-#if RELEASE || TEST_SAVE_LOAD
-            LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
-            LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
-            LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
-#else
-            LEVEL2.IsLocked = false;
-            LEVEL3.IsLocked = false;
-            LEVEL4.IsLocked = false;
+#if XBOX
+            if (Guide.IsTrialMode)
+            {
+                TUTORIAL.IsLocked = false;
+                LEVEL1.IsLocked = false;
+                LEVEL2.IsLocked = true;
+                LEVEL3.IsLocked = true;
+                LEVEL4.IsLocked = true;
+            }
+            else
 #endif
-            //TEST.IsLocked = false;
+            {
+                //TODO CHANGE ME this will need to be driven from the user profile
+                TUTORIAL.IsLocked = false;
+                LEVEL1.IsLocked = false;
+#if RELEASE || TEST_SAVE_LOAD
+                LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
+                LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
+                LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
+#else
+                LEVEL2.IsLocked = false;
+                LEVEL3.IsLocked = false;
+                LEVEL4.IsLocked = false;
+#endif
+                //TEST.IsLocked = false;
+            }
 
 
             // Hook up menu event handlers.

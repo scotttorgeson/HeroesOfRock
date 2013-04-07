@@ -33,6 +33,9 @@ namespace HeroesOfRock
 //#if XBOX360
 //            this.Components.Add(new GamerServicesComponent(this));
 //#endif
+#if TRIAL_MODE
+            Guide.SimulateTrialMode = true;
+#endif
         }
 
         /// <summary>

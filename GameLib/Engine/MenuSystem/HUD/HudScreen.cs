@@ -36,6 +36,7 @@ namespace GameLib.Engine.MenuSystem {
         private bool crowdOn;
 
         public HudScreen () {
+            canPause = true;
             fullScreenRec = Renderer.ScreenRect;
 
             this.time = 0f;

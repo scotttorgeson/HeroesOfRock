@@ -82,6 +82,14 @@ namespace GameLib.Engine.MenuSystem {
             menuSystem.AddScreen(new EndLevelMenu("End Level"));
         }
 
+        public void PauseGame()
+        {
+            if (!Stage.ActiveStage.Paused && menuSystem.CanPause())
+            {
+                menuSystem.AddScreen(new PauseMenu("Pause Menu"));
+            }
+        }
+
         public override void PauseQB()
         {
             //unpausable

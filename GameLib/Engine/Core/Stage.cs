@@ -316,16 +316,27 @@ namespace GameLib
                 LoadStage();
         }
 
+        private bool paused = false;
+        public bool Paused { get { return paused; } }
+
         public void PauseGame()
         {
-            foreach (Quarterback qb in QBTable.Values)
-                qb.PauseQB();
+            if (paused == false)
+            {
+                paused = true;
+                foreach (Quarterback qb in QBTable.Values)
+                    qb.PauseQB();
+            }
         }
 
         public void ResumeGame()
         {
-            foreach (Quarterback qb in QBTable.Values)
-                qb.UnPauseQB();
+            if (paused == true)
+            {
+                paused = false;
+                foreach (Quarterback qb in QBTable.Values)
+                    qb.UnPauseQB();
+            }
         }
 
         public void Draw(float dt)

@@ -18,6 +18,8 @@ namespace GameLib.Engine.MenuSystem {
 
     public abstract class GameScreen
     {
+        protected bool canPause = false;
+        public bool CanPause { get { return canPause; } }
 
         bool markedForRemove;
         public bool MarkedForRemove
