@@ -1,4 +1,4 @@
 ModelName=Buildings\LargeApartmentBuildingModel
 PhysicsType=Box
 Mass=-1
-Texture=Buildings\LargeApartmentBuildingDiffuse_Graffiti
+Texture=Buildings\LargeBuildingDiffuse_G

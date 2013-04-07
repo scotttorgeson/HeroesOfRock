@@ -36,7 +36,7 @@ namespace GameLib
             sharedSaveDevice.PromptForDevice();
 
 #if XBOX
-            Components.Add(new GamerServicesComponent(this));
+            game.Components.Add(new GamerServicesComponent(game));
 #endif
 
             saveDevice.SaveCompleted += new SaveCompletedEventHandler(saveDevice_SaveCompleted);

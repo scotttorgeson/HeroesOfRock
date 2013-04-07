@@ -60,7 +60,7 @@ namespace GameLib.Engine.MenuSystem {
 
             int height = h / 5;
             healthRec = new Rectangle(fullScreenRec.Left, fullScreenRec.Top, w / 6, h / 3);
-            scoreRec = new Rectangle(fullScreenRec.Right - (int)(1.1f * height), fullScreenRec.Top, (int)(1.1f * height), height);
+            scoreRec = new Rectangle(fullScreenRec.Right - (int)(1.3f * height), fullScreenRec.Top, (int)(1.1f * height), height);
             skullRec = new Rectangle(fullScreenRec.Center.X - (int)(.5f * 1.32f * height), fullScreenRec.Top, (int)(1.32f * height), height);
             timeRec = scoreRec;
             timeRec.X -= (int)(1.32f * height);
@@ -91,7 +91,7 @@ namespace GameLib.Engine.MenuSystem {
                 Stage.renderer.SpriteBatch.DrawString(font, score, scorePos, Color.White);
 
                 //draw skulls
-                String kills = String.Format("x{0}", rockMeter.KillStreak);
+                String kills = String.Format("x{0}", rockMeter.KillStreak.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 Vector2 size = font.MeasureString(kills);
                 if (rockMeter.KillStreak >= 50)
                 {
@@ -122,7 +122,8 @@ namespace GameLib.Engine.MenuSystem {
             int minutes = (int)p/60;
             int seconds = (int)p%60;
 
-            return string.Format("{0}:{1}", minutes.ToString("D2"), seconds.ToString("D2"));
+            return string.Format("{0}:{1}", minutes.ToString("D2", System.Globalization.CultureInfo.InvariantCulture), 
+                seconds.ToString("D2", System.Globalization.CultureInfo.InvariantCulture));
         }
 
         public override void HandleInput (MenuInput input) {

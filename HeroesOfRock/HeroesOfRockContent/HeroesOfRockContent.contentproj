@@ -972,8 +972,8 @@
       <Processor>AnimationProcessor</Processor>
       <ProcessorParameters_Scale>0.3</ProcessorParameters_Scale>
     </Compile>
-    <Compile Include="Models\Buildings\LargeApartmentBuildingDiffuse_Graffiti.tga">
-      <Name>LargeApartmentBuildingDiffuse_Graffiti</Name>
+    <Compile Include="Models\Buildings\LargeBuildingDiffuse_G.tga">
+      <Name>LargeBuildingDiffuse_G</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

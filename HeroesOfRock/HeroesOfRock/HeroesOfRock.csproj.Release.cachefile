@@ -39,6 +39,10 @@ Content\Actors\StreetLight.xnb
 Content\Actors\PowerLinePole.xnb
 Content\Actors\Explosion1.xnb
 Content\Actors\EnemyWeakShieldedScared.xnb
+Content\Actors\LargeApartmentBuilding-1.xnb
+Content\Actors\Building_01-1.xnb
+Content\Actors\Building_02-1.xnb
+Content\Actors\SmallStore-1.xnb
 Content\GameVariables.xnb
 Content\Worlds\AlphaLevel.xnb
 Content\Worlds\LoadingLevel.xnb
@@ -203,6 +207,8 @@ Content\Models\Environment\TrashCanDiffuse.xnb
 Content\Models\Environment\TVDiffuse.xnb
 Content\Models\Environment\TVSpecular.xnb
 Content\Models\StandardEnemy\ShieldEnemyDiffuse.xnb
+Content\Models\Buildings\LargeBuildingDiffuse_G.xnb
+Content\Models\Buildings\SmallStoreDiffuse_Graffiti.xnb
 Content\UI\bepu_physics_logo_big.xnb
 Content\UI\Menu\blank.xnb
 Content\UI\Menu\background.xnb
@@ -296,6 +302,8 @@ Content\UI\Menu\perfect.xnb
 Content\UI\BloodSplatter\BloodSplatter01.xnb
 Content\UI\BloodSplatter\BloodSplatter02.xnb
 Content\Models\RangedEnemy\RocketDiffuse.xnb
+Content\Models\Buildings\Building01_Texture_Graffiti.xnb
+Content\Models\Buildings\Building02_Texture_Graffiti.xnb
 Content\Controls.xnb
 Content\MoveList.xnb
 Content\Audio\A-heavy.xnb

@@ -59,7 +59,7 @@ namespace GameLib
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
             defaultFont = Stage.Content.Load<SpriteFont>("DefaultFont");
-
+            
             particleEffect = new BasicEffect(graphicsDevice);
             //particleEffect.EnableDefaultLighting();
 
