@@ -213,8 +213,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
             spriteBatch.DrawString(font, "Final Score ", new Vector2(scoreRec.Center.X, scoreRec.Center.Y), Color.White, 0,
                       font.MeasureString("Final Score ") / 2, 2, SpriteEffects.None, 0);
 
-            spriteBatch.DrawString(font, score.ToString(), new Vector2(scoreRec.Center.X, scoreRec.Center.Y + (2 * font.LineSpacing)), Color.White, 0,
-                       font.MeasureString(score.ToString()) / 2, 2, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, score.ToString(System.Globalization.CultureInfo.InvariantCulture), new Vector2(scoreRec.Center.X, scoreRec.Center.Y + (2 * font.LineSpacing)), Color.White, 0,
+                       font.MeasureString(score.ToString(System.Globalization.CultureInfo.InvariantCulture)) / 2, 2, SpriteEffects.None, 0);
 
             if (drawPerfect)
                 spriteBatch.Draw(perfection, new Rectangle(scoreRec.Center.X - (int)(perfection.Width * 0.5) / 2, scoreRec.Bottom - 100, (int)(perfection.Width * 0.5),
