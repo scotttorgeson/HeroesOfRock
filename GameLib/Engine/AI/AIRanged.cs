@@ -335,6 +335,7 @@ namespace GameLib.Engine.AI
         {
             if(!hasAttacked)
             {
+                FaceTargetSnappedToPlane();
                 numAttacks--;
                 hasAttacked = true;
 
@@ -373,7 +374,7 @@ namespace GameLib.Engine.AI
                     _myMissile.GetAgent<AIMissile>().ReInit(ref pos);
                     _myMissile.WakeUp();
                 }
-                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Zero, false, -1, 10, 
+                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, -toPlayer, false, -1, 10, 
                                                 15, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero, 
                                                 Vector3.Zero, Vector3.Zero, "smoke");
 
@@ -495,7 +496,7 @@ namespace GameLib.Engine.AI
             _myMissile.WakeUp();
 
             if(pFX)
-                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Zero, false, -1, 10,
+                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Up, false, -1, 10,
                                             15, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero,
                                             Vector3.Zero, Vector3.Zero, "smoke");
             hasAttacked = true;

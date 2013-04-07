@@ -81,6 +81,33 @@ namespace GameLib.Engine.AttackSystem
         }
         private int numDeaths;
 
+        public int GetTotalScore
+        {
+            get
+            {
+                return score + KillStreakScore + RockGodScore;
+            }
+        }
+
+        public int KillStreakScore
+        {
+            get
+            {
+                return HighestKillStreak * scoreForKillStreak;
+            }
+        }
+
+        public int RockGodScore
+        {
+            get
+            {
+                if (numDeaths == 0)
+                    return scoreForRockGod;
+                //else
+                return 0;
+            }
+        }
+
         private float timeSinceLastMove;
 
         private float RockLevelCooldownTime;
@@ -94,6 +121,9 @@ namespace GameLib.Engine.AttackSystem
 
         private const int baseRate = 900;
         private int lerpRate;
+
+        private const int scoreForKillStreak = 1000;
+        private const int scoreForRockGod = 1000000;
 
         private bool dontKillActor = false; // for the loading level
 
@@ -311,7 +341,7 @@ namespace GameLib.Engine.AttackSystem
             rockLevel = (int)Math.Floor(rockLevelf);
             if (rockLevel < 1 && !dontKillActor)
             {
-                rockLevel = 0;
+                rockLevel = 1;
                 this.actor.NotifyDeathList();
             }
 

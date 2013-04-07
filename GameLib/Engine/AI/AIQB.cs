@@ -761,24 +761,27 @@ namespace GameLib.Engine.AI
             
             if (!isBound)
             {
-                /*Matrix proj = Stage.ActiveStage.GetQB<CameraQB>().ActiveCamera.ProjectionMatrix;
-                Matrix view = Stage.ActiveStage.GetQB<CameraQB>().ActiveCamera.ViewMatrix;
-                Vector3 leftCoord = Stage.renderer.GraphicsDevice.Viewport.Unproject(new Vector3(0,0,0), proj, view, CameraQB.WorldMatrix);
-                Vector3 rightCoord = Stage.renderer.GraphicsDevice.Viewport.Unproject(new Vector3(Stage.renderer.GraphicsDevice.Viewport.Width, 0, 0), 
-                    proj, view, CameraQB.WorldMatrix);*/
-                
+                CameraQB c = Stage.ActiveStage.GetQB<CameraQB>();
+                PlayerCamera p = (c.ActiveCamera as PlayerCamera);
+                float offset;
                 BEPUphysics.Entities.Prefabs.Box box1, box2;
                 if (MoveDirection == PlayerDirection.Right || MoveDirection == PlayerDirection.Left)
                 {
-                    Vector3 box1Center = new Vector3(center.X - boundOffset, center.Y, center.Z);
-                    Vector3 box2Center = new Vector3(center.X + boundOffset, center.Y, center.Z);
+                    offset = boundOffset;
+                    //offset = p.DesiredPositionOffset.Z * (float)Math.Tan(p.ProjectionMatrix.M11 * .5f);
+                    //offset -= (5 - p.DesiredPositionOffset.Y) * 1.5f;
+                    Vector3 box1Center = new Vector3(center.X - offset, center.Y, center.Z);
+                    Vector3 box2Center = new Vector3(center.X + offset, center.Y, center.Z);
                     box1 = new BEPUphysics.Entities.Prefabs.Box(box1Center, boundBoxThickness, 50.0f, 20.0f);
                     box2 = new BEPUphysics.Entities.Prefabs.Box(box2Center, boundBoxThickness, 50.0f, 20.0f);
                 }
                 else
                 {
-                    Vector3 box1Center = new Vector3(center.X, center.Y, center.Z - boundOffset);
-                    Vector3 box2Center = new Vector3(center.X, center.Y, center.Z + boundOffset);
+                    offset = boundOffset;
+                    //offset = p.DesiredPositionOffset.X * (float)Math.Tan(p.ProjectionMatrix.M11 * .5f);
+                    //offset -= (5 - p.DesiredPositionOffset.Y) * 1.5f;
+                    Vector3 box1Center = new Vector3(center.X, center.Y, center.Z - offset);
+                    Vector3 box2Center = new Vector3(center.X, center.Y, center.Z + offset);
                     box1 = new BEPUphysics.Entities.Prefabs.Box(box1Center, 20.0f, 50.0f, boundBoxThickness);
                     box2 = new BEPUphysics.Entities.Prefabs.Box(box2Center, 20.0f, 50.0f, boundBoxThickness);
                 }
@@ -828,11 +831,11 @@ namespace GameLib.Engine.AI
             if (isBound)
             {
                 if (MoveDirection == PlayerDirection.Right || MoveDirection == PlayerDirection.Left)
-                    return (enemyPos.X > playerBoundingBoxes[0].Position.X + boundBoxThickness * 2 && 
-                            enemyPos.X < playerBoundingBoxes[1].Position.X - boundBoxThickness * 2) ;
+                    return (enemyPos.X > playerBoundingBoxes[0].Position.X + boundBoxThickness && 
+                            enemyPos.X < playerBoundingBoxes[1].Position.X - boundBoxThickness) ;
                 else
-                    return (enemyPos.Z > playerBoundingBoxes[0].Position.Z + boundBoxThickness * 2 && 
-                            enemyPos.Z < playerBoundingBoxes[1].Position.Z - boundBoxThickness * 2);
+                    return (enemyPos.Z > playerBoundingBoxes[0].Position.Z + boundBoxThickness && 
+                            enemyPos.Z < playerBoundingBoxes[1].Position.Z - boundBoxThickness);
             }
             else
             {

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using GameLib.Engine.MenuSystem.Menus.MenuComponents;
 using GameLib.Engine.Particles;
 using Microsoft.Xna.Framework.Input;
+using GameLib.Engine.AttackSystem;
 
 namespace GameLib.Engine.MenuSystem.Menus {
     public class EndLevelMenu : GameMenu {
@@ -22,8 +23,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         private int baseScore;
         private int score;
-        private int highestLevel;
-        private int numHits;
         private int bonusPoints;
         private int killStreak;
         private int skullToDraw;
@@ -37,6 +36,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private bool checkForPerfect;
         private bool drawPerfect;
 
+        private RockMeter rm;
+
         public EndLevelMenu (string title)
             : base(title) {
             skullToDraw = 0;
@@ -46,7 +47,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.ActiveStage.PauseGame();
 
             // todo: update to save the real high score
-            Stage.SaveGame.AddHighScore(Stage.ActiveStage.Parm.GetString("AssetName"), baseScore);
+            Stage.SaveGame.AddHighScore(Stage.ActiveStage.Parm.GetString("AssetName"), rm.GetTotalScore);
             if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
                 Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
             Stage.SaveGame.SaveGameData();
@@ -54,11 +55,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         private void GetScoreData () {
             //get our data
-            GameLib.Engine.AttackSystem.RockMeter rm = PlayerAgent.Player.GetAgent<GameLib.Engine.AttackSystem.RockMeter>();
+            rm = PlayerAgent.Player.GetAgent<RockMeter>();
 
             baseScore = rm.Score;
-            highestLevel = rm.HighestRockLevel;
-            numHits = rm.NumTimesHit;
             timeOnLevel = Stage.ActiveStage.Time;
             killStreak = 0;
             skullToDraw = 0;
@@ -199,14 +198,17 @@ namespace GameLib.Engine.MenuSystem.Menus {
             spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
 
-            spriteBatch.Draw(skullCounters[skullToDraw], skullRec, Color.White);
+            if (doneLerpingKillStreak)
+            {
+                spriteBatch.Draw(skullCounters[skullToDraw], skullRec, Color.White);
 
 
-            spriteBatch.DrawString(font2, "Kill Streak", new Vector2(skullRec.Center.X, skullRec.Top + 5), Color.White, 0,
-                      font.MeasureString("Kill Streak") / 2, 2, SpriteEffects.None, 0);
+                spriteBatch.DrawString(font2, "Kill Streak", new Vector2(skullRec.Center.X, skullRec.Top + 5), Color.White, 0,
+                          font.MeasureString("Kill Streak") / 2, 2, SpriteEffects.None, 0);
 
-            spriteBatch.DrawString(font2, "x" + killStreak, new Vector2(skullRec.Center.X + 50, skullRec.Center.Y), Color.White, 0,
-                      font.MeasureString("x" + killStreak) / 2, 2, SpriteEffects.None, 0);
+                spriteBatch.DrawString(font2, "x" + killStreak, new Vector2(skullRec.Center.X + 50, skullRec.Center.Y), Color.White, 0,
+                          font.MeasureString("x" + killStreak) / 2, 2, SpriteEffects.None, 0);
+            }
 
             spriteBatch.DrawString(font, "Final Score ", new Vector2(scoreRec.Center.X, scoreRec.Center.Y), Color.White, 0,
                       font.MeasureString("Final Score ") / 2, 2, SpriteEffects.None, 0);
@@ -241,31 +243,27 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         private void TallySkulls () {
 
-            if (killStreak < PlayerAgent.Player.GetAgent<GameLib.Engine.AttackSystem.RockMeter>().KillStreak - 1) {
-                if (killStreak == 5) {
+            killStreak = rm.HighestKillStreak;
+                if (killStreak >= 5) {
                     skullToDraw = 1;
                     Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
-                } else if (killStreak == 20) {
+                } else if (killStreak >= 20) {
                     skullToDraw = 2;
                     Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
-                } else if (killStreak == 50) {
+                } else if (killStreak >= 50) {
                     skullToDraw = 3;
                     Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
                 }
-                killStreak++;
-            } else {
                 doneLerpingKillStreak = true;
                 doneLerpingScore = false;
-                bonusPoints = killStreak * 1000;
+                bonusPoints = rm.KillStreakScore;
                 Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(new Vector2(skullRec.Center.X, skullRec.Top), new Vector2(0, 10), 3f, "+" + bonusPoints);
-            }
         }
 
-
         private void CheckForPerfect () {
-            if (!Stage.HasDied) {
+            bonusPoints = rm.RockGodScore;
+            if (bonusPoints > 0) {
                 drawPerfect = true;
-                bonusPoints = 1000000;
                 Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(Vector2.Zero, new Vector2(0, 10), 3f, "+" + bonusPoints);
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
             }

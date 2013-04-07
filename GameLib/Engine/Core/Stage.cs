@@ -51,9 +51,6 @@ namespace GameLib
                 GlobalGameParms.initialized = true;
             }
 
-            if (ActiveStage != null && ActiveStage.Parm.HasParm("AssetName") && !ActiveStage.Parm.GetString("AssetName").Equals(file))
-                HasDied = false;
-
             LoadStage( Content.Load<ParameterSet>("Worlds/" + file), blockingLoad );
         }
 
@@ -356,9 +353,6 @@ namespace GameLib
         }
 
         public static bool QuitGame = false;
-
-        public static bool HasDied { get; set; }
-
 
         public static SaveGame SaveGame;
 

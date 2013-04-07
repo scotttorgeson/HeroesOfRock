@@ -659,7 +659,6 @@ namespace GameLib
         public void OnPlayerDeath()
         {
             Player.Revive(ref respawnPosition, ref respawnRotation);
-            Stage.HasDied = true;
         }
         #endregion
 

@@ -23,11 +23,9 @@ namespace GameLib.Engine.MenuSystem.HUD.HudComponents {
         private Rectangle numberArea;
         private Rectangle numberPieceArea;
         private Rectangle pointerArea;
-        private Rectangle knobArea;
         private Rectangle knobBGArea;
         private Rectangle knobGlowArea;
         
-        private float rotationAngle;
         private float knobScale;
         private float glowAlpha;
 
@@ -37,10 +35,11 @@ namespace GameLib.Engine.MenuSystem.HUD.HudComponents {
         private int glowDir;
         private int currentKnobNumber;
 
+        private float[] knobAngles = new float[] { 0, -.495f, -.959f, -1.46f, -1.959f, -2.429f, -2.931f, -3.412f, -3.901f, -4.474f, -5.104f };
+
         public HealthKnob (Rectangle area) {
             this.area = area;
             this.currentKnobNumber = 1;
-            this.rotationAngle = 0;
             this.glowAlpha = 0;
             this.glowDir = 1;
             this.numberPieces = new Texture2D[11];
@@ -52,8 +51,7 @@ namespace GameLib.Engine.MenuSystem.HUD.HudComponents {
         public void Update (float dt) {
             int rockLevel = (int)PlayerAgent.Player.GetAgent<RockMeter>().RockLevel;
             //rotate knob
-            if (rockLevel != currentKnobNumber)
-                RotateKnobTo(rockLevel);
+            currentKnobNumber = rockLevel;
             
             //logic for knob glow
             if (rockLevel > 10) {
@@ -69,12 +67,12 @@ namespace GameLib.Engine.MenuSystem.HUD.HudComponents {
 #if DEBUG && WINDOWS
             ControlsQB c = Stage.ActiveStage.GetQB<ControlsQB>();
             if (c.CurrentKeyboardState.IsKeyDown(Keys.Up) && c.LastKeyboardState.IsKeyUp(Keys.Up)) {
-                if(currentKnobNumber != 11)
-                    RotateKnobTo(currentKnobNumber + 1);
+                if (currentKnobNumber != 11)
+                    currentKnobNumber++;
             }
             if (c.CurrentKeyboardState.IsKeyDown(Keys.Down) && c.LastKeyboardState.IsKeyUp(Keys.Down)) {
                 if (currentKnobNumber != 1)
-                    RotateKnobTo(currentKnobNumber - 1);
+                    currentKnobNumber--;
             }
 #endif
         }
@@ -116,24 +114,8 @@ namespace GameLib.Engine.MenuSystem.HUD.HudComponents {
             Stage.renderer.SpriteBatch.Draw(knobBG, knobBGArea, Color.White);
             Stage.renderer.SpriteBatch.Draw(pointer, pointerArea, colors[currentKnobNumber-1]);
             Stage.renderer.SpriteBatch.Draw(knobGlow, knobGlowArea, Color.White * glowAlpha);
-            Stage.renderer.SpriteBatch.Draw(knob, knobPosition, null, Color.White, rotationAngle, knobOrigin, knobScale, SpriteEffects.None, 0);
+            Stage.renderer.SpriteBatch.Draw(knob, knobPosition, null, Color.White, knobAngles[currentKnobNumber-1], knobOrigin, knobScale, SpriteEffects.None, 0);
             Stage.renderer.SpriteBatch.Draw(numberPieces[currentKnobNumber-1], numberPieceArea, Color.White);
-        }
-
-       
-
-        /// <summary>
-        /// Rotates the knob.
-        /// </summary>
-        /// <param name="number"></param>
-        private void RotateKnobTo (int number) {
-            int delta = currentKnobNumber - number;
-            float degree = .46f;
-
-           // if (number > 9 || currentKnobNumber > 9) { degree += .05f; }
-
-            rotationAngle += (degree * delta);
-            currentKnobNumber = number;
         }
     }
 }
