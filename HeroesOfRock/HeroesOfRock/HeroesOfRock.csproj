@@ -134,10 +134,6 @@
       <Project>{2A9D2227-78D7-4804-B6D1-560BB43AE911}</Project>
       <Name>BEPUphysics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\EasyStorage\EasyStorage [Windows].csproj">
-      <Project>{A89EB1D5-B286-48EB-A864-315ABCDAA024}</Project>
-      <Name>EasyStorage [Windows]</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GameLib\GameLib.csproj">
       <Project>{FE04795D-7C33-4860-9263-2AAE893B9FF3}</Project>
       <Name>GameLib</Name>

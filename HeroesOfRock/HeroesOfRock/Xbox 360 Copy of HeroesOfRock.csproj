@@ -93,10 +93,6 @@
       <Project>{18ad00ee-4898-4b18-baae-c24d3afd999b}</Project>
       <Name>Xbox 360 Copy (3) of BEPUphysics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\EasyStorage\EasyStorage [Xbox].csproj">
-      <Project>{46C81A1E-8509-4B35-AE33-121730BDD910}</Project>
-      <Name>EasyStorage [Xbox]</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\GameLib\Xbox 360 Copy of GameLib.csproj">
       <Project>{6a3b3956-4850-4441-9c01-bcfc19947cb3}</Project>
       <Name>Xbox 360 Copy of GameLib</Name>

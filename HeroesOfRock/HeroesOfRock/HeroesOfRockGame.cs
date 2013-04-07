@@ -9,12 +9,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using BEPUphysics;
-//using BEPUphysicsDrawer;
 using BEPUphysics.Collidables;
 using GameLib;
 using GameLib.Engine.MenuSystem;
 using GameLib.Engine.MenuSystem.Menus;
-using EasyStorage;
 
 //  svn://lenny.eng.utah.edu/home/torgeson/HeroesOfRock
 
