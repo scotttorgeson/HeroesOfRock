@@ -84,7 +84,7 @@ namespace GameLib.Engine.MenuSystem {
 
                 RockMeter rockMeter = PlayerAgent.Player.GetAgent<RockMeter>();
                 //draw score
-                String score = rockMeter.Score.ToString();
+                String score = rockMeter.Score.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 Vector2 scorePos = new Vector2(scoreRec.Center.X - (font.MeasureString(score).Length() / 2), scoreRec.Center.Y);
                 Stage.renderer.SpriteBatch.Draw(scoreBG, scoreRec, Color.White);               
                 Stage.renderer.SpriteBatch.DrawString(font, score, scorePos, Color.White);

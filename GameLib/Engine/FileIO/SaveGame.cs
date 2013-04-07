@@ -113,17 +113,27 @@ namespace GameLib
                 {
                     saveDevice.SaveAsync("HeroesOfRock", "HeroesOfRockSave.txt", stream =>
                     {
-                        using (System.IO.StreamWriter writer = new System.IO.StreamWriter(stream))
+                        try
                         {
-                            // write all the levels, and the scores for them
-                            foreach (string level in levelsUnlocked)
+                            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(stream))
                             {
-                                List<float> highScores = GetHighScores(level);
-                                writer.Write(level);
-                                foreach (float score in highScores)
-                                    writer.Write(' ' + score.ToString());
-                                writer.Write(writer.NewLine);
+                                // write all the levels, and the scores for them
+                                foreach (string level in levelsUnlocked)
+                                {
+                                    List<float> highScores = GetHighScores(level);
+                                    writer.Write(level);
+                                    foreach (float score in highScores)
+                                        writer.Write(' ' + score.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                                    writer.Write(writer.NewLine);
+                                }
                             }
+                        }
+                        catch(Exception e)
+                        {
+                            // something bad happened while saving
+#if DEBUG
+                            System.Diagnostics.Debug.WriteLine(e.Message);
+#endif
                         }
                     });
                     saveGameRequested = false;
@@ -150,43 +160,57 @@ namespace GameLib
                     {
                         saveDevice.LoadAsync("HeroesOfRock", "HeroesOfRockSave.txt", stream =>
                         {
-                            using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
+                            try
                             {
-                                bool fileOk = true;
-                                while (!reader.EndOfStream && fileOk)
+                                using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
                                 {
-                                    string line = reader.ReadLine();
-                                    string[] split = line.Split();
-
-                                    if (split.Length > 1) // we should have at least the level name, and 1 score
+                                    bool fileOk = true;
+                                    while (!reader.EndOfStream && fileOk)
                                     {
-                                        string level = split[0];
-                                        UnlockLevel(level);
-                                        for (int i = 1; (i < HIGH_SCORES_PER_LEVEL) && (i < split.Length - 1); i++)
+                                        string line = reader.ReadLine();
+                                        string[] split = line.Split();
+
+                                        if (split.Length > 1) // we should have at least the level name, and 1 score
                                         {
-                                            float score = 0.0f;
-                                            if (float.TryParse(split[i], out score))
-                                                AddHighScore(level, score);
-                                            else
+                                            string level = split[0];
+                                            UnlockLevel(level);
+                                            for (int i = 1; (i < HIGH_SCORES_PER_LEVEL) && (i < split.Length - 1); i++)
+                                            {
+                                                float score = 0.0f;
+                                                if (float.TryParse(split[i], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out score))
+                                                    AddHighScore(level, score);
+                                                else
+                                                {
+                                                    // corrupted file, bad news, maybe they pulled the hard drive out mid save?
+#if DEBUG
+                                                    System.Diagnostics.Debug.Assert(false, "File corrupted!!");
+#endif
+                                                    fileOk = false;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // make sure its not an empty line
+                                            if (!(split.Length == 1 && split[0] == ""))
                                             {
                                                 // corrupted file, bad news, maybe they pulled the hard drive out mid save?
 #if DEBUG
                                                 System.Diagnostics.Debug.Assert(false, "File corrupted!!");
 #endif
                                                 fileOk = false;
-                                                break;
                                             }
                                         }
                                     }
-                                    else
-                                    {
-                                        // corrupted file, bad news, maybe they pulled the hard drive out mid save?
-#if DEBUG
-                                        System.Diagnostics.Debug.Assert(false, "File corrupted!!");
-#endif
-                                        fileOk = false;
-                                    }
                                 }
+                            }
+                            catch (Exception e)
+                            {
+                                // something bad happened while loading
+#if DEBUG
+                                System.Diagnostics.Debug.WriteLine(e.Message);
+#endif
                             }
                         });
 

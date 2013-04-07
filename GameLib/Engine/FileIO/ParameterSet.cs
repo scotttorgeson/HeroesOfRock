@@ -50,7 +50,7 @@ namespace GameLib
             System.Diagnostics.Debug.Assert(HasParm(key));
             if (prefix != null)
                 key = prefix + key;
-            return float.Parse(dictionary[key]);
+            return float.Parse(dictionary[key], System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public int GetInt(string key)
@@ -58,7 +58,7 @@ namespace GameLib
             System.Diagnostics.Debug.Assert(HasParm(key));
             if (prefix != null)
                 key = prefix + key;
-            return int.Parse(dictionary[key]);
+            return int.Parse(dictionary[key], System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public string GetString(string key)
@@ -75,7 +75,7 @@ namespace GameLib
             if (prefix != null)
                 key = prefix + key;
             string[] parm = dictionary[key].Split();
-            return new Vector2(float.Parse(parm[0]), float.Parse(parm[1]));
+            return new Vector2(float.Parse(parm[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(parm[1], System.Globalization.CultureInfo.InvariantCulture));
         }
 
         public Vector3 GetVector3(string key)
@@ -84,7 +84,7 @@ namespace GameLib
             if (prefix != null)
                 key = prefix + key;
             string[] parm = dictionary[key].Split();
-            return new Vector3(float.Parse(parm[0]), float.Parse(parm[1]), float.Parse(parm[2]));
+            return new Vector3(float.Parse(parm[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(parm[1], System.Globalization.CultureInfo.InvariantCulture), float.Parse(parm[2], System.Globalization.CultureInfo.InvariantCulture));
         }
 
         public Vector4 GetVector4(string key)
@@ -93,7 +93,7 @@ namespace GameLib
             if (prefix != null)
                 key = prefix + key;
             string[] parm = dictionary[key].Split();
-            return new Vector4(float.Parse(parm[0]), float.Parse(parm[1]), float.Parse(parm[2]), float.Parse(parm[3]));
+            return new Vector4(float.Parse(parm[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(parm[1], System.Globalization.CultureInfo.InvariantCulture), float.Parse(parm[2], System.Globalization.CultureInfo.InvariantCulture), float.Parse(parm[3], System.Globalization.CultureInfo.InvariantCulture));
         }
 
         public bool GetBool(string key)
@@ -110,10 +110,10 @@ namespace GameLib
             if (prefix != null)
                 key = prefix + key;
             string[] s = key.Split();
-            float x = float.Parse(s[0]);
-            float y = float.Parse(s[1]);
-            float z = float.Parse(s[2]);
-            float w = float.Parse(s[3]);
+            float x = float.Parse(s[0], System.Globalization.CultureInfo.InvariantCulture);
+            float y = float.Parse(s[1], System.Globalization.CultureInfo.InvariantCulture);
+            float z = float.Parse(s[2], System.Globalization.CultureInfo.InvariantCulture);
+            float w = float.Parse(s[3], System.Globalization.CultureInfo.InvariantCulture);
             return new Quaternion(x, y, z, w);
         }
 
@@ -121,7 +121,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = q.X.ToString() + ' ' + q.Y.ToString() + ' ' + q.Z.ToString() + ' ' + q.W.ToString();
+            string value = q.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + q.Y.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + q.Z.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + q.W.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -129,7 +129,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = v.X.ToString() + ' ' + v.Y.ToString() + ' ' + v.Z.ToString();
+            string value = v.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Y.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Z.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -137,7 +137,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = v.X.ToString() + ' ' + v.Y.ToString();
+            string value = v.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -145,7 +145,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = f.ToString();
+            string value = f.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -153,7 +153,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = b.ToString();
+            string value = b.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -169,7 +169,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = v.X.ToString() + ' ' + v.Y.ToString() + ' ' + v.Z.ToString() + ' ' + v.W.ToString();
+            string value = v.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Y.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Z.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.W.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -177,7 +177,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = q.X.ToString() + ' ' + q.Y.ToString() + ' ' + q.Z.ToString() + ' ' + q.W.ToString();
+            string value = q.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + q.Y.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + q.Z.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + q.W.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -185,7 +185,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = v.X.ToString() + ' ' + v.Y.ToString() + ' ' + v.Z.ToString();
+            string value = v.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Y.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Z.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -193,7 +193,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = v.X.ToString() + ' ' + v.Y.ToString();
+            string value = v.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -201,7 +201,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = f.ToString();
+            string value = f.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -209,7 +209,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = b.ToString();
+            string value = b.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 
@@ -225,7 +225,7 @@ namespace GameLib
         {
             if (prefix != null)
                 key = prefix + key;
-            string value = v.X.ToString() + ' ' + v.Y.ToString() + ' ' + v.Z.ToString() + ' ' + v.W.ToString();
+            string value = v.X.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Y.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.Z.ToString(System.Globalization.CultureInfo.InvariantCulture) + ' ' + v.W.ToString(System.Globalization.CultureInfo.InvariantCulture);
             dictionary[key] = value;
         }
 

@@ -14,8 +14,8 @@ namespace GameLib.Engine.MenuSystem.Menus.MenuComponents {
             base(""){
             this.graphic = Stage.Content.Load<Texture2D>("UI/Menu/"+textureName);
             this.position = position;
-            this.dim = new Rectangle(Int32.Parse(position.X.ToString())-(graphic.Width/2), 
-                Int32.Parse(position.Y.ToString())-(graphic.Height/2), graphic.Width, graphic.Height);
+            this.dim = new Rectangle(Int32.Parse(position.X.ToString(System.Globalization.CultureInfo.InvariantCulture), System.Globalization.CultureInfo.InvariantCulture) - (graphic.Width / 2),
+                Int32.Parse(position.Y.ToString(System.Globalization.CultureInfo.InvariantCulture), System.Globalization.CultureInfo.InvariantCulture) - (graphic.Height / 2), graphic.Width, graphic.Height);
             this.CanSelect = false;
         }
         

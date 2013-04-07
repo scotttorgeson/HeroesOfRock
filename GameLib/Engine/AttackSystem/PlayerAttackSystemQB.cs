@@ -194,7 +194,7 @@ namespace GameLib.Engine.AttackSystem
                                 CameraQB.ProjectionMatrix, CameraQB.ViewMatrix, Matrix.Identity);
 
                             Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(new Vector2(screenPos.X, screenPos.Y + 10), -50 * Vector2.UnitY,
-                                2.0f, increaseRockMeter.ToString());
+                                2.0f, increaseRockMeter.ToString(System.Globalization.CultureInfo.InvariantCulture));
                         }
                     }
                     else //you hit an enemy but dealt no damage 

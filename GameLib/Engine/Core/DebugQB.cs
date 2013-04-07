@@ -108,10 +108,10 @@ namespace GameLib
         {
 #if DEBUG
             // debug menu info
-            Renderer.Instance.SpriteBatch.DrawString(font, avgFps.ToString("F"), fpsPosition, Color.White);
+            Renderer.Instance.SpriteBatch.DrawString(font, avgFps.ToString("F", System.Globalization.CultureInfo.InvariantCulture), fpsPosition, Color.White);
 
 #if WINDOWS
-            Renderer.Instance.SpriteBatch.DrawString(font, "RAM: " + (ram / 1024f / 1024f).ToString("F") + " MB", ramPosition, Color.White);
+            Renderer.Instance.SpriteBatch.DrawString(font, "RAM: " + (ram / 1024f / 1024f).ToString("F", System.Globalization.CultureInfo.InvariantCulture) + " MB", ramPosition, Color.White);
             Renderer.Instance.SpriteBatch.DrawString(font, "CPU: " + (cpu) + " %", cpuPosition, Color.White);
 #endif
             //Renderer.Instance.SpriteBatch.DrawString(font, CameraQB.ToString(), new Vector2(20, 40), Color.White);

@@ -86,7 +86,7 @@ namespace GameLib.Engine.MenuSystem.HUD.HudComponents {
             
             
             for(int i = 0; i < 11; i++){
-                numberPieces[i] = Stage.Content.Load<Texture2D>("UI/HUD/number"+ (i+1).ToString());
+                numberPieces[i] = Stage.Content.Load<Texture2D>("UI/HUD/number" + (i + 1).ToString(System.Globalization.CultureInfo.InvariantCulture));
             }
 
             //setup scalers
