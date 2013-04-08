@@ -115,6 +115,7 @@ namespace GameLib
 
         public void StartFreeCam()
         {
+#if DEBUG || WINDOWS
             if (!freeCamEnabled)
             {
                 // jump to free camera
@@ -123,16 +124,19 @@ namespace GameLib
                 JumpToCamera(freeCamera);
                 freeCamEnabled = true;
             }
+#endif
         }
 
         public void EndFreeCam()
         {
+#if DEBUG || WINDOWS
             if (freeCamEnabled)
             {
                 // remove the free camera
                 cameras.RemoveAt(0);
                 freeCamEnabled = false;
             }
+#endif
         }
 
         public FreeCamera EditorCamera

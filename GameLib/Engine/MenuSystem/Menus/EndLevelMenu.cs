@@ -87,7 +87,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
             ExitScreen();
-            Stage.LoadStage(Stage.ActiveStage.Parm.GetString("NextLevel"), true);
+            LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
         }
 
         void QuitGame (object sender, EventArgs e) {

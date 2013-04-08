@@ -48,6 +48,11 @@ namespace GameLib.Engine.Particles
         public override void LoadContent()
         {
             floatingTextFont = Stage.Content.Load<SpriteFont>("belligerent");
+            Stage.Content.Load<Texture2D>("ParticleFX/blood1");
+            Stage.Content.Load<Texture2D>("ParticleFX/blood2");
+            Stage.Content.Load<Texture2D>("ParticleFX/explosion");
+            Stage.Content.Load<Texture2D>("ParticleFX/smoke");
+            Stage.Content.Load<Texture2D>("ParticleFX/dust2");
         }
 
         public override void Update(float dt)

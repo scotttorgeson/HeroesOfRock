@@ -46,10 +46,10 @@ namespace HeroesOfRock
         /// </summary>
         protected override void Initialize()
         {
-//#if WINDOWS
+#if WINDOWS || (XBOX && RELEASE)
             IsFixedTimeStep = false; //allows a variable frame rate
             graphics.SynchronizeWithVerticalRetrace = false; // turns off vsync
-//#endif
+#endif
 
             graphics.PreferMultiSampling = true;
 

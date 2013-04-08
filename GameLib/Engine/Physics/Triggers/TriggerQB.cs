@@ -119,7 +119,7 @@ namespace GameLib
 
         public override void Update(float dt)
         {
-#if DEBUG
+#if DEBUG && WINDOWS
             if ( Stage.ActiveStage.GetQB<ControlsQB>().CurrentKeyboardState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.V) && Stage.ActiveStage.GetQB<ControlsQB>().LastKeyboardState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.V) )
             {
                 ShowTriggers(!TriggersShown);
