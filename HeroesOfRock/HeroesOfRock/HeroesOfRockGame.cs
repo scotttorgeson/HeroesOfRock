@@ -56,9 +56,6 @@ namespace HeroesOfRock
             graphics.PreferredBackBufferWidth = Renderer.ScreenWidth;
             graphics.PreferredBackBufferHeight = Renderer.ScreenHeight;
 
-#if !DEBUG && WINDOWS
-            graphics.IsFullScreen = true;
-#endif
             graphics.ApplyChanges();
 
             Stage.InitSaveGame(this);
