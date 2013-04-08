@@ -64,6 +64,8 @@ namespace GameLib
 
         PlayerAnimationAgent playerAnimation;
 
+        float jumpTime = 0.80f;
+
         #endregion
 
         #region Direction
@@ -199,7 +201,7 @@ namespace GameLib
                 GamePadType gamePadType = Stage.ActiveStage.GetQB<ControlsQB>().GetGamePadType();
 
                 if (gamePadType == GamePadType.AlternateGuitar || gamePadType == GamePadType.Guitar)
-                    updateGuitar(dt);
+                    updateGuitarWithStrum(dt);
                 else
                     updateGamePad(dt);
             }
@@ -215,7 +217,7 @@ namespace GameLib
                     attackAnimationTimer = 0.0f;
             }
             else if (State == PlayerState.Jumping)
-                playerAnimation.PlayAnimation(PlayerAnimationAgent.AnimationTypes.Jump, actor.PhysicsObject.CharacterController.DashTime);
+                playerAnimation.PlayAnimation(PlayerAnimationAgent.AnimationTypes.Jump, jumpTime);
             else if(actor.PhysicsObject.CharacterController.Dashing)
                 playerAnimation.PlayAnimation(PlayerAnimationAgent.AnimationTypes.Dash, actor.PhysicsObject.CharacterController.DashTime);
             else if (State==PlayerState.Running)
@@ -290,7 +292,7 @@ namespace GameLib
             }
         }
 
-        private void updateGuitar(float dt)
+        private void updateGuitarWithStrum(float dt)
         {
             int dir = (int)strum.value;
             //if all the guitar face buttons are not pressed then move
@@ -326,23 +328,24 @@ namespace GameLib
             }
 
             //jumping
-            if (guitarJump.IsNewAction)
+            if (guitarJump.IsNewAction  || leftBumper.IsNewAction && strum.value != 0.0f || leftBumper.value != 0.0f && strum.IsNewAction)
             {
                 State = PlayerState.Jumping;
                 actor.PhysicsObject.CharacterController.Jump();
+                recoveryTimer = jumpTime;
             }
 
             //holding strum and pushing dash button
             if (strum.value != 0.0f)
             {
-                if (A.IsNewAction || leftBumper.IsNewAction)
+                if (A.IsNewAction)
                     Dash(dir);
             }
 
             //all strumming actions
             if (strum.IsNewAction)
             {
-                if (A.value != 0.0f || leftBumper.value != 0.0f)
+                if (A.value != 0.0f)
                     Dash(dir);
                 else
                 {
