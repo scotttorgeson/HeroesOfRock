@@ -14,6 +14,7 @@ DashFlowWindow=0.5
 LockOnRange=2.0
 StartingRockLevel=6
 ShutdownInsteadOfKill=true
+isStrumMode=false
 
 ModelType=Skinned
 WeakAttackAnimation=MainCharacter\MainCharacter_WeakAttack
