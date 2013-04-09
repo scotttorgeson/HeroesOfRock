@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using GameLib.Engine.AI;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace GameLib
@@ -16,7 +17,7 @@ namespace GameLib
         InputAction[][] unpauseInput;
         bool[] allInputsRequired;
 #else
-        InputAction Green;
+        InputAction Red;
 #endif
         InputAction strum;
         InputAction back;
@@ -26,15 +27,27 @@ namespace GameLib
         bool finished;
         bool returnToMenu;
         ControlsQB cQB;
+        Microsoft.Xna.Framework.Input.GamePadType gp;
+
+        Texture2D tutImg;
+        Rectangle tutImgDim;
+
+        Texture2D guitarCont;
+        Rectangle guitarContDim;
+        Texture2D controllerCont;
+        Rectangle controllerContDim;
 
         //variables specifying the current progress
         bool triggered;
+
+        bool showing;
+        bool acceptingSkip;
 
         int tutIndex;
         int numTuts;
         float timer;
 
-        public Microsoft.Xna.Framework.Graphics.Texture2D[] tutImg { get; private set; }
+        public Texture2D[] tutImgs { get; private set; }
         public Rectangle[] imgDim { get; private set; }
 
 
@@ -107,6 +120,13 @@ namespace GameLib
 
         public override void Initialize(Stage stage)
         {
+            guitarCont = Stage.Content.Load<Texture2D>("UI/Tutorial/guitarContinueTut");
+            guitarContDim = new Rectangle((int)(Renderer.ScreenWidth * .5f) - 150, (int)(Renderer.ScreenHeight * .7f), 300, 100);
+
+            controllerCont = Stage.Content.Load<Texture2D>("UI/Tutorial/controllerContinueTut");
+            controllerContDim = new Rectangle((int)(Renderer.ScreenWidth * .5f) - 150, (int)(Renderer.ScreenHeight * .7f), 300, 100);
+
+            stage.GetQB<TriggerQB>().RegisterDrawFunction(Draw);
             numTuts = actor.Parm.GetInt("Num");
 
 #if INPUTREQUIRED
@@ -117,18 +137,18 @@ namespace GameLib
             killEnemies = new bool[numTuts];
             spawnEnemy = new bool[numTuts];
             triggerDelay = new float[numTuts];
-            tutImg = new Microsoft.Xna.Framework.Graphics.Texture2D[numTuts];
+            tutImgs = new Microsoft.Xna.Framework.Graphics.Texture2D[numTuts];
             imgDim = new Rectangle[numTuts];
 
             //get the control scheme
             cQB = stage.GetQB<ControlsQB>();
 
 #if !INPUTREQUIRED
-            Green = cQB.GetInputAction("A");
+            Red = cQB.GetInputAction("B");
             strum = cQB.GetInputAction("Strum");
 #endif
 
-            Microsoft.Xna.Framework.Input.GamePadType gp = cQB.GetGamePadType();
+           gp = cQB.GetGamePadType();
 
             Vector2 pos, size;
             switch (gp)
@@ -140,7 +160,7 @@ namespace GameLib
 #if INPUTREQUIRED
                         GetInput(j,actor.Parm.GetString("GuitarInput" + j), ref cQB);
 #endif
-                        tutImg[j] = Stage.Content.Load<Microsoft.Xna.Framework.Graphics.Texture2D>("UI/Tutorial/" + actor.Parm.GetString("GuitarImage" + j));
+                        tutImgs[j] = Stage.Content.Load<Texture2D>("UI/Tutorial/" + actor.Parm.GetString("GuitarImage" + j));
                         pos = actor.Parm.GetVector2("GuitarImagePos" + j);
                         size = actor.Parm.GetVector2("GuitarImageSize" + j);
                         imgDim[j] = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
@@ -152,9 +172,12 @@ namespace GameLib
 #if INPUTREQUIRED
                         GetInput(j, actor.Parm.GetString("ControllerInput" + j), ref cQB);
 #endif
-                        tutImg[j] = Stage.Content.Load<Microsoft.Xna.Framework.Graphics.Texture2D>("UI/Tutorial/" + actor.Parm.GetString("ControllerImage" + j));
+                        tutImgs[j] = Stage.Content.Load<Texture2D>("UI/Tutorial/" + actor.Parm.GetString("GuitarImage" + j));
+                        //tutImgs[j] = Stage.Content.Load<Texture2D>("UI/Tutorial/" + actor.Parm.GetString("ControllerImage" + j));
                         pos = actor.Parm.GetVector2("ControllerImagePos" + j);
                         size = actor.Parm.GetVector2("ControllerImageSize" + j);
+                        //pos = actor.Parm.GetVector2("ControllerImagePos" + j);
+                        //size = actor.Parm.GetVector2("ControllerImageSize" + j);
                         imgDim[j] = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
                     }
                     break;
@@ -218,24 +241,28 @@ namespace GameLib
 
         new public void Update(float dt)
         {
+            timer -= dt;
             if (!triggered) return;
             if (finished)
             {
-                timer -= dt;
                 if (timer <= 0)
                 {
                     Lock();
                 }
             }
-            
-            bool metRequirements = false;
-
-            Microsoft.Xna.Framework.Input.GamePadType gp = cQB.GetGamePadType();
-            if (gp == Microsoft.Xna.Framework.Input.GamePadType.Guitar ||
-                gp == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar)
+            else if (timer <= 0)
             {
-                if (strum.IsNewAction)
+                acceptingSkip = true;
+                bool metRequirements = false;
+
+                //get this every time to account for controller switching?
+                //note the tutorial images won't actually switch, but the press to continue will
+                gp = cQB.GetGamePadType();
+                if (gp == Microsoft.Xna.Framework.Input.GamePadType.Guitar ||
+                    gp == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar)
                 {
+                    if (strum.IsNewAction)
+                    {
 #if INPUTREQUIRED
                     if (unpauseInput.Length == 1 && unpauseInput[tutIndex][0].IsNewAction)
                     {
@@ -254,13 +281,13 @@ namespace GameLib
                             if (unpauseInput[tutIndex][i].value != 0) metRequirements = true;
                     }
 #else
-                    metRequirements = (Green.value != 0);
+                        metRequirements = (Red.value != 0);
 #endif
-                    if (metRequirements) UnLock(dt);
+                        if (metRequirements) UnLock(dt);
+                    }
                 }
-            }
-            else
-            {
+                else
+                {
 #if INPUTREQUIRED
                 if (unpauseInput.Length == 1 && unpauseInput[tutIndex][0].IsNewAction)
                 {
@@ -279,9 +306,10 @@ namespace GameLib
                         if (unpauseInput[tutIndex][i].value != 0) metRequirements = true;
                 }
 #else
-                metRequirements = Green.IsNewAction;
+                    metRequirements = Red.IsNewAction;
 #endif
-                if (metRequirements) UnLock(dt);
+                    if (metRequirements) UnLock(dt);
+                }
             }
         }
 
@@ -299,11 +327,11 @@ namespace GameLib
 
         private void UnLock(float dt)
         {
-
             finished = true;
             timer = triggerDelay[tutIndex];
 
-            Stage.ActiveStage.GetQB<TriggerQB>().tutorialPic.showing = false;
+            showing = false;
+            acceptingSkip = false;
 
             if (killEnemies[tutIndex])
                 Stage.ActiveStage.GetQB<AIQB>().KillAll();
@@ -317,16 +345,39 @@ namespace GameLib
 
         private void Lock()
         {
-
-            Stage.ActiveStage.GetQB<TriggerQB>().tutorialPic.changeImage(tutImg[tutIndex], imgDim[tutIndex], true);
-
-            if (spawnEnemy[tutIndex])
+            if (tutIndex < numTuts)
             {
-                Vector3 pos = actor.PhysicsObject.Position;
-                pos.Y += .5f;
-                Vector3 rot = Vector3.Zero;
-                Stage.ActiveStage.GetQB<AIQB>().Spawn("EnemyDumb", ref pos, ref rot, -1);
+                tutImg = tutImgs[tutIndex];
+                tutImgDim = imgDim[tutIndex];
+
+                if (spawnEnemy[tutIndex])
+                {
+                    Vector3 pos = actor.PhysicsObject.Position;
+                    pos.Y += 3.0f;
+                    Vector3 rot = Vector3.Zero;
+                    Stage.ActiveStage.GetQB<AIQB>().Spawn("EnemyDumb", ref pos, ref rot, -1);
+                }
             }
+            finished = false;
+            showing = true;
+            timer = 3.0f;
+        }
+
+        public void Draw()
+        {
+            //draw press to continue
+            if (acceptingSkip)
+            {
+                if (gp == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar ||
+                    gp == Microsoft.Xna.Framework.Input.GamePadType.Guitar)
+                    Stage.renderer.SpriteBatch.Draw(guitarCont, guitarContDim, Color.White);
+                else
+                    Stage.renderer.SpriteBatch.Draw(controllerCont, controllerContDim, Color.White);
+            }
+
+            //draw
+            if (showing)
+                Stage.renderer.SpriteBatch.Draw(tutImg, tutImgDim, Color.White);
         }
 
         //this will break the game

@@ -1508,11 +1508,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="UI\Tutorial\controllerChordsTut.png">
-      <Name>controllerChordsTut</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="UI\Tutorial\controllerDashTut.png">
       <Name>controllerDashTut</Name>
       <Importer>TextureImporter</Importer>
@@ -1523,13 +1518,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="UI\Tutorial\MoveHere.png">
-      <Name>MoveHere</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Tutorial\MoveTut.png">
-      <Name>MoveTut</Name>
+    <Compile Include="UI\Tutorial\guitarMoveTut.png">
+      <Name>guitarMoveTut</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1612,11 +1602,6 @@
   <ItemGroup>
     <Compile Include="UI\Tutorial\guitarAttackTut.png">
       <Name>guitarAttackTut</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Tutorial\guitarChordTut.png">
-      <Name>guitarChordTut</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -2160,6 +2145,20 @@
     </Compile>
     <Compile Include="Models\Buildings\Building02_Texture_Graffiti.png">
       <Name>Building02_Texture_Graffiti</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Tutorial\controllerContinueTut.png">
+      <Name>controllerContinueTut</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Tutorial\guitarContinueTut.png">
+      <Name>guitarContinueTut</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

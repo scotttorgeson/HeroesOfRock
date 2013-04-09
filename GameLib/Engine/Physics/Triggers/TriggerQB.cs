@@ -13,14 +13,17 @@ namespace GameLib
         public LinkedList<Actor> triggers = new LinkedList<Actor>();
         public List<textToScreen> ui = new List<textToScreen>();
 
-        /*public delegate void DrawFunc();
+        public delegate void DrawFunc();
         List<DrawFunc> drawList = new List<DrawFunc>();
         public void RegisterDrawFunction(DrawFunc drawFunc)
         {
             drawList.Add(drawFunc);
-        }*/
+        }
+        public void clearDrawList()
+        {
+            drawList.Clear();
+        }
 
-        public tutorialTexture tutorialPic = new tutorialTexture();
         ParameterSet Parm;
         SpriteFont font;
 
@@ -175,8 +178,10 @@ namespace GameLib
             foreach (textToScreen value in ui)
                 Stage.renderer.SpriteBatch.DrawString(font, value.text, value.position, value.color);
 
-            if (tutorialPic.showing)
-                Stage.renderer.SpriteBatch.Draw(tutorialPic.text, tutorialPic.dimensions, Color.White);
+            foreach (DrawFunc d in drawList)
+            {
+                d();
+            }
 
             base.DrawUI(dt);
 
@@ -237,33 +242,6 @@ namespace GameLib
             text = t;
             position = p;
             color = c;
-        }
-    }
-
-    public class tutorialTexture
-    {
-        public Texture2D text;
-        public Rectangle dimensions;
-
-        public bool showing;
-
-        public tutorialTexture()
-        {
-            showing = false;
-        }
-
-        public tutorialTexture(Texture2D t, Rectangle d, bool show)
-        {
-            text = t;
-            dimensions = d;
-            showing = show;
-        }
-
-        public void changeImage(Texture2D t, Rectangle d, bool show)
-        {
-            text = t;
-            dimensions = d;
-            showing = show;
         }
     }
 }
