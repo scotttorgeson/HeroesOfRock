@@ -336,6 +336,22 @@
       <Name>FireEscape</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
+    <Compile Include="Actors\40can.parm">
+      <Name>40can</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
+    <Compile Include="Actors\Beercan.parm">
+      <Name>Beercan</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
+    <Compile Include="Actors\Billboard.parm">
+      <Name>Billboard</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
+    <Compile Include="Actors\Couch.parm">
+      <Name>Couch</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
     <None Include="Actors\Level1Path.parm">
       <Name>Level1Path</Name>
       <Importer>ParameterSetImporter</Importer>
@@ -994,10 +1010,55 @@
     <Compile Include="Models\Environment\fireescape.fbx">
       <Name>fireescape</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>0.26</ProcessorParameters_Scale>
     </Compile>
     <Compile Include="Models\Environment\FireEscapeDiffuse.tga">
       <Name>FireEscapeDiffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Environment\40Can.fbx">
+      <Name>40Can</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>0.22</ProcessorParameters_Scale>
+    </Compile>
+    <Compile Include="Models\Environment\40Diffuse.tga">
+      <Name>40Diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Environment\BeerCan.fbx">
+      <Name>BeerCan</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>0.22</ProcessorParameters_Scale>
+    </Compile>
+    <Compile Include="Models\Environment\BeerDiffuse.tga">
+      <Name>BeerDiffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Environment\BillboardTexture_v08.tga">
+      <Name>BillboardTexture_v08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Environment\Billboard_Final01.fbx">
+      <Name>Billboard_Final01</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>2</ProcessorParameters_Scale>
+    </Compile>
+    <Compile Include="Models\Environment\CouchFBX.fbx">
+      <Name>CouchFBX</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>AnimationProcessor</Processor>
+      <ProcessorParameters_Scale>1.1</ProcessorParameters_Scale>
+    </Compile>
+    <Compile Include="Models\Environment\Couch_Texture_v03.tga">
+      <Name>Couch_Texture_v03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
