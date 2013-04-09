@@ -46,19 +46,16 @@ namespace HeroesOfRock
         /// </summary>
         protected override void Initialize()
         {
-//#if WINDOWS
+#if WINDOWS || (XBOX && RELEASE)
             IsFixedTimeStep = false; //allows a variable frame rate
             graphics.SynchronizeWithVerticalRetrace = false; // turns off vsync
-//#endif
+#endif
 
             graphics.PreferMultiSampling = true;
 
             graphics.PreferredBackBufferWidth = Renderer.ScreenWidth;
             graphics.PreferredBackBufferHeight = Renderer.ScreenHeight;
 
-#if !DEBUG && WINDOWS
-            graphics.IsFullScreen = true;
-#endif
             graphics.ApplyChanges();
 
             Stage.InitSaveGame(this);

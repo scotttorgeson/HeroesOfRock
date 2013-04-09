@@ -29,6 +29,8 @@ namespace GameLib
 
         public PlayerState State { get; private set; }
 
+        public bool isStrumMode;
+
         #region InputAction declarations
         InputAction strum;
         InputAction leftAxisX;
@@ -63,6 +65,8 @@ namespace GameLib
         PlayerAnimationAgent.AnimationTypes animationType;
 
         PlayerAnimationAgent playerAnimation;
+
+        float jumpTime = 0.80f;
 
         #endregion
 
@@ -162,6 +166,11 @@ namespace GameLib
                 AQB.AddSound(Player.Parm.GetString("Sound" + index));
                 index++;
             }
+
+            if(Player.Parm.HasParm("isStrumMode"))
+                isStrumMode = Player.Parm.GetBool("isStrumMode");
+            else
+                isStrumMode = true;
         }
 
         /// <summary>
@@ -199,7 +208,10 @@ namespace GameLib
                 GamePadType gamePadType = Stage.ActiveStage.GetQB<ControlsQB>().GetGamePadType();
 
                 if (gamePadType == GamePadType.AlternateGuitar || gamePadType == GamePadType.Guitar)
-                    updateGuitar(dt);
+                    if (isStrumMode)
+                        updateGuitarWithStrum(dt);
+                    else
+                        updateGuitarWithOutStrum(dt);
                 else
                     updateGamePad(dt);
             }
@@ -215,7 +227,7 @@ namespace GameLib
                     attackAnimationTimer = 0.0f;
             }
             else if (State == PlayerState.Jumping)
-                playerAnimation.PlayAnimation(PlayerAnimationAgent.AnimationTypes.Jump, actor.PhysicsObject.CharacterController.DashTime);
+                playerAnimation.PlayAnimation(PlayerAnimationAgent.AnimationTypes.Jump, jumpTime);
             else if(actor.PhysicsObject.CharacterController.Dashing)
                 playerAnimation.PlayAnimation(PlayerAnimationAgent.AnimationTypes.Dash, actor.PhysicsObject.CharacterController.DashTime);
             else if (State==PlayerState.Running)
@@ -290,7 +302,7 @@ namespace GameLib
             }
         }
 
-        private void updateGuitar(float dt)
+        private void updateGuitarWithStrum(float dt)
         {
             int dir = (int)strum.value;
             //if all the guitar face buttons are not pressed then move
@@ -326,23 +338,24 @@ namespace GameLib
             }
 
             //jumping
-            if (guitarJump.IsNewAction)
+            if (guitarJump.IsNewAction  || leftBumper.IsNewAction && strum.value != 0.0f || leftBumper.value != 0.0f && strum.IsNewAction)
             {
                 State = PlayerState.Jumping;
                 actor.PhysicsObject.CharacterController.Jump();
+                recoveryTimer = jumpTime;
             }
 
             //holding strum and pushing dash button
             if (strum.value != 0.0f)
             {
-                if (A.IsNewAction || leftBumper.IsNewAction)
+                if (A.IsNewAction)
                     Dash(dir);
             }
 
             //all strumming actions
             if (strum.IsNewAction)
             {
-                if (A.value != 0.0f || leftBumper.value != 0.0f)
+                if (A.value != 0.0f)
                     Dash(dir);
                 else
                 {
@@ -361,6 +374,66 @@ namespace GameLib
                     }
                 }
             }
+        }
+
+        private void updateGuitarWithOutStrum(float dt)
+        {
+            int dir = (int)strum.value;
+
+            SetFacingDirection(dir);
+
+            if (dir != 0)
+                State = PlayerState.Running;
+            else
+                State = PlayerState.Normal;
+
+            switch (MoveDirection)
+            {
+                case PlayerDirection.Right:
+                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = dir * Vector2.UnitX;
+                    break;
+                case PlayerDirection.Left:
+                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = dir * -Vector2.UnitX;
+                    break;
+                case PlayerDirection.Forward:
+                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = dir * -Vector2.UnitY;
+                    break;
+                case PlayerDirection.Backward:
+                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = dir * Vector2.UnitY;
+                    break;
+            }
+            
+ 
+            //jumping
+            if (guitarJump.IsNewAction || leftBumper.IsNewAction)
+            {
+                State = PlayerState.Jumping;
+                actor.PhysicsObject.CharacterController.Jump();
+                recoveryTimer = jumpTime;
+            }
+
+            //holding strum and pushing dash button
+            if (A.IsNewAction)
+                Dash(0);
+
+            if (B.IsNewAction)
+                input.Red = true;
+            if (Y.IsNewAction)
+                input.Yellow = true;
+            if (X.IsNewAction)
+                input.Blue = true;
+
+            if (input.isSet())
+            {
+                currentAttack = attacks.getAttack(input);
+                startAttack();
+                input.Reset();
+                
+                //stop all movement if an attack is set
+                this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
+
+            }
+
         }
 
         private void finishAttack()

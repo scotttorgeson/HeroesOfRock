@@ -51,6 +51,12 @@ namespace GameLib.Engine.Decals
             actorQB.RegisterActorCreatedFunction(AddToDecalWorld);
         }
 
+        public override void LoadContent()
+        {
+            Stage.Content.Load<Texture2D>("Decals/blood");
+            Stage.Content.Load<Texture2D>("Decals/crack");
+        }
+
         public override void KillInstance()
         {
             if (decals != null)
