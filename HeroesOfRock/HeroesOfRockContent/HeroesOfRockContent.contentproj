@@ -332,6 +332,10 @@
       <Name>Building_02-1</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
+    <Compile Include="Actors\FireEscape.parm">
+      <Name>FireEscape</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
     <None Include="Actors\Level1Path.parm">
       <Name>Level1Path</Name>
       <Importer>ParameterSetImporter</Importer>
@@ -984,6 +988,16 @@
     </Compile>
     <Compile Include="Models\dumpster_diffuse.tga">
       <Name>dumpster_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Environment\fireescape.fbx">
+      <Name>fireescape</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Environment\FireEscapeDiffuse.tga">
+      <Name>FireEscapeDiffuse</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
