@@ -30,8 +30,8 @@ TriggerVolume1ControllerImage0=controllerMoveTut
 TriggerVolume1ControllerImagePos0=100 150
 TriggerVolume1ControllerImageSize0=391 300
 TriggerVolume1GuitarImage0=guitarMoveTut
-TriggerVolume1GuitarImagePos0=100 220
-TriggerVolume1GuitarImageSize0=311 250
+TriggerVolume1GuitarImagePos0=100 150
+TriggerVolume1GuitarImageSize0=391 300
 TriggerVolume1DieOnTrigger0=False
 
 TriggerVolume1ControllerInput1=LeftBumper,RightBumper
@@ -41,8 +41,8 @@ TriggerVolume1ControllerImage1=controllerDashTut
 TriggerVolume1ControllerImagePos1=100 150
 TriggerVolume1ControllerImageSize1=391 300
 TriggerVolume1GuitarImage1=guitarDashTut
-TriggerVolume1GuitarImagePos1=100 220
-TriggerVolume1GuitarImageSize1=311 250
+TriggerVolume1GuitarImagePos1=100 150
+TriggerVolume1GuitarImageSize1=391 300
 TriggerVolume1TriggerDelay1=-1.0
 
 TriggerVolume1ControllerInput2=B
@@ -53,7 +53,7 @@ TriggerVolume1ControllerImagePos2=80 150
 TriggerVolume1ControllerImageSize2=311 250
 TriggerVolume1GuitarImage2=HudTut
 TriggerVolume1GuitarImagePos2=80 150
-TriggerVolume1GuitarImageSize2=391 300
+TriggerVolume1GuitarImageSize2=311 250
 
 TriggerVolume1ControllerInput3=B,X,Y
 TriggerVolume1GuitarInput3=B,X,Y
@@ -62,8 +62,8 @@ TriggerVolume1ControllerImage3=controllerAttackTut
 TriggerVolume1ControllerImagePos3=100 150
 TriggerVolume1ControllerImageSize3=391 300
 TriggerVolume1GuitarImage3=guitarAttackTut
-TriggerVolume1GuitarImagePos3=100 220
-TriggerVolume1GuitarImageSize3=311 250
+TriggerVolume1GuitarImagePos3=100 150
+TriggerVolume1GuitarImageSize3=391 300
 TriggerVolume1SpawnEnemy3=True
 TriggerVolume1TriggerDelay3=-2.0
 
@@ -75,7 +75,7 @@ TriggerVolume1ControllerImagePos4=100 180
 TriggerVolume1ControllerImageSize4=300 150
 TriggerVolume1GuitarImage4=FlowTut
 TriggerVolume1GuitarImagePos4=100 180
-TriggerVolume1GuitarImageSize4=300 10
+TriggerVolume1GuitarImageSize4=300 150
 
 TriggerVolume1ControllerInput5=Triggers
 TriggerVolume1GuitarInput5=B,Y,X
@@ -84,8 +84,8 @@ TriggerVolume1ControllerImage5=controllerSlamTut
 TriggerVolume1ControllerImagePos5=100 150
 TriggerVolume1ControllerImageSize5=391 300
 TriggerVolume1GuitarImage5=guitarSlamTut
-TriggerVolume1GuitarImagePos5=100 220
-TriggerVolume1GuitarImageSize5=311 250
+TriggerVolume1GuitarImagePos5=100 150
+TriggerVolume1GuitarImageSize5=391 300
 TriggerVolume1TriggerDelay5=-2.0
 TriggerVolume1KillEnemies5=True
 

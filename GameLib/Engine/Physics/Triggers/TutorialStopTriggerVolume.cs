@@ -172,12 +172,9 @@ namespace GameLib
 #if INPUTREQUIRED
                         GetInput(j, actor.Parm.GetString("ControllerInput" + j), ref cQB);
 #endif
-                        tutImgs[j] = Stage.Content.Load<Texture2D>("UI/Tutorial/" + actor.Parm.GetString("GuitarImage" + j));
-                        //tutImgs[j] = Stage.Content.Load<Texture2D>("UI/Tutorial/" + actor.Parm.GetString("ControllerImage" + j));
+                        tutImgs[j] = Stage.Content.Load<Texture2D>("UI/Tutorial/" + actor.Parm.GetString("ControllerImage" + j));
                         pos = actor.Parm.GetVector2("ControllerImagePos" + j);
                         size = actor.Parm.GetVector2("ControllerImageSize" + j);
-                        //pos = actor.Parm.GetVector2("ControllerImagePos" + j);
-                        //size = actor.Parm.GetVector2("ControllerImageSize" + j);
                         imgDim[j] = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
                     }
                     break;
