@@ -982,6 +982,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Models\dumpster_diffuse.tga">
+      <Name>dumpster_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GameLib\GameLib.csproj">
@@ -1758,13 +1763,6 @@
   <ItemGroup>
     <Compile Include="ParticleFX\dust.png">
       <Name>dust</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\dumpster_diffuse.png">
-      <Name>dumpster_diffuse</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

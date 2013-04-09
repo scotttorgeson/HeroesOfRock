@@ -274,7 +274,6 @@ Content\Decals\blood.xnb
 Content\Decals\crack.xnb
 Content\ParticleFX\dust2.xnb
 Content\ParticleFX\dust.xnb
-Content\Models\dumpster_diffuse.xnb
 Content\UI\HUD\number1.xnb
 Content\UI\HUD\number10.xnb
 Content\UI\HUD\number11.xnb
@@ -370,16 +369,17 @@ Content\Audio\Missile3_16.xnb
 Content\Audio\Missile4_16.xnb
 Content\Audio\MissileExplosion_16.xnb
 Content\Models\Grid\Grid_0.xnb
-Content\FBX\722729C6\sLevel1.fbm\Ground_Texture_0.xnb
+Content\FBX\A0EA2A3C\sLevel1.fbm\Ground_Texture_0.xnb
 Content\Models\Buildings\LargeApartmentBuildingDiffuse_0.xnb
 Content\Models\Buildings\SmallStoreDiffuse_0.xnb
-Content\FBX\303E2E1F\cardboardbox.fbm\boxdiffuse_0.xnb
+Content\FBX\639D2E95\cardboardbox.fbm\boxdiffuse_0.xnb
 Content\Models\Environment\powerLineDiffuse_0.xnb
 Content\Models\Environment\ShoppingCartDiffuse_0.xnb
 Content\Models\Environment\StopLightDiffuse_0.xnb
 Content\Models\Environment\StreetlightDiffuse_0.xnb
 Content\Models\Environment\TrashCanDiffuse_0.xnb
 Content\Models\Environment\TVDiffuse_0.xnb
+Content\Models\dumpster_diffuse.xnb
 Content\Audio\banknote-counterSTOPPING.wma
 Content\Audio\banknote-counter_COUNTING.wma
 Content\Audio\crickets.wma
