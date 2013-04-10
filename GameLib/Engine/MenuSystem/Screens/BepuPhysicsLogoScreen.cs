@@ -24,7 +24,7 @@ namespace GameLib.Engine.MenuSystem.Screens {
             if (content == null)
                 content = Stage.Content;
 
-            logoTexture = content.Load<Texture2D>("UI/bepu_physics_logo_big");
+            logoTexture = content.Load<Texture2D>("UI/Menu/bepu_physics_logo_big");
         }
 
         public override void Update (float dt, bool otherScreenHasFocus,
@@ -61,7 +61,7 @@ namespace GameLib.Engine.MenuSystem.Screens {
 
         private void LogoScreenOut () {
             this.MarkedForRemove = true;
-            MenuSystem.AddScreen(new BackgroundScreen());
+            MenuSystem.AddScreen(new BackgroundScreen("Menu/splashBackground", 0.8f));
             MenuSystem.AddScreen(new SplashMenu());
         }
     }

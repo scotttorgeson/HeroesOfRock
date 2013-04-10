@@ -15,19 +15,18 @@ namespace GameLib.Engine.MenuSystem.Menus {
             : base("") {
 
             SpriteFont font = Stage.Content.Load<SpriteFont>("DefaultFont");
-            MenuEntry pressA = new MenuEntry("Press A to Begin");
-            MenuGraphic logo = new MenuGraphic("logo", new Vector2(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X, Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.Y - 100));
-            MenuGraphic bestPlayed = new MenuGraphic("bestPlayed", new Vector2(logo.Dim.Center.X, logo.Dim.Bottom+15));
-            pressA.Position = new Vector2(bestPlayed.Dim.Center.X - font.MeasureString(pressA.Text).Length()/2, bestPlayed.Dim.Bottom + font.LineSpacing);
+            MenuGraphic logo = new MenuGraphic("Menu/logo", new Vector2(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X, Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.Y), .75f);
+            MenuGraphic pressA = new MenuGraphic("Menu/pressA", new Vector2(logo.Dim.Center.X, logo.Dim.Bottom - logo.Dim.Height / 2 + Stage.Content.Load<Texture2D>("UI/Menu/pressA").Height), .75f);
+            MenuGraphic bestPlayed = new MenuGraphic("Menu/bestPlayed", new Vector2(pressA.Dim.Center.X, Stage.renderer.GraphicsDevice.Viewport.Bounds.Bottom - Stage.Content.Load<Texture2D>("UI/Menu/bestPlayed").Height), .6f);
             pressA.Flashing = true;
 
             // Hook up menu event handlers.
             this.GreenButtonPressed += GoToMainMenu;
 
             // Add entries to the menu.
-            MenuEntries.Add(logo);
-            //MenuEntries.Add(bestPlayed);
+            MenuEntries.Add(logo);            
             MenuEntries.Add(pressA);
+            MenuEntries.Add(bestPlayed);
 
             //hack to makes sure press a is selected, fix.
             selectedEntry = 2;
@@ -38,7 +37,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         void GoToMainMenu (object sender, EventArgs e) {
             this.MarkedForRemove = true;
-            MenuSystem.AddScreen(new BackgroundScreen());
+            MenuSystem.AddScreen(new BackgroundScreen("MainMenu/background", 0.8f));
             MenuSystem.AddScreen(new MainMenu());
         }
 
@@ -94,10 +93,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
             // make sure our entries are in the right place before we draw them
             GraphicsDevice graphics = Renderer.Instance.GraphicsDevice;
             SpriteFont font = MenuSystem.Font;
+
             // Draw each menu entry in turn.
             for (int i = 0; i < MenuEntries.Count; i++) {
                 MenuEntry menuEntry = MenuEntries[i];
-
+                if (i == 1)
+                    menuEntry.Flashing = true;
                 bool isSelected = IsActive && (i == selectedEntry);
 
               //  if(i != 1)

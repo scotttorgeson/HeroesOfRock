@@ -68,7 +68,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         public override void LoadContent () {
             smoked = Stage.Content.Load<Texture2D>("UI/Menu/smoked");
-            perfection = Stage.Content.Load<Texture2D>("UI/Menu/perfect");
+            perfection = Stage.Content.Load<Texture2D>("UI/HUD/perfect");
 
             for (int i = 0; i < 4; i++)
                 skullCounters[i] = Stage.Content.Load<Texture2D>("UI/HUD/SkullCounter" + (i + 1));

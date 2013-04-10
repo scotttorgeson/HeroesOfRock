@@ -10,20 +10,30 @@ namespace GameLib.Engine.MenuSystem.Menus {
     /// </summary>
     public class BackgroundScreen : GameScreen {
 
-        ContentManager content;
-        Texture2D backgroundTexture;
+        private ContentManager content;
+        private Texture2D backgroundTexture;
+        private String backgroundPath;
+        private float scale;
 
         public BackgroundScreen () {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            backgroundPath = "MainMenu/background";
+            scale = 0.8f;
         }
 
+        public BackgroundScreen (String backgroundPath, float scale) {
+            TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            this.backgroundPath = backgroundPath;
+            this.scale = scale;
+        }
 
         public override void LoadContent () {
             if (content == null)
                 content = Stage.Content;
-
-            backgroundTexture = content.Load<Texture2D>("UI/Menu/background");
+            Stage.renderer.GraphicsDevice.Clear(Color.Black);
+            backgroundTexture = content.Load<Texture2D>("UI/"+backgroundPath);
         }
 
         public override void Update (float dt, bool otherScreenHasFocus,
@@ -36,8 +46,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
         /// Draws the background screen.
         /// </summary>
         public override void Draw (float dt) {
-            Rectangle fullscreen = new Rectangle(0, 0, Renderer.ScreenWidth, Renderer.ScreenHeight);
+            scale = 0.68f;
+            int width = (int)(backgroundTexture.Width * scale);
+            int height = (int)(backgroundTexture.Height * scale);
+            int centerX = (int)(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X - width / 2);
+            int centerY = (int)(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.Y- height/ 2);
 
+            Rectangle fullscreen = new Rectangle(centerX, centerY, width, height);
+            Stage.renderer.GraphicsDevice.Clear(new Color(3,3,3));
             Stage.renderer.SpriteBatch.Draw(backgroundTexture, fullscreen,
                              new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
         }

@@ -36,14 +36,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
             MenuSystem.FadeBackBufferToBlack(TransitionAlpha * 2 / 3);
 
 
-            Vector2 viewportSize = new Vector2(Renderer.ScreenWidth, Renderer.ScreenHeight);
+            Vector2 viewportSize = new Vector2(Stage.renderer.GraphicsDevice.Viewport.Bounds.Width, Stage.renderer.GraphicsDevice.Viewport.Bounds.Height);
             Vector2 textSize = font.MeasureString(message);
             Vector2 textPosition = (viewportSize - textSize) / 2;
 
             const int hPad = 32;
             const int vPad = 16;
 
-                backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
+            backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
                                                      (int)textPosition.Y - vPad,
                                                      (int)textSize.X + hPad * 2,
                                                       (int)textSize.Y + vPad * 2);

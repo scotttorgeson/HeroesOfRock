@@ -42,7 +42,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             foreach (FileInfo file in files) {
                 string key = Path.GetFileNameWithoutExtension(file.Name);
                 Texture2D texture = Stage.Content.Load<Texture2D>(Stage.Content.RootDirectory + "/UI/Extras/" + key);
-                MenuEntries.Add(new MenuGraphic(texture.Name, Vector2.Zero));
+                MenuEntries.Add(new MenuGraphic(texture.Name, Vector2.Zero, 1));
             }
         }
 
