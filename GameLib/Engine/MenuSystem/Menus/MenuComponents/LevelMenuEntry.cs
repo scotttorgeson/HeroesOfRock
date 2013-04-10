@@ -13,30 +13,67 @@ namespace GameLib.Engine.MenuSystem.Menus {
         public string LevelName { get; private set; }
         public bool UseLoadingLevel { get; private set; }
 
-        private Texture2D blank;
-        private Texture2D lockGraphic;
-        private Texture2D skullGraphic;
-        private int height;
-        private int width;
+        private Texture2D blank, lockGraphic, skullGraphic, divider;
+        private int height, width;
+        int[] tscores;
         private float scale;
+        private String rating;
 
         public LevelMenuEntry (string levelName, string text, string graphic, bool useLoadingLevel)
             : base(text) {
                 LevelName = levelName;
                 LevelGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/"+graphic);
-                
+                divider = Stage.Content.Load<Texture2D>("UI/LevelGraphics/divider");
                 width = LevelGraphic.Width;
                 height = LevelGraphic.Height;
                 this.blank = Stage.Content.Load<Texture2D>("UI/Menu/blank");
                 this.lockGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/LevelLock");
-                this.skullGraphic = Stage.Content.Load<Texture2D>("UI/Misc/skull");
-                this.scale =  .30f;
+                this.scale =  1f;
+                            
             
                 //TODO These should be driven from user profile
+                PlayerScore();
                 IsLocked = true;
                 StarRating = 0;
-
+                tscores = TopScore();
                 UseLoadingLevel = useLoadingLevel;
+        }
+
+        private int[] TopScore () {
+            int[] topScores = new int[3];
+            
+            for (int i = 0; i < 3; i++) {
+                //get top three values
+            }
+
+            topScores = new int[] { 3333, 2222, 1111 }; //REMOVE
+
+            return topScores;
+
+        }
+
+        //TODO PLACE APPROPRIATE VALUES
+        private void PlayerScore () {
+            int playerScore = 20000;
+            skullGraphic = null;
+            rating = "";
+
+            if (playerScore <= 2000  && playerScore > 0) {
+                skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull1");
+                rating = "POSER STATUS";
+            } else if (playerScore <= 5000 && playerScore > 0) {
+                skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull2");
+                rating = "HEAD BANGER STATUS";
+            } else if (playerScore <= 10000 && playerScore > 0) {
+                skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull3");
+                rating = "METAL HEAD STATUS";
+            } else if (playerScore <= 15000 && playerScore > 0) {
+                skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull4");
+                rating = "HARDCORE STATUS";
+            } else if (playerScore >= 20000) {
+                skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull5");
+                rating = "ROCK GOD STATUS";
+            }
         }
 
         public override void Draw (GameMenu menu, bool isSelected, float dt) {
@@ -47,12 +84,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
             // Draw text, centered on the middle of each line.
             MenuSystem sys = menu.MenuSystem;
             SpriteFont baseFont = sys.Font;
-            SpriteFont font = sys.Boycott;//TODO ADD THE NEW FONT
+            SpriteFont font = sys.Boycott;
 
-            scale = .25f;
+            scale = .5f;
 
-            int x = (int)Position.X - (LevelGraphic.Width / 2);
-            int y = (int)Position.Y - (LevelGraphic.Height / 2);
+            int x = (int)(Position.X - ((1.6*LevelGraphic.Width) / 2));
+            int y = (int)(Position.Y - ((1.75*LevelGraphic.Height) / 2));
             int scaledWidth = (int)(width * scale);
             int scaledHeight = (int)(height * scale);
 
@@ -76,32 +113,41 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 Stage.renderer.SpriteBatch.Draw(blank, rec, Color.Black * 0.8f);
             } else {
 
+                Rectangle dividerRec = new Rectangle((int)startPosition.X, (int)startPosition.Y + rec.Height, rec.Width, 1);
+
                 //draw the skull ratings
-                float skullScale = 0.1f;
+                if (skullGraphic != null) {
+                float skullScale = 1f;
 
                 int w = (int)(skullGraphic.Width * skullScale);
                 int h = (int)(skullGraphic.Height * skullScale);
 
-                Rectangle skullRec = new Rectangle((int)startPosition.X, (int)startPosition.Y + rec.Height + h / 2, w, h);
-                Stage.renderer.SpriteBatch.Draw(skullGraphic, skullRec, Color.White);
+                
+                    Rectangle skullRec = new Rectangle((int)startPosition.X, (int)startPosition.Y + rec.Height + h / 4, w, h);
+                    Stage.renderer.SpriteBatch.Draw(skullGraphic, skullRec, Color.White);
 
-                //draw the skull rating string TODO get correct skull
-                String rating = "HARDCORE STATUS";
-                Stage.renderer.SpriteBatch.DrawString(font, rating, new Vector2(rec.Right - font.MeasureString(rating).X, rec.Bottom +
-                    font.MeasureString(rating).Y), color, 0, origin, 1, SpriteEffects.None, 0);
 
-                //draw divider TODO
+                    //draw the skull rating string
+                    Vector2 ratingPos = new Vector2(rec.Right - font.MeasureString(rating).X, rec.Bottom + skullRec.Height / 2);
+                    Stage.renderer.SpriteBatch.DrawString(font, rating, ratingPos, color, 0, origin, 1, SpriteEffects.None, 0);
 
-                //draw Top scores TODO set below divider
+                    //draw divider
+                    int dw = rec.Width;
+                    int dh = divider.Height;
+                    dividerRec = new Rectangle((int)startPosition.X, (int)ratingPos.Y + (25 * dh), dw, dh);
+                    Stage.renderer.SpriteBatch.Draw(divider, dividerRec, Color.White);
+                }
+                
+                //draw Top scores
                 String title = "TOP SCORES";
-                Stage.renderer.SpriteBatch.DrawString(font, title, new Vector2(rec.Right - font.MeasureString(title).X, rec.Bottom +
-                    +font.MeasureString(rating).Y + font.MeasureString(title).Y), color, 0, origin, 1, SpriteEffects.None, 0);
+                Vector2 titlePos = new Vector2(dividerRec.Right - font.MeasureString(title).X, dividerRec.Bottom + 
+                    font.MeasureString(title).Y);
+                Stage.renderer.SpriteBatch.DrawString(font, title,  titlePos, color, 0, origin, 1, SpriteEffects.None, 0);
 
-                int[] tscores = { 3333, 2222, 1111 };//TODO get this from the level
                 for (int i = 0; i < 3; i++) {
-                    String score = (i + 1) + " - " + tscores[i]; //TODO use shit parsing
-                    Stage.renderer.SpriteBatch.DrawString(baseFont, score, new Vector2(rec.Right - baseFont.MeasureString(score).X, rec.Bottom +
-                     +baseFont.MeasureString(rating).Y + baseFont.MeasureString(title).Y + (baseFont.MeasureString(score).Y * (i + 1)) / 2), color, 0, origin, 1, SpriteEffects.None, 0);
+                    String score = (i + 1) + " - " + tscores[i];
+                    Stage.renderer.SpriteBatch.DrawString(baseFont, score, new Vector2(rec.Right - baseFont.MeasureString(score).X, (int)titlePos.Y
+                        + (baseFont.MeasureString(score).Y * (i + 1)) / 2), color, 0, origin, 1, SpriteEffects.None, 0);
                 }
             }
         }

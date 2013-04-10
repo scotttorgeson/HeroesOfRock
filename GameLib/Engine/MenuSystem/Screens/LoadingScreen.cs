@@ -20,7 +20,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private LoadingScreen (MenuSystem menuSystem, bool loadingIsSlow, string levelName) {
             this.loadingIsSlow = loadingIsSlow;
             this.levelName = levelName;
-            this.background = Stage.Content.Load<Texture2D>("UI/Menu/splashBackground");
+            this.background = Stage.Content.Load<Texture2D>("UI/Menu/background");
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
         }
 

@@ -137,6 +137,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         /// When the user cancels the main menu, ask if they want to exit the sample.
         /// </summary>
         protected override void OnCancel () {
+            this.MarkedForRemove = true;
             MenuSystem.AddScreen(new MainMenu());
         }
 

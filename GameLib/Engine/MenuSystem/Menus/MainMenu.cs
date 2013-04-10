@@ -55,7 +55,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
         void CredsSelected (object sender, EventArgs e) {
-            MenuSystem.AddScreen(new ColoredBackgroundScreen(Color.Black));
             MenuSystem.AddScreen(new CreditsMenu());
         }
 
