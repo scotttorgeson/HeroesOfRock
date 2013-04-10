@@ -219,6 +219,7 @@ namespace GameLib.Engine.AttackSystem
             if (killStreak > highestKillStreak)
                 highestKillStreak = killStreak;
 
+#if VO_IS_NO_LONGER_TERRIBLE
             string sound = null;
             switch (killStreak)
             {
@@ -244,6 +245,7 @@ namespace GameLib.Engine.AttackSystem
 
             if (sound != null)
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound(sound, 1, 0, 0);
+#endif
 
             return amount * rockLevel;
         }
