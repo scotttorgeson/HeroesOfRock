@@ -242,7 +242,7 @@ namespace GameLib
                         {
                             Actor actor = decal.Actors[i];
                             Matrix world = actor.modelInstance.RenderTransform;
-                            if (fastCameraBoundingFrustum.Intersects(ref actor.modelInstance.boundingSphere))
+                            if (actor.modelInstance.Shown && fastCameraBoundingFrustum.Intersects(ref actor.modelInstance.boundingSphere))
                             {
                                 Model model = actor.modelInstance.model.Model;
 
