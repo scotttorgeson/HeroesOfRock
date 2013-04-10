@@ -79,6 +79,9 @@ namespace GameLib.Engine.Decals
             // todo: copy stuff from the actors physics object if we can? (triangle mesh)
             if (actor.PhysicsObject.IsStatic)
             {
+                if ( actor.Parm.HasParm("ApplyDecals") && !actor.Parm.GetBool("ApplyDecals" ) )
+                    return;
+
                 BEPUphysics.Collidables.StaticMesh staticMesh = PhysicsHelpers.ModelToStaticMesh(actor.modelInstance.model.Model, new BEPUphysics.MathExtensions.AffineTransform(actor.PhysicsObject.Orientation, actor.PhysicsObject.Position));
                 staticMesh.OwningActor = actor;
                 decalsWorld.Add(staticMesh);

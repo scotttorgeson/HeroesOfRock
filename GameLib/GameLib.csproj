@@ -110,6 +110,7 @@
     <Compile Include="Engine\Decals\DecalQB.cs" />
     <Compile Include="Engine\FileIO\SaveGame.cs" />
     <Compile Include="Engine\FileIO\ThreadSafeContentManager.cs" />
+    <Compile Include="Engine\MenuSystem\PopUps\QuitConfirmPopUp.cs" />
     <Compile Include="Engine\Renderer\Effects\SkinnedEffect.cs" />
     <Compile Include="Engine\Renderer\RModel\EditorManipulatorRModel.cs" />
     <Compile Include="Engine\Renderer\RModel\RModelInstance.cs" />

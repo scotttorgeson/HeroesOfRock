@@ -121,6 +121,7 @@
     <Compile Include="Engine\MenuSystem\PopUps\ExtrasPopUp.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\MessageBox.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\OptionPopUp.cs" />
+    <Compile Include="Engine\MenuSystem\PopUps\QuitConfirmPopUp.cs" />
     <Compile Include="Engine\MenuSystem\Screens\BackgroundScreen.cs" />
     <Compile Include="Engine\MenuSystem\Screens\BepuPhysicsLogoScreen.cs" />
     <Compile Include="Engine\MenuSystem\Screens\ColoredBackgroundScreen.cs" />

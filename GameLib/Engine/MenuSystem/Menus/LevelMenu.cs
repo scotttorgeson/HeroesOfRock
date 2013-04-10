@@ -8,21 +8,22 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace GameLib.Engine.MenuSystem.Menus {
     public class LevelMenu : GameMenu {
+        Texture2D levelSelect, levelLock;
+
         public LevelMenu ()
-            : base("Choose a Level") {
+            : base("") {
             //LevelMenuEntry TEST = new LevelMenuEntry("TestLevel2", "Test Level", "LevelBlank", false);
             //LevelMenuEntry ONE = new LevelMenuEntry("Level1", "Level 1", "LevelBlank");
             //LevelMenuEntry TWO = new LevelMenuEntry("Level2", "Level 2", "LevelBlank");
             //LevelMenuEntry THREE = new LevelMenuEntry("Level3", "Level 3", "LevelBlank");
             //LevelMenuEntry FOUR = new LevelMenuEntry("Level4", "Level 4", "LevelBlank");
 
-            
-
-            LevelMenuEntry TUTORIAL = new LevelMenuEntry("Tutorial", "Tutorial", "LevelAlpha", false);
-            LevelMenuEntry LEVEL1 = new LevelMenuEntry("Level1", "Level 1", "LevelAlpha", false);
-            LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 2", "LevelAlpha", false);
-            LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 3", "LevelAlpha", false);
-            LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 4", "LevelAlpha", false);
+            levelSelect = Stage.Content.Load<Texture2D>("UI/LevelGraphics/levelSelect");
+            LevelMenuEntry TUTORIAL = new LevelMenuEntry("Tutorial", "Tutorial", "Level1", false);
+            LevelMenuEntry LEVEL1 = new LevelMenuEntry("Level1", "Level 1", "Level1", false);
+            LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 2", "Level2", false);
+            LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 3", "Level3", false);
+            LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 4", "Level4", false);
 
 #if XBOX
             if (Guide.IsTrialMode)
@@ -137,6 +138,15 @@ namespace GameLib.Engine.MenuSystem.Menus {
         /// </summary>
         protected override void OnCancel () {
             MenuSystem.AddScreen(new MainMenu());
+        }
+
+        public override void Draw (float dt) {
+            base.Draw(dt);
+            Rectangle rec = Stage.renderer.GraphicsDevice.Viewport.Bounds;
+            int width = (int)(levelSelect.Width * 0.7f);
+            int height = (int)(levelSelect.Height * 0.7f);
+            Rectangle levelSelectRec = new Rectangle(rec.Left + width/2, rec.Top + (int)(height * 2), width, height);
+            Stage.renderer.SpriteBatch.Draw(levelSelect, levelSelectRec, Color.White);
         }
 
         public override void HandleInput (MenuInput input) {

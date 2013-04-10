@@ -1,5 +1,5 @@
 ModelName=StandardEnemy\StandardEnemy_AttackAnimation
-Mass=-1
+Mass=1
 Agents=AIDumb,HealthAgent
 PhysicsType=Box
 Health=200

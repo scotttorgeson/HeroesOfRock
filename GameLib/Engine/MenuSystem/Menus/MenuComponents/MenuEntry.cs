@@ -7,8 +7,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
      public class MenuEntry {
         private string text;
         private float selectionFade;
-        private float alpha;
-        private float diff;
+        protected float alpha;
+        protected float diff;
         protected Vector2 position;
         private Boolean flashing;
         private Boolean canSelect;

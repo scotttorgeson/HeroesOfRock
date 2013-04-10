@@ -11,22 +11,23 @@ namespace GameLib.Engine.MenuSystem {
 
 	public class MenuSystem {
 
-        LinkedList<GameScreen> menus = new LinkedList<GameScreen>();
+		LinkedList<GameScreen> menus = new LinkedList<GameScreen>();
 
-        public bool CanPause()
-        {
-            foreach (GameScreen screen in menus)
-                if (!screen.CanPause)
-                    return false;
-            return true;
-        }
+		public bool CanPause()
+		{
+			foreach (GameScreen screen in menus)
+				if (!screen.CanPause)
+					return false;
+			return true;
+		}
 
-        public int MenuCount
-        {
-            get { return menus.Count; }
-        }
-		
-		SpriteFont font;
+		public int MenuCount
+		{
+			get { return menus.Count; }
+		}
+
+		SpriteFont font; 
+		SpriteFont boycott;
 		Texture2D blankTexture;
 
 		public Texture2D BlankTexture {
@@ -46,6 +47,9 @@ namespace GameLib.Engine.MenuSystem {
 			get { return font; }
 		}
 
+		public SpriteFont Boycott {
+			get { return boycott; }
+		}
 		public MenuSystem (ControlsQB controls) {
 			Input = new MenuInput(controls);
 		}
@@ -64,6 +68,7 @@ namespace GameLib.Engine.MenuSystem {
 		{
 			//spriteBatch = new SpriteBatch(Renderer.Instance.GraphicsDevice);
 			font = content.Load<SpriteFont>("belligerent");
+			boycott = content.Load<SpriteFont>("boycott");
 			blankTexture = content.Load<Texture2D>("UI/Menu/blank");
 
 			foreach (GameScreen screen in menus)
@@ -79,52 +84,52 @@ namespace GameLib.Engine.MenuSystem {
 
 		public void Update(float dt)
 		{
-            LinkedListNode<GameScreen> node;
+			LinkedListNode<GameScreen> node;
 
-            node = menus.Last;
-            if (node == null)
-                return;
+			node = menus.Last;
+			if (node == null)
+				return;
 
-            bool otherScreenHasFocus = false;//Stage.IsPaused;
-            bool coveredByOtherScreen = false;
+			bool otherScreenHasFocus = false;//Stage.IsPaused;
+			bool coveredByOtherScreen = false;
 
-            do
-            {
-                if (node.Value.MarkedForRemove)
-                {
-                    LinkedListNode<GameScreen> temp = node;
-                    node = node.Next;
-                    menus.Remove(temp);
-                }
-                else
-                {
-                    // Update the menu.
-                    node.Value.Update(dt, otherScreenHasFocus, coveredByOtherScreen);
+			do
+			{
+				if (node.Value.MarkedForRemove)
+				{
+					LinkedListNode<GameScreen> temp = node;
+					node = node.Next;
+					menus.Remove(temp);
+				}
+				else
+				{
+					// Update the menu.
+					node.Value.Update(dt, otherScreenHasFocus, coveredByOtherScreen);
 
-                    if (node.Value.MenuState == MenuState.TransitionOn ||
-                        node.Value.MenuState == MenuState.Active)
-                    {
-                        // If this is the first active menu we came across,
-                        // give it a chance to handle input.
-                        if (!otherScreenHasFocus)
-                        {
-                            node.Value.HandleInput(input);
+					if (node.Value.MenuState == MenuState.TransitionOn ||
+						node.Value.MenuState == MenuState.Active)
+					{
+						// If this is the first active menu we came across,
+						// give it a chance to handle input.
+						if (!otherScreenHasFocus)
+						{
+							node.Value.HandleInput(input);
 
-                            otherScreenHasFocus = true;
-                        }
+							otherScreenHasFocus = true;
+						}
 
-                        // If this is an active non-popup, inform any subsequent
-                        // menus that they are covered by it.
-                        if (!node.Value.IsPopup)
-                            coveredByOtherScreen = true;
-                    }
-                }
+						// If this is an active non-popup, inform any subsequent
+						// menus that they are covered by it.
+						if (!node.Value.IsPopup)
+							coveredByOtherScreen = true;
+					}
+				}
 
 
-                if (node != null)
-                    node = node.Previous;
+				if (node != null)
+					node = node.Previous;
 
-            } while (node != null);
+			} while (node != null);
 
 		}
 
@@ -134,7 +139,7 @@ namespace GameLib.Engine.MenuSystem {
 			foreach (GameScreen screen in menus)
 			{
 				if (screen.MenuState != MenuState.Hidden)
-				    screen.Draw(dt);
+					screen.Draw(dt);
 			}
 		}
 
@@ -156,11 +161,11 @@ namespace GameLib.Engine.MenuSystem {
 			menus.AddLast(screen);
 		}
 
-        public void ExitAll()
-        {
-            foreach (GameScreen g in menus)
-                g.ExitScreen();
-        }
+		public void ExitAll()
+		{
+			foreach (GameScreen g in menus)
+				g.ExitScreen();
+		}
 
 
 		/// <summary>
@@ -170,9 +175,8 @@ namespace GameLib.Engine.MenuSystem {
 		public void FadeBackBufferToBlack(float alpha)
 		{
 			Stage.renderer.SpriteBatch.Draw(blankTexture,
-                             new Rectangle(0, 0, Renderer.ScreenWidth, Renderer.ScreenHeight),
+							 new Rectangle(0, 0, Renderer.ScreenWidth, Renderer.ScreenHeight),
 							 Color.Black * alpha);
 		}
-
-	}
+    }
 }
