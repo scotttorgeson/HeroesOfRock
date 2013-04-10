@@ -178,10 +178,5 @@ namespace GameLib.Engine.MenuSystem {
 							 new Rectangle(0, 0, Renderer.ScreenWidth, Renderer.ScreenHeight),
 							 Color.Black * alpha);
 		}
-
-
-        internal static void AddScrreen (Screens.ColoredBackgroundScreen coloredBackgroundScreen) {
-            throw new NotImplementedException();
-        }
     }
 }
