@@ -167,10 +167,7 @@ namespace GameLib
                 index++;
             }
 
-            if(Player.Parm.HasParm("isStrumMode"))
-                isStrumMode = Player.Parm.GetBool("isStrumMode");
-            else
-                isStrumMode = true;
+            isStrumMode = Stage.SaveGame.getStrumMode();
         }
 
         /// <summary>

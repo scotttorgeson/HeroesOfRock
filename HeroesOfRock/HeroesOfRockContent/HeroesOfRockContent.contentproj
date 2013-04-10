@@ -1489,43 +1489,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\Options\ampBody.png">
-      <Name>ampBody</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Options\knob.png">
-      <Name>knob</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Options\meter.png">
-      <Name>meter</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Options\meterNeedle.png">
-      <Name>meterNeedle</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Options\sliderBar.png">
-      <Name>sliderBar</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Options\sliderKnob.png">
-      <Name>sliderKnob</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Options\switch.png">
-      <Name>switch</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Models\ASPHALT-bump.jpg">
       <Name>ASPHALT-bump</Name>
       <Importer>TextureImporter</Importer>
@@ -1681,18 +1644,6 @@
   <ItemGroup>
     <Compile Include="UI\HUD\pointer.png">
       <Name>pointer</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="UI\Options\meter.png">
-      <Name>meter</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\Options\meterNeedle.png">
-      <Name>meterNeedle</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -2395,6 +2346,48 @@
     </Compile>
     <Compile Include="UI\LevelGraphics\level5.png">
       <Name>level5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Options\EffectsVolume.png">
+      <Name>EffectsVolume</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UI\Options\Gore.png">
+      <Name>Gore</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UI\Options\MoreGore.png">
+      <Name>MoreGore</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UI\Options\MusicVolume.png">
+      <Name>MusicVolume</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UI\Options\OptionsKnob.png">
+      <Name>OptionsKnob</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UI\Options\OptionsSwitch.png">
+      <Name>OptionsSwitch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UI\Options\Options_Amp.png">
+      <Name>Options_Amp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="UI\Options\StrumMode.png">
+      <Name>StrumMode</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -206,8 +206,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 spriteBatch.DrawString(font2, "Kill Streak", new Vector2(skullRec.Center.X, skullRec.Top + 5), Color.White, 0,
                           font.MeasureString("Kill Streak") / 2, 2, SpriteEffects.None, 0);
 
-                spriteBatch.DrawString(font2, "x" + killStreak, new Vector2(skullRec.Center.X + 50, skullRec.Center.Y), Color.White, 0,
-                          font.MeasureString("x" + killStreak) / 2, 2, SpriteEffects.None, 0);
+                Vector2 killStreakTextSize = font.MeasureString("x" + killStreak);
+                spriteBatch.DrawString(font2, "x" + killStreak, new Vector2(skullRec.Center.X + 30, skullRec.Center.Y), 
+                    Color.White, 0, new Vector2(0, killStreakTextSize.Y/2), 2, SpriteEffects.None, 0);
             }
 
             spriteBatch.DrawString(font, "Final Score ", new Vector2(scoreRec.Center.X, scoreRec.Center.Y), Color.White, 0,
@@ -244,20 +245,25 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private void TallySkulls () {
 
             killStreak = rm.HighestKillStreak;
-                if (killStreak >= 5) {
-                    skullToDraw = 1;
-                    Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
-                } else if (killStreak >= 20) {
-                    skullToDraw = 2;
-                    Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
-                } else if (killStreak >= 50) {
+                if (killStreak >= 50) {
                     skullToDraw = 3;
                     Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
                 }
+                else if (killStreak >= 20)
+                {
+                    skullToDraw = 2;
+                    Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
+                }
+                else if (killStreak >= 5)
+                {
+                    skullToDraw = 1;
+                    Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
+                }
+
                 doneLerpingKillStreak = true;
                 doneLerpingScore = false;
                 bonusPoints = rm.KillStreakScore;
-                Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(new Vector2(skullRec.Center.X, skullRec.Top), new Vector2(0, 10), 3f, "+" + bonusPoints);
+                //Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(new Vector2(skullRec.Center.X, skullRec.Top), new Vector2(0, 10), 3f, "+" + bonusPoints);
         }
 
         private void CheckForPerfect () {

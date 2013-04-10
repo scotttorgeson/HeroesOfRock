@@ -62,9 +62,9 @@ namespace GameLib
 
         public const int HIGH_SCORES_PER_LEVEL = 3;
         public List<string> levelsUnlocked = new List<string>();
-        public Dictionary<string, List<float>> highScores = new Dictionary<string, List<float>>();
+        public Dictionary<string, List<int>> highScores = new Dictionary<string, List<int>>();
 
-        public void AddHighScore(string level, float score)
+        public void AddHighScore(string level, int score)
         {
             if (highScores.ContainsKey(level))
             {
@@ -79,7 +79,7 @@ namespace GameLib
             else
             {
                 // create the entry in the dictionary, then insert the score
-                highScores[level] = new List<float>(HIGH_SCORES_PER_LEVEL + 1);
+                highScores[level] = new List<int>(HIGH_SCORES_PER_LEVEL + 1);
                 highScores[level].Add(score);
             }
         }
@@ -90,9 +90,9 @@ namespace GameLib
                 levelsUnlocked.Add(level);
         }
 
-        public List<float> GetHighScores(string level)
+        public List<int> GetHighScores(string level)
         {
-            List<float> scores = new List<float>(HIGH_SCORES_PER_LEVEL);
+            List<int> scores = new List<int>(HIGH_SCORES_PER_LEVEL);
 
             // add all the scores we have for this level
             if (highScores.ContainsKey(level))
@@ -100,9 +100,41 @@ namespace GameLib
 
             // then fill out the rest with 0
             while (scores.Count < HIGH_SCORES_PER_LEVEL)
-                scores.Add(0f);
+                scores.Add(0);
 
             return scores;
+        }
+
+        public int musicVol = 11;
+        public int fxVol = 11;
+        public bool strumMode = true;
+        public bool gore = true;
+        public bool moreGore = true;
+
+        public void StoreOptionData(int musicVolume, int fxVolume, bool gorey, bool moreGorey, bool strum)
+        {
+            musicVol = musicVolume;
+            fxVol = fxVolume;
+            strumMode = strum;
+            gore = gorey;
+            moreGore = moreGorey;
+        }
+
+        public void getVolumes(out int musicVolume, out int fxVolume)
+        {
+            musicVolume = musicVol;
+            fxVolume = fxVol;
+        }
+
+        public void getGores(out bool gorey, out bool moreGorey)
+        {
+            gorey = gore;
+            moreGorey = moreGore;
+        }
+
+        public bool getStrumMode()
+        {
+            return strumMode;
         }
 
         public void CheckSaveGame()
@@ -120,12 +152,18 @@ namespace GameLib
                                 // write all the levels, and the scores for them
                                 foreach (string level in levelsUnlocked)
                                 {
-                                    List<float> highScores = GetHighScores(level);
+                                    List<int> highScores = GetHighScores(level);
                                     writer.Write(level);
-                                    foreach (float score in highScores)
+                                    foreach (int score in highScores)
                                         writer.Write(' ' + score.ToString(System.Globalization.CultureInfo.InvariantCulture));
                                     writer.Write(writer.NewLine);
                                 }
+                                //write in this order, music volume, fx volume, strumMode, gore, moreGore
+                                writer.Write(musicVol); writer.Write(writer.NewLine);
+                                writer.Write(fxVol); writer.Write(writer.NewLine);
+                                writer.Write(strumMode); writer.Write(writer.NewLine);
+                                writer.Write(gore); writer.Write(writer.NewLine);
+                                writer.Write(moreGore); writer.Write(writer.NewLine);
                             }
                         }
                         catch(Exception e)
@@ -162,6 +200,7 @@ namespace GameLib
                         {
                             try
                             {
+                                int otherParmIndex = 0;
                                 using (System.IO.StreamReader reader = new System.IO.StreamReader(stream))
                                 {
                                     bool fileOk = true;
@@ -176,8 +215,8 @@ namespace GameLib
                                             UnlockLevel(level);
                                             for (int i = 1; (i < HIGH_SCORES_PER_LEVEL) && (i < split.Length - 1); i++)
                                             {
-                                                float score = 0.0f;
-                                                if (float.TryParse(split[i], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out score))
+                                                int score = 0;
+                                                if (int.TryParse(split[i], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out score))
                                                     AddHighScore(level, score);
                                                 else
                                                 {
@@ -192,14 +231,64 @@ namespace GameLib
                                         }
                                         else
                                         {
-                                            // make sure its not an empty line
+                                            // get our other data if it isn't an empty line
                                             if (!(split.Length == 1 && split[0] == ""))
                                             {
-                                                // corrupted file, bad news, maybe they pulled the hard drive out mid save?
+                                             
+                                                switch (otherParmIndex)
+                                                {
+                                                    case 0: //music volume
+                                                        if (!int.TryParse(split[0], out musicVol))
+                                                        {
+                                                            // corrupted file, bad news, maybe they pulled the hard drive out mid save?
 #if DEBUG
-                                                System.Diagnostics.Debug.Assert(false, "File corrupted!!");
+                                                            System.Diagnostics.Debug.Assert(false, "File corrupted!!");
 #endif
-                                                fileOk = false;
+                                                            fileOk = false;
+                                                        }
+                                                        break;
+                                                    case 1: //fx volume
+                                                        if (!int.TryParse(split[0], out fxVol))
+                                                        {
+                                                            // corrupted file, bad news, maybe they pulled the hard drive out mid save?
+#if DEBUG
+                                                            System.Diagnostics.Debug.Assert(false, "File corrupted!!");
+#endif
+                                                            fileOk = false;
+                                                        }
+                                                        break;
+                                                    case 2: //strum mode
+                                                        if (!bool.TryParse(split[0], out strumMode))
+                                                        {
+                                                            // corrupted file, bad news, maybe they pulled the hard drive out mid save?
+#if DEBUG
+                                                            System.Diagnostics.Debug.Assert(false, "File corrupted!!");
+#endif
+                                                            fileOk = false;
+                                                        }
+                                                        break;
+                                                    case 3: //gore
+                                                        if (!bool.TryParse(split[0], out gore))
+                                                        {
+                                                            // corrupted file, bad news, maybe they pulled the hard drive out mid save?
+#if DEBUG
+                                                            System.Diagnostics.Debug.Assert(false, "File corrupted!!");
+#endif
+                                                            fileOk = false;
+                                                        }
+                                                        break;
+                                                    case 4: //more gore
+                                                        if (!bool.TryParse(split[0], out moreGore))
+                                                        {
+                                                            // corrupted file, bad news, maybe they pulled the hard drive out mid save?
+#if DEBUG
+                                                            System.Diagnostics.Debug.Assert(false, "File corrupted!!");
+#endif
+                                                            fileOk = false;
+                                                        }
+                                                        break;
+                                                }
+                                                otherParmIndex++;
                                             }
                                         }
                                     }

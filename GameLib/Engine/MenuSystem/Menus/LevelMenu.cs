@@ -12,11 +12,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         public LevelMenu ()
             : base("") {
-            //LevelMenuEntry TEST = new LevelMenuEntry("TestLevel2", "Test Level", "LevelBlank", false);
-            //LevelMenuEntry ONE = new LevelMenuEntry("Level1", "Level 1", "LevelBlank");
-            //LevelMenuEntry TWO = new LevelMenuEntry("Level2", "Level 2", "LevelBlank");
-            //LevelMenuEntry THREE = new LevelMenuEntry("Level3", "Level 3", "LevelBlank");
-            //LevelMenuEntry FOUR = new LevelMenuEntry("Level4", "Level 4", "LevelBlank");
 
             levelSelect = Stage.Content.Load<Texture2D>("UI/LevelGraphics/levelSelect");
             LevelMenuEntry TUTORIAL = new LevelMenuEntry("Tutorial", "Tutorial", "Level1", false);
@@ -59,12 +54,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
             LEVEL2.Selected += LoadLevel;
             LEVEL3.Selected += LoadLevel;
             LEVEL4.Selected += LoadLevel;
-            //TEST.Selected += LoadLevel;
-            //TEST.Selected += LoadLevel;
-            //ONE.Selected += LoadLevel;
-            //TWO.Selected += LoadLevel;
-            //THREE.Selected += LoadLevel;
-            //FOUR.Selected += LoadLevel;
 
             // Add entries to the menu.
             MenuEntries.Add(TUTORIAL);
@@ -72,12 +61,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
             MenuEntries.Add(LEVEL2);
             MenuEntries.Add(LEVEL3);
             MenuEntries.Add(LEVEL4);
-            //MenuEntries.Add(TEST);
-            //MenuEntries.Add(TEST);
-            //MenuEntries.Add(ONE);
-            //MenuEntries.Add(TWO);
-            //MenuEntries.Add(THREE);
-            //MenuEntries.Add(FOUR);
         }
 
         /// <summary>
@@ -119,7 +102,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 int offset = (menuEntry.GetWidth(this) + 50) * (i - selectedEntry);
                 // each entry is to be centered vertically
                 position.X = Renderer.ScreenWidth - menuEntry.GetWidth(this) / 2 + offset;
-                position.Y = Renderer.ScreenHeight - menuEntry.GetHeight(this) / 2;
+                position.Y = Renderer.ScreenHeight * 3 / 4;
                 selectedPosition.X = Renderer.ScreenRect.Center.X / 2 - (menuEntry.GetWidth(this) / 2);
                 selectedPosition.Y = position.Y;
 
@@ -143,7 +126,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         public override void Draw (float dt) {
             base.Draw(dt);
-            Rectangle rec = Stage.renderer.GraphicsDevice.Viewport.Bounds;
+            Rectangle rec = Renderer.ScreenRect;
             int width = (int)(levelSelect.Width * 0.7f);
             int height = (int)(levelSelect.Height * 0.7f);
             Rectangle levelSelectRec = new Rectangle(rec.Left + width/2, rec.Top + (int)(height * 2), width, height);

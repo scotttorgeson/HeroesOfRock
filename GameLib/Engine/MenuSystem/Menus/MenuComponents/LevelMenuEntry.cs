@@ -46,7 +46,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 //get top three values
             }
 
-            topScores = new int[] { 3333, 2222, 1111 }; //REMOVE
+            topScores = Stage.SaveGame.GetHighScores(LevelName).ToArray();
 
             return topScores;
 
@@ -144,8 +144,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
                     font.MeasureString(title).Y);
                 Stage.renderer.SpriteBatch.DrawString(font, title,  titlePos, color, 0, origin, 1, SpriteEffects.None, 0);
 
-                for (int i = 0; i < 3; i++) {
-                    String score = (i + 1) + " - " + tscores[i];
+                for (int i = 0; i < tscores.Length; i++) {
+                    String score = (i + 1) + " - " + tscores[i].ToString(System.Globalization.CultureInfo.InvariantCulture);
                     Stage.renderer.SpriteBatch.DrawString(baseFont, score, new Vector2(rec.Right - baseFont.MeasureString(score).X, (int)titlePos.Y
                         + (baseFont.MeasureString(score).Y * (i + 1)) / 2), color, 0, origin, 1, SpriteEffects.None, 0);
                 }

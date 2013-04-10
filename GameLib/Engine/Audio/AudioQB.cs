@@ -109,11 +109,13 @@ namespace GameLib
                     pitchFluctuationRate = 6.28f * GlobalGameParms.GameParms.GetFloat("SoundFluctuationRate");
                 if (GlobalGameParms.GameParms.HasParm("SoundFluctuationAmp"))
                     pitchFluctuationAmplitude = GlobalGameParms.GameParms.GetFloat("SoundFluctuationAmp");
-                if (GlobalGameParms.GameParms.HasParm("SoundMaxMusicVol"))
-                    maxMusicVolume = GlobalGameParms.GameParms.GetFloat("SoundMaxMusicVol");
-                if (GlobalGameParms.GameParms.HasParm("SoundMaxSFXVol"))
-                    maxSFXVolume = GlobalGameParms.GameParms.GetFloat("SoundMaxSFXVol");
             }
+            int musicVol;
+            int sfxVol;
+            Stage.SaveGame.getVolumes(out musicVol, out sfxVol);
+            
+            maxMusicVolume = (float)musicVol / 11;
+            maxSFXVolume = (float)sfxVol / 11;
 
             if ( levelTheme != null )
                 levelTheme.Volume = 0.1f;
@@ -288,7 +290,7 @@ namespace GameLib
         {
 #if !JAKESCOMP
             LoadSound(soundName);
-            soundsLib[soundName].Play();
+            soundsLib[soundName].Play(maxSFXVolume, 0, 0);
 #endif
         }
 
@@ -303,7 +305,7 @@ namespace GameLib
         {
 #if !JAKESCOMP
             LoadSound(soundName);
-            soundsLib[soundName].Play(volume, pitch, pan);
+            soundsLib[soundName].Play(volume*maxSFXVolume, pitch, pan);
 #endif
         }
 
@@ -360,7 +362,7 @@ namespace GameLib
             LoadSound(soundName);
             SoundEffectInstance instance = soundsLib[soundName].CreateInstance();
             instance.IsLooped = isLooped;
-            instance.Volume = volume;
+            instance.Volume = volume * maxSFXVolume;
             instance.Pitch = pitch;
             instance.Pan = pan;
             int id = soundEffectId++;
@@ -381,7 +383,7 @@ namespace GameLib
         public void ChangeSoundVolume(int id, float volume)
         {
 #if !JAKESCOMP
-            soundInstances[id].Volume = volume;
+            soundInstances[id].Volume = volume * maxSFXVolume;
 #endif
         }
         public void ChangeSoundPitch(int id, float pitch)

@@ -763,13 +763,15 @@ namespace GameLib.Engine.AI
             {
                 CameraQB c = Stage.ActiveStage.GetQB<CameraQB>();
                 PlayerCamera p = (c.ActiveCamera as PlayerCamera);
+
+                float halfFov = (float)((Math.PI / 2 - Math.Atan(p.ProjectionMatrix.M22)));
+                float aspect = p.ProjectionMatrix.M22 / p.ProjectionMatrix.M11;
+
                 float offset;
                 BEPUphysics.Entities.Prefabs.Box box1, box2;
                 if (MoveDirection == PlayerDirection.Right || MoveDirection == PlayerDirection.Left)
                 {
-                    offset = boundOffset;
-                    //offset = p.DesiredPositionOffset.Z * (float)Math.Tan(p.ProjectionMatrix.M11 * .5f);
-                    //offset -= (5 - p.DesiredPositionOffset.Y) * 1.5f;
+                    offset = aspect * Math.Abs(PlayerAgent.Player.PhysicsObject.Position.Z - p.DesiredPosition.Z) * (float)Math.Tan(halfFov);
                     Vector3 box1Center = new Vector3(center.X - offset, center.Y, center.Z);
                     Vector3 box2Center = new Vector3(center.X + offset, center.Y, center.Z);
                     box1 = new BEPUphysics.Entities.Prefabs.Box(box1Center, boundBoxThickness, 50.0f, 20.0f);
@@ -777,9 +779,7 @@ namespace GameLib.Engine.AI
                 }
                 else
                 {
-                    offset = boundOffset;
-                    //offset = p.DesiredPositionOffset.X * (float)Math.Tan(p.ProjectionMatrix.M11 * .5f);
-                    //offset -= (5 - p.DesiredPositionOffset.Y) * 1.5f;
+                    offset = aspect * Math.Abs(PlayerAgent.Player.PhysicsObject.Position.X - p.DesiredPosition.X) * (float)Math.Tan(halfFov);
                     Vector3 box1Center = new Vector3(center.X, center.Y, center.Z - offset);
                     Vector3 box2Center = new Vector3(center.X, center.Y, center.Z + offset);
                     box1 = new BEPUphysics.Entities.Prefabs.Box(box1Center, 20.0f, 50.0f, boundBoxThickness);
