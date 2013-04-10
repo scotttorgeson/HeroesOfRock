@@ -34,8 +34,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
         public override void HandleInput (MenuInput input) {
             base.HandleInput(input);
 
-            if (input.IsMenuCancel()) {
-                ExitScreen();
+           if (input.IsMenuCancel()) {
+                OnCancel();
             }
                 
         }
