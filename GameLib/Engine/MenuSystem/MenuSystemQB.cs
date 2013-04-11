@@ -86,7 +86,7 @@ namespace GameLib.Engine.MenuSystem {
         {
             if (!Stage.ActiveStage.Paused && menuSystem.CanPause())
             {
-                menuSystem.AddScreen(new PauseMenu("Pause Menu"));
+                menuSystem.AddScreen(new PauseMenu(""));
             }
         }
 

@@ -110,6 +110,7 @@
     <Compile Include="Engine\Decals\DecalQB.cs" />
     <Compile Include="Engine\FileIO\SaveGame.cs" />
     <Compile Include="Engine\FileIO\ThreadSafeContentManager.cs" />
+    <Compile Include="Engine\MenuSystem\Menus\PauseMenu.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\ControlsPopUp.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\QuitConfirmPopUp.cs" />
     <Compile Include="Engine\Renderer\Effects\SkinnedEffect.cs" />
@@ -195,7 +196,6 @@
     <Compile Include="Engine\MenuSystem\Menus\MenuComponents\MenuEntry.cs" />
     <Compile Include="Engine\MenuSystem\GameMenu.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\MessageBox.cs" />
-    <Compile Include="Engine\MenuSystem\Menus\PauseMenu.cs" />
     <Compile Include="Engine\Physics\PhysicsHelpers.cs" />
     <Compile Include="Engine\Physics\PhysicsObject.cs" />
     <Compile Include="Engine\Physics\PhysicsQB.cs" />

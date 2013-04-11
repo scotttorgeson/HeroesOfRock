@@ -146,7 +146,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 Stage.SaveGame.SaveGameData();
                 //todo: reload necessary game variables here i.e. sound volumes for audioQB and strum mode for player agent
             }
-            MenuSystem.AddScreen(new MainMenu());
+            ExitScreen();
         }
 
         public override void Draw(float dt)

@@ -129,7 +129,7 @@ namespace GameLib.Engine.MenuSystem {
         public override void HandleInput (MenuInput input) {
             base.HandleInput(input);
             if (input.IsPauseGame()) {
-                MenuSystem.AddScreen(new PauseMenu("Pause Menu"));
+                MenuSystem.AddScreen(new PauseMenu(""));
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Home)) {
