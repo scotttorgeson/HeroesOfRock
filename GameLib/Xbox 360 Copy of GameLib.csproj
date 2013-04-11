@@ -118,6 +118,7 @@
     <Compile Include="Engine\MenuSystem\Menus\TutorialMenu.cs" />
     <Compile Include="Engine\MenuSystem\PopUpScreen.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\ConceptArtPopUp.cs" />
+    <Compile Include="Engine\MenuSystem\PopUps\ControlsPopUp.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\ExtrasPopUp.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\MessageBox.cs" />
     <Compile Include="Engine\MenuSystem\PopUps\OptionPopUp.cs" />

@@ -14,13 +14,15 @@ namespace GameLib.Engine.MenuSystem.Menus {
             //Load Game
             MenuGraphic logo = new MenuGraphic("MainMenu/mainMenuLogo", Vector2.Zero, 0.8f);
             MenuGraphic play = new MenuGraphic("MainMenu/play", "MainMenu/play_hover", Vector2.Zero, 0.8f);
+            MenuGraphic controls = new MenuGraphic("MainMenu/controls", "MainMenu/controls_hover", Vector2.Zero, 0.8f);
             MenuGraphic options = new MenuGraphic("MainMenu/options", "MainMenu/options_hover", Vector2.Zero, 0.8f);
             //MenuGraphic extras = new MenuGraphic("MainMenu/play"));
             MenuGraphic credits = new MenuGraphic("MainMenu/credits", "MainMenu/credits_hover", Vector2.Zero, 0.8f);
             MenuGraphic exit = new MenuGraphic("MainMenu/exit", "MainMenu/exit_hover", Vector2.Zero, 0.8f);
 
             // Hook up menu event handlers.
-            play.Selected += LevelSelectSelected;
+            play.Selected += PlaySelected;
+            controls.Selected += ControlsSelected;
             options.Selected += OptionsSelected;
             //extras.Selected += ExtrasSelected;
             credits.Selected += CredsSelected;
@@ -29,6 +31,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             // Add entries to the menu.
             MenuEntries.Add(logo);
             MenuEntries.Add(play);
+            MenuEntries.Add(controls);
             MenuEntries.Add(options);
             //MenuEntries.Add(extras);
             MenuEntries.Add(credits);
@@ -39,15 +42,18 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
 
+        void PlaySelected (object sender, EventArgs e) {
+            MenuSystem.AddScreen(new BackgroundScreen());
+            MenuSystem.AddScreen(new LevelMenu());
+        }
+
+        void ControlsSelected (object sender, EventArgs e) {
+            MenuSystem.AddScreen(new ControlsPopUp(""));
+        }
         void OptionsSelected (object sender, EventArgs e) {
             const string message = "Options!";
             OptionPopUp options = new OptionPopUp(message);
             MenuSystem.AddScreen(options);
-        }
-
-        void LevelSelectSelected (object sender, EventArgs e) {
-            MenuSystem.AddScreen(new BackgroundScreen());
-            MenuSystem.AddScreen(new LevelMenu());
         }
 
         void ExtrasSelected (object sender, EventArgs e) {

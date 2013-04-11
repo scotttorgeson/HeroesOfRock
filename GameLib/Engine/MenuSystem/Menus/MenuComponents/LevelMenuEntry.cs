@@ -14,6 +14,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         public bool UseLoadingLevel { get; private set; }
 
         private Texture2D blank, lockGraphic, skullGraphic, divider;
+        private SpriteFont baseFont;
         private int height, width;
         int[] tscores;
         private float scale;
@@ -28,6 +29,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 height = LevelGraphic.Height;
                 this.blank = Stage.Content.Load<Texture2D>("UI/Menu/blank");
                 this.lockGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/LevelLock");
+                this.baseFont = Stage.Content.Load<SpriteFont>("Arial");
                 this.scale =  1f;
                             
             
@@ -82,14 +84,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
             color *= menu.TransitionAlpha;
 
             // Draw text, centered on the middle of each line.
-            MenuSystem sys = menu.MenuSystem;
-            SpriteFont baseFont = sys.Font;
-            SpriteFont font = sys.Boycott;
+            SpriteFont font = menu.MenuSystem.Boycott;
 
             scale = .5f;
 
             int x = (int)(Position.X - ((1.6*LevelGraphic.Width) / 2));
-            int y = (int)(Position.Y - ((1.75*LevelGraphic.Height) / 2));
+            int y = (int)(Position.Y - ((1.3*LevelGraphic.Height) / 2));
             int scaledWidth = (int)(width * scale);
             int scaledHeight = (int)(height * scale);
 
@@ -117,24 +117,24 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
                 //draw the skull ratings
                 if (skullGraphic != null) {
-                float skullScale = 1f;
+                float skullScale = 0.85f;
 
                 int w = (int)(skullGraphic.Width * skullScale);
                 int h = (int)(skullGraphic.Height * skullScale);
 
                 
-                    Rectangle skullRec = new Rectangle((int)startPosition.X, (int)startPosition.Y + rec.Height + h / 4, w, h);
+                    Rectangle skullRec = new Rectangle((int)startPosition.X, (int)startPosition.Y + rec.Height + h / 2, w, h);
                     Stage.renderer.SpriteBatch.Draw(skullGraphic, skullRec, Color.White);
 
 
                     //draw the skull rating string
-                    Vector2 ratingPos = new Vector2(rec.Right - font.MeasureString(rating).X, rec.Bottom + skullRec.Height / 2);
+                    Vector2 ratingPos = new Vector2(rec.Right - font.MeasureString(rating).X, rec.Bottom + skullRec.Height/2 + font.MeasureString(rating).Y/2);
                     Stage.renderer.SpriteBatch.DrawString(font, rating, ratingPos, color, 0, origin, 1, SpriteEffects.None, 0);
 
                     //draw divider
                     int dw = rec.Width;
                     int dh = divider.Height;
-                    dividerRec = new Rectangle((int)startPosition.X, (int)ratingPos.Y + (25 * dh), dw, dh);
+                    dividerRec = new Rectangle((int)startPosition.X, (int)ratingPos.Y + (12 * dh), dw, dh);
                     Stage.renderer.SpriteBatch.Draw(divider, dividerRec, Color.White);
                 }
                 
@@ -147,7 +147,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 for (int i = 0; i < tscores.Length; i++) {
                     String score = (i + 1) + " - " + tscores[i].ToString(System.Globalization.CultureInfo.InvariantCulture);
                     Stage.renderer.SpriteBatch.DrawString(baseFont, score, new Vector2(rec.Right - baseFont.MeasureString(score).X, (int)titlePos.Y
-                        + (baseFont.MeasureString(score).Y * (i + 1)) / 2), color, 0, origin, 1, SpriteEffects.None, 0);
+                        + 15 + (int)(1.5*baseFont.MeasureString(score).Y * (i + 1))/2) , color, 0, origin, 1, SpriteEffects.None, 0);
                 }
             }
         }
