@@ -19,6 +19,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 2", "Level2", false);
             LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 3", "Level3", false);
             LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 4", "Level4", false);
+            LevelMenuEntry LEVEL5 = new LevelMenuEntry("Level5", "Level 5", "Level5", false);
 
 #if XBOX
             if (Guide.IsTrialMode)
@@ -28,6 +29,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 LEVEL2.IsLocked = true;
                 LEVEL3.IsLocked = true;
                 LEVEL4.IsLocked = true;
+                LEVEL5.IsLocked = true;
             }
             else
 #endif
@@ -39,10 +41,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
                 LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
                 LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
+                LEVEL5.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL5.LevelName);
 #else
                 LEVEL2.IsLocked = false;
                 LEVEL3.IsLocked = false;
                 LEVEL4.IsLocked = false;
+                LEVEL5.IsLocked = false;
 #endif
                 //TEST.IsLocked = false;
             }
@@ -54,6 +58,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             LEVEL2.Selected += LoadLevel;
             LEVEL3.Selected += LoadLevel;
             LEVEL4.Selected += LoadLevel;
+            LEVEL5.Selected += LoadLevel;
 
             // Add entries to the menu.
             MenuEntries.Add(TUTORIAL);
@@ -61,6 +66,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             MenuEntries.Add(LEVEL2);
             MenuEntries.Add(LEVEL3);
             MenuEntries.Add(LEVEL4);
+            MenuEntries.Add(LEVEL5);
         }
 
         /// <summary>

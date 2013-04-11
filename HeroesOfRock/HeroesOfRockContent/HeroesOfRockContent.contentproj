@@ -1072,6 +1072,10 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Worlds\Level5.parm">
+      <Name>Level5</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GameLib\GameLib.csproj">
