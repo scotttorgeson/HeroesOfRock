@@ -14,7 +14,7 @@ namespace GameLib
         public WaterRModel(ParameterSet parm)
             : base(parm)
         {
-
+            parm.AddParm("ApplyDecals", "false");
         }
 
         public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content, ParameterSet parm, Stage stage)

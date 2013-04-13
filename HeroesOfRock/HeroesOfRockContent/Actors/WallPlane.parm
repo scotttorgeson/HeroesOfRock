@@ -1,0 +1,7 @@
+ModelName=Earth
+Mass=-1
+PhysicsType=StaticMesh
+Texture=Earth_Texture
+SpecularPower=4.0
+Shininess=0.1
+ApplyDecals=false

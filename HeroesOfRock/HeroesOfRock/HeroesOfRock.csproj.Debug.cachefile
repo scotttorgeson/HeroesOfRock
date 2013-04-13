@@ -442,10 +442,10 @@ Content\Audio\Missile3_16.xnb
 Content\Audio\Missile4_16.xnb
 Content\Audio\MissileExplosion_16.xnb
 Content\Models\Grid\Grid_0.xnb
-Content\FBX\722729C6\sLevel1.fbm\Ground_Texture_0.xnb
+Content\Ground_Texture_0.xnb
 Content\Models\Buildings\LargeApartmentBuildingDiffuse_0.xnb
 Content\Models\Buildings\SmallStoreDiffuse_0.xnb
-Content\FBX\303E2E1F\cardboardbox.fbm\boxdiffuse_0.xnb
+Content\boxdiffuse_0.xnb
 Content\Models\Environment\powerLineDiffuse_0.xnb
 Content\Models\Environment\ShoppingCartDiffuse_0.xnb
 Content\Models\Environment\StopLightDiffuse_0.xnb
@@ -455,6 +455,7 @@ Content\Models\Environment\TVDiffuse_0.xnb
 Content\Models\Environment\FireEscapeDiffuse_0.xnb
 Content\Models\Environment\40Diffuse_0.xnb
 Content\Models\Environment\BeerDiffuse_0.xnb
+Content\Actors\WallPlane.xnb
 Content\Audio\banknote-counterSTOPPING.wma
 Content\Audio\banknote-counter_COUNTING.wma
 Content\Audio\crickets.wma

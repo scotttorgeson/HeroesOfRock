@@ -352,6 +352,10 @@
       <Name>Couch</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
+    <Compile Include="Actors\WallPlane.parm">
+      <Name>WallPlane</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
     <None Include="Actors\Level1Path.parm">
       <Name>Level1Path</Name>
       <Importer>ParameterSetImporter</Importer>
