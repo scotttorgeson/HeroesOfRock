@@ -238,6 +238,7 @@ namespace GameLib
             }
 
             foreach (Quarterback qb in QBTable.Values)
+                
                 qb.PreLoadInit(Parm);
         }
 

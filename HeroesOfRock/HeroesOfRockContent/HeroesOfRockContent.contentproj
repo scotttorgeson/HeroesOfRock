@@ -396,6 +396,10 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+    <Compile Include="Actors\WallPlane.parm">
+      <Name>WallPlane</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
     <None Include="Effects\v2\Common.fxh">
       <Name>Common</Name>
     </None>
@@ -1071,6 +1075,10 @@
       <Name>Couch_Texture_v03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Worlds\Level5.parm">
+      <Name>Level5</Name>
+      <Importer>ParameterSetImporter</Importer>
     </Compile>
   </ItemGroup>
   <ItemGroup>

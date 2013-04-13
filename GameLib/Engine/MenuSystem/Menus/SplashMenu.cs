@@ -32,6 +32,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             selectedEntry = 1;
 
             Stage.SaveGame.LoadGameData();
+            Stage.ActiveStage.GetQB<AudioQB>().ChangeTheme("HORcityday");
         }
 
 

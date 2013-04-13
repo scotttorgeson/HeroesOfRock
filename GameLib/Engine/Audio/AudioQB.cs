@@ -132,6 +132,32 @@ namespace GameLib
             base.PostLoadInit(Parm);
         }
 
+        public void ChangeTheme(string themeName)
+        {
+#if !JAKESCOMP
+            levelTheme = Stage.Content.Load<SoundEffect>("Audio/" + themeName).CreateInstance();
+            levelTheme.IsLooped = true;
+            levelTheme.Volume = 0.1f;
+
+            int musicVol;
+            int sfxVol;
+
+            musicVol = 0;
+            sfxVol = 0;
+            if (!Stage.Editor)
+                Stage.SaveGame.getVolumes(out musicVol, out sfxVol);
+
+            maxMusicVolume = (float)musicVol / 11;
+            maxSFXVolume = (float)sfxVol / 11;
+
+            if (levelTheme != null)
+            {
+                levelTheme.Volume = maxMusicVolume;
+                PlayTheme(1.0f);
+            }
+#endif
+        }
+
         public override void  LevelLoaded()
         {
             if (levelTheme != null)
@@ -163,7 +189,7 @@ namespace GameLib
 
         public override void Update(float dt)
         {
-            if (IsPaused) return;
+            //if (IsPaused) return;
 
 #if !JAKESCOMP
             if (levelTheme != null) {

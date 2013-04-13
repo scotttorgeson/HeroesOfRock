@@ -1,5 +1,4 @@
-AssetName=MainMenu
+AssetName=StartGame
 FirstScreen=ElevenTenLogoScreen
 Quarterbacks=ActorQB,ControlsQB,ParticleQB,AudioQB,MenuSystemQB,CameraQB
 Sound0=Arail-attack2
-SoundTheme=HORcityday
