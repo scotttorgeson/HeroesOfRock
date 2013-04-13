@@ -101,7 +101,8 @@ namespace GameLib
 
         public override void PostLoadInit(ParameterSet Parm)
         {
-            rm = PlayerAgent.Player.GetAgent<GameLib.Engine.AttackSystem.RockMeter>();
+            if(PlayerAgent.Player != null)
+                rm = PlayerAgent.Player.GetAgent<GameLib.Engine.AttackSystem.RockMeter>();
             
             if (GlobalGameParms.initialized)
             {
@@ -136,7 +137,11 @@ namespace GameLib
             if (levelTheme != null)
             {
                 levelTheme.Play();
-                FluctuateOnRockLevel(1.0f);
+
+                if (rm != null)
+                    FluctuateOnRockLevel(1.0f);
+                else
+                    PlayTheme(1f);
             }
 
             base.LevelLoaded();
@@ -161,7 +166,12 @@ namespace GameLib
             if (IsPaused) return;
 
 #if !JAKESCOMP
-            if(levelTheme != null) FluctuateOnRockLevel(dt);
+            if (levelTheme != null) {
+                if (rm != null)
+                    FluctuateOnRockLevel(dt);
+                else
+                    PlayTheme(dt);
+            }
 #endif
             // look for any sounds in the kill when done list that are done, and kill them
             for (int i = killWhenDoneList.Count - 1; i >= 0; --i)
@@ -288,6 +298,22 @@ namespace GameLib
             
 
             prevRockLevel = rm.RockLevel;
+        
+        }
+
+        private void PlayTheme (float dt) {
+
+            float volume = maxMusicVolume;
+#if Lerping
+            float currVol = levelTheme.Volume;
+            float lerpRate = .5f;
+            Lerp(volume, ref currVol, lerpRate * dt);
+            levelTheme.Volume = currVol;
+#else
+            levelTheme.Volume = volume;
+            levelTheme.Pitch = pitch;
+            
+#endif
         }
 
         public void PlaySound(string soundName)

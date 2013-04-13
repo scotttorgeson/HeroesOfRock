@@ -21,6 +21,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         private Rectangle skullRec;
         private Rectangle scoreRec;
+        private Rectangle multiplier;
         private Rectangle scoreTitleRec;
         private Rectangle statusTitleRec;
         private Rectangle skullStatusRec;
@@ -35,6 +36,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private int killStreak;
         private int skullToDraw;
         private int lerpRate;
+        private int sound;
 
         private float timeOnLevel;
         private float timer;
@@ -43,6 +45,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private bool doneLerpingKillStreak;
         private bool checkForPerfect;
         private bool drawStatus;
+        private bool soundPlaying;
 
         private RockMeter rm;
 
@@ -103,11 +106,13 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             w = (int)(levelCompleteRec.Width);
             h = MenuSystem.Font.LineSpacing / 2;
-            scoreRec = new Rectangle(scoreTitleRec.Center.X, scoreTitleRec.Bottom + h, w, h);
+            scoreRec = new Rectangle(scoreTitleRec.Center.X - scoreTitleRec.Width/2, scoreTitleRec.Bottom + h, w, h);
+
+            multiplier = new Rectangle(scoreRec.Right, scoreTitleRec.Bottom + h, w, h);
 
             w = (int)(bestTitle.Width * scale);
             h = (int)(bestTitle.Height * scale);
-            bestTitleRec = new Rectangle(scoreTitleRec.X, scoreRec.Bottom + h, w, h);
+            bestTitleRec = new Rectangle(scoreTitleRec.X, scoreRec.Bottom + (3*h), w, h);
 
             w = skullCounters[0].Width;
             h = skullCounters[0].Height;
@@ -119,11 +124,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             w = (int)(skullStatus.Width * scale);
             h = (int)(skullStatus.Height * scale);
-            skullStatusRec = new Rectangle(statusTitleRec.Center.X, statusTitleRec.Bottom + h / 4, w, h);
+            skullStatusRec = new Rectangle(statusTitleRec.Center.X, scoreRec.Y, w, h);
 
             w = (int)(selectBack.Width * scale);
             h = (int)(selectBack.Height * scale);
-            selectBackRec = new Rectangle(window.Right - w, window.Bottom -  h, w, h);
+            selectBackRec = new Rectangle(window.Right - (int)(1.5*w), window.Bottom -  (int)(1.5 *h), w, h);
         }
 
         void Continue (object sender, EventArgs e) {
@@ -146,14 +151,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
                     doneLerpingScore = true;
                 }
             } else if (doneLerpingScore) {
-                if (input.IsGreen()) {
+                if (input.IsGreen() || input.IsMenuSelect()) {
                     if (Stage.ActiveStage.Parm.HasParm("NextLevel")) {
-                        Stage.LoadStage(Stage.ActiveStage.Parm.GetString("NextLevel"), true);
+                        LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
                     } else {
-                        Stage.LoadStage("MainMenu", true);
+                        LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("MainMenu"));
                     }
 
-                } else if (input.IsRed()) {
+                } else if (input.IsRed() || input.IsMenuCancel()) {
                     QuitGame(this, new EventArgs());
                 }
             }
@@ -169,20 +174,29 @@ namespace GameLib.Engine.MenuSystem.Menus {
             timer += dt;
 
             if (!doneLerpingScore) {
+                if(!soundPlaying){
+                    sound = Stage.ActiveStage.GetQB<AudioQB>().PlaySoundInstance("banknote_counter_COUNTING", true, true);
+                    soundPlaying = true;
+                }
+                    
                 int rate = lerpRate;
                 if ((baseScore + bonusPoints) > 900000)
-                    rate = lerpRate * 10;
+                    rate = lerpRate * 100;
 
                 Lerp(baseScore + bonusPoints, ref score, (int)Math.Ceiling(rate * dt));
-                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("banknote_counter_COUNTING"); 
             }          
-            else if (!doneLerpingKillStreak){
-           
+            else if (!doneLerpingKillStreak){           
                 TallySkulls();
             } else if (doneLerpingScore && doneLerpingKillStreak && checkForPerfect) {
-                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("banknote-counterSTOPPING");
+                //Stage.ActiveStage.GetQB<AudioQB>().PlaySound("banknote-counterSTOPPING");
                 CalculateStatus();
             }
+
+            if (doneLerpingScore) {
+                Stage.ActiveStage.GetQB<AudioQB>().StopStound(sound);
+                soundPlaying = false;
+            }
+                
 
 #if DEBUG && WINDOWS
             ControlsQB c = Stage.ActiveStage.GetQB<ControlsQB>();
@@ -229,9 +243,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 Vector2 killStreakTextSize = font.MeasureString("x" + killStreak);
                 spriteBatch.DrawString(font, "x" + killStreak, new Vector2(skullRec.Center.X + 30, skullRec.Center.Y), 
                     Color.White, 0, new Vector2(0, killStreakTextSize.Y/2), 2, SpriteEffects.None, 0);
+
+                //spriteBatch.DrawString(font, "x" + killStreak, new Vector2(scoreRec.Center.X + 4*font.MeasureString("x" + killStreak).X, scoreRec.Center.Y + (2 * font.LineSpacing)),
+    //Color.White, 0, new Vector2(0, killStreakTextSize.Y / 2), 2, SpriteEffects.None, 0);
             }
 
-            if (drawStatus) {
+            if (drawStatus && doneLerpingScore) {
                 spriteBatch.Draw(statusTitle, statusTitleRec, Color.White);
                 spriteBatch.Draw(skullStatus, skullStatusRec, Color.White);
             }

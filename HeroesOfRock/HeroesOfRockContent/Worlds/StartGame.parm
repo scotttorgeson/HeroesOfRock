@@ -1,8 +1,5 @@
 AssetName=MainMenu
 FirstScreen=ElevenTenLogoScreen
-Quarterbacks=PhysicsQB,ControlsQB,ActorQB,CameraQB,DebugQB,AudioQB,TriggerQB,PlayerAttackSystemQB,ParticleQB,AIQB,BloodSplatterQB,MenuSystemQB,TempoQB
+Quarterbacks=ActorQB,ControlsQB,ParticleQB,AudioQB,MenuSystemQB,CameraQB
 Sound0=Arail-attack2
 SoundTheme=HORcityday
-Actor0=GuitarAvatar
-Actor0Position=-4.786655 14.19834 0
-Actor0Rotation=0 0 0

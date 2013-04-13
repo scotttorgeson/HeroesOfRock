@@ -14,7 +14,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         public PauseMenu (string message, bool includeUsageText)
             : base(message) {
             Vector2 position = new Vector2(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X, Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.Y);
-            
+            Stage.ActiveStage.PauseGame();
             MenuGraphic continueGame = new MenuGraphic("Pause/continue", "Pause/continue_hover", position, 0.65f);
             MenuGraphic controls = new MenuGraphic("MainMenu/controls", "MainMenu/controls_hover", position, 0.65f);
             MenuGraphic tune = new MenuGraphic("Pause/tuneMyGear", "Pause/tuneMyGear_hover", position, 0.65f);
