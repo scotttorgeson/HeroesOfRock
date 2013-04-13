@@ -147,7 +147,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             //confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
 
             //MenuSystem.AddScreen(confirmExitMessageBox);
-            MenuSystem.AddScreen(new QuitConfirmPopUp(""));
+            MenuSystem.AddScreen(new QuitConfirmPopUp("", true));
         }
 
 

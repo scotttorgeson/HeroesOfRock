@@ -29,7 +29,7 @@ namespace GameLib
 
         public PlayerState State { get; private set; }
 
-        public bool isStrumMode;
+        public static bool isStrumMode;
 
         #region InputAction declarations
         InputAction strum;
@@ -442,9 +442,6 @@ namespace GameLib
             State = PlayerState.Normal;
             recoveryTimer = 0;          
             currentAttack = null;
-
-            
-
         }
 
         private void startAttack()

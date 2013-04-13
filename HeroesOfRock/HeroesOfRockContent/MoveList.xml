@@ -55,7 +55,7 @@
       <RockMeterIncrease>1</RockMeterIncrease>
       <FlowStart>.175</FlowStart>
       <FlowDuration>.35</FlowDuration>
-      <FrontArea>4</FrontArea>
+      <FrontArea>4.5</FrontArea>
       <BackArea>-.25</BackArea>
       <Force Type="Microsoft.Xna.Framework.Vector2">0 0</Force>
       <ParticleEffect>test</ParticleEffect>
