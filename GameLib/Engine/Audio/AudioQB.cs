@@ -27,14 +27,14 @@ namespace GameLib
         private SoundEffectInstance cheeringSFX;
         private SoundEffectInstance booingSFX;
 
-        private float maxMusicVolume;
-        private float maxSFXVolume;
+        public static float maxMusicVolume;
+        public static float maxSFXVolume;
         private float pitchFluctuation;
         private float pitchFluctuationRate;
         private float pitchFluctuationAmplitude;
         private int prevRockLevel;
 
-        public float MaxMusicVolume
+        /*public float MaxMusicVolume
         {
             get { return maxMusicVolume; }
             set { maxMusicVolume = value; }
@@ -44,7 +44,7 @@ namespace GameLib
         {
             get { return maxSFXVolume; }
             set { maxSFXVolume = value; }
-        }
+        }*/
 
         private GameLib.Engine.AttackSystem.RockMeter rm; //for changing the sound levels
 

@@ -442,9 +442,6 @@ namespace GameLib
             State = PlayerState.Normal;
             recoveryTimer = 0;          
             currentAttack = null;
-
-            
-
         }
 
         private void startAttack()
