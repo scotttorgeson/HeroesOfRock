@@ -107,7 +107,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             w = (int)(bestTitle.Width * scale);
             h = (int)(bestTitle.Height * scale);
-            bestTitleRec = new Rectangle(scoreTitleRec.X, scoreTitleRec.Bottom + scoreRec.Bottom + h, w, h);
+            bestTitleRec = new Rectangle(scoreTitleRec.X, scoreRec.Bottom + h, w, h);
 
             w = skullCounters[0].Width;
             h = skullCounters[0].Height;
@@ -119,11 +119,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             w = (int)(skullStatus.Width * scale);
             h = (int)(skullStatus.Height * scale);
-            skullStatusRec = new Rectangle(statusTitleRec.Right + statusTitleRec.Width / 2, statusTitleRec.Bottom + h / 4, w, h);
+            skullStatusRec = new Rectangle(statusTitleRec.Center.X, statusTitleRec.Bottom + h / 4, w, h);
 
             w = (int)(selectBack.Width * scale);
             h = (int)(selectBack.Height * scale);
-            selectBackRec = new Rectangle(window.Right - (2 * w), window.Bottom - (2 * h), w, h);
+            selectBackRec = new Rectangle(window.Right - w, window.Bottom -  h, w, h);
         }
 
         void Continue (object sender, EventArgs e) {
