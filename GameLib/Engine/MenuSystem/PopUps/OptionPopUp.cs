@@ -69,6 +69,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             origMusicVol = musicVol;
             PlayerAgent.isStrumMode = strumMode;
             origStrumMode = strumMode;
+            Stage.ActiveStage.PauseGame();
         }
 
         public OptionPopUp (string message, bool includeUsageText)
@@ -239,12 +240,15 @@ namespace GameLib.Engine.MenuSystem.Menus {
         {
             musicVol++;
             if (musicVol > 11) musicVol = 0;
+            AudioQB.maxMusicVolume = (float)musicVol / 11;
+
         }
 
         private void ChangeFxVol()
         {
             fxVol++;
             if (fxVol > 11) fxVol = 0;
+            AudioQB.maxSFXVolume = (float)fxVol / 11;
         }
 
         private void ChangeGore()

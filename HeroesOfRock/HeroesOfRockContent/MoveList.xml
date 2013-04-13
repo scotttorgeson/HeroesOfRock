@@ -5,8 +5,8 @@
     <Item>
       <Name>Quick Melee</Name>
       <ButtonSequence>B</ButtonSequence>
-      <TimeBeforeAttack>0.66</TimeBeforeAttack>
-      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <TimeBeforeAttack>0.25</TimeBeforeAttack>
+      <TimeAfterAttack>0.75</TimeAfterAttack>
       <Damage>30</Damage>
       <StunTime>0</StunTime>
       <Disarming>false</Disarming>
@@ -26,8 +26,8 @@
     <Item>
       <Name>Medium Melee</Name>
       <ButtonSequence>Y</ButtonSequence>
-      <TimeBeforeAttack>0.66</TimeBeforeAttack>
-      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <TimeBeforeAttack>0.5</TimeBeforeAttack>
+      <TimeAfterAttack>0.5</TimeAfterAttack>
       <Damage>15</Damage>
       <StunTime>1.0</StunTime>
       <Disarming>true</Disarming>
@@ -47,8 +47,8 @@
     <Item>
       <Name>Heavy Melee</Name>
       <ButtonSequence>X</ButtonSequence>
-      <TimeBeforeAttack>0.66</TimeBeforeAttack>
-      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <TimeBeforeAttack>0.3</TimeBeforeAttack>
+      <TimeAfterAttack>0.7</TimeAfterAttack>
       <Damage>60</Damage>
       <StunTime>0</StunTime>
       <Disarming>false</Disarming>
@@ -68,8 +68,8 @@
     <Item>
       <Name>Smash</Name>
       <ButtonSequence>B | Y | X</ButtonSequence>
-      <TimeBeforeAttack>0.66</TimeBeforeAttack>
-      <TimeAfterAttack>0.34</TimeAfterAttack>
+      <TimeBeforeAttack>0.35</TimeBeforeAttack>
+      <TimeAfterAttack>0.65</TimeAfterAttack>
       <Damage>60</Damage>
       <StunTime>2.0</StunTime>
       <Disarming>true</Disarming>
