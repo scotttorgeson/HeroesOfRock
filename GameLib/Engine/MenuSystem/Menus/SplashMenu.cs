@@ -29,13 +29,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
             MenuEntries.Add(bestPlayed);
 
             //hack to makes sure press a is selected, fix.
-            selectedEntry = 2;
+            selectedEntry = 1;
 
             Stage.SaveGame.LoadGameData();
         }
 
 
         void GoToMainMenu (object sender, EventArgs e) {
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
             this.MarkedForRemove = true;
             MenuSystem.AddScreen(new BackgroundScreen("MainMenu/background", 0.8f));
             MenuSystem.AddScreen(new MainMenu());
@@ -104,6 +105,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
               //  if(i != 1)
                     menuEntry.Draw(this, isSelected, dt);
             }
+        }
+
+        public override void HandleInput (MenuInput input) {
+            if (input.IsMenuSelect()) {
+                //Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
+            } 
         }
 
         ///EVENTS///

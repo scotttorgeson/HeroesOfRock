@@ -11,15 +11,23 @@ using GameLib.Engine.AttackSystem;
 
 namespace GameLib.Engine.MenuSystem.Menus {
     public class EndLevelMenu : GameMenu {
-        private Texture2D smoked;
-        private Texture2D perfection;
+        private Texture2D levelComplete;
+        private Texture2D scoreTitle;
+        private Texture2D bestTitle;
+        private Texture2D statusTitle;
+        private Texture2D skullStatus;
+        private Texture2D selectBack;
         private Texture2D[] skullCounters;
 
         private Rectangle skullRec;
         private Rectangle scoreRec;
-        private Rectangle bonusRec;
-        private Rectangle optionsRec;
+        private Rectangle scoreTitleRec;
+        private Rectangle statusTitleRec;
+        private Rectangle skullStatusRec;
         private Rectangle window;
+        private Rectangle levelCompleteRec;
+        private Rectangle bestTitleRec;
+        private Rectangle selectBackRec;
 
         private int baseScore;
         private int score;
@@ -34,19 +42,19 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private bool doneLerpingScore; //may not need
         private bool doneLerpingKillStreak;
         private bool checkForPerfect;
-        private bool drawPerfect;
+        private bool drawStatus;
 
         private RockMeter rm;
 
         public EndLevelMenu (string title)
             : base(title) {
-            skullToDraw = 0;
-            GetScoreData();
-            timer = 0f;
-            checkForPerfect = true;
+            
             Stage.ActiveStage.PauseGame();
+            GetScoreData();
 
-            // todo: update to save the real high score
+            timer = 0f;
+            
+            // save the high score
             Stage.SaveGame.AddHighScore(Stage.ActiveStage.Parm.GetString("AssetName"), rm.GetTotalScore);
             if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
                 Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
@@ -62,25 +70,60 @@ namespace GameLib.Engine.MenuSystem.Menus {
             killStreak = 0;
             skullToDraw = 0;
             bonusPoints = 0;
-            lerpRate = 50000;
+            lerpRate = 10000;
             skullCounters = new Texture2D[4];
+            checkForPerfect = true;
         }
 
         public override void LoadContent () {
-            smoked = Stage.Content.Load<Texture2D>("UI/Menu/smoked");
-            perfection = Stage.Content.Load<Texture2D>("UI/HUD/perfect");
+            base.LoadContent();
+            int w, h;
+            float scale = 0.8f;
 
+            //load textures
             for (int i = 0; i < 4; i++)
                 skullCounters[i] = Stage.Content.Load<Texture2D>("UI/HUD/SkullCounter" + (i + 1));
 
-            window = Stage.renderer.GraphicsDevice.Viewport.Bounds;
-            skullRec = new Rectangle(window.Right - (int)(skullCounters[0].Width * 0.5), window.Bottom - (int)(skullCounters[0].Height * 0.5),
-                (int)(skullCounters[0].Width * 0.5), (int)(skullCounters[0].Height * 0.5));
-            scoreRec = new Rectangle(skullRec.X, skullRec.Y + skullRec.Height, skullRec.Width, skullRec.Height);
-            bonusRec = new Rectangle(scoreRec.X, scoreRec.Y + scoreRec.Height, scoreRec.Width, scoreRec.Height * 3);
-            optionsRec = new Rectangle(bonusRec.X, bonusRec.Y + bonusRec.Height, bonusRec.Width, bonusRec.Height / 3);
+            levelComplete = Stage.Content.Load<Texture2D>("UI/EndLevel/levelComplete");
+            scoreTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/scoreTitle");
+            bestTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/bestTitle");
+            statusTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/statusTitle");
+            skullStatus = Stage.Content.Load<Texture2D>("UI/EndLevel/skull1");
+            selectBack = Stage.Content.Load<Texture2D>("UI/MainMenu/select_back");
 
-            base.LoadContent();
+            window = Stage.renderer.GraphicsDevice.Viewport.Bounds;
+
+            w = (int)(levelComplete.Width * scale);
+            h = (int)(levelComplete.Height * scale);
+            levelCompleteRec = new Rectangle(window.Left + w/2, window.Top + h, w, h);
+
+            w = (int)(scoreTitle.Width * scale);
+            h = (int)(scoreTitle.Height * scale);
+            scoreTitleRec = new Rectangle(levelCompleteRec.X, levelCompleteRec.Y + (2*h), w, h);
+
+            w = (int)(levelCompleteRec.Width);
+            h = MenuSystem.Font.LineSpacing / 2;
+            scoreRec = new Rectangle(scoreTitleRec.Center.X, scoreTitleRec.Bottom + h, w, h);
+
+            w = (int)(bestTitle.Width * scale);
+            h = (int)(bestTitle.Height * scale);
+            bestTitleRec = new Rectangle(scoreTitleRec.X, scoreTitleRec.Bottom + scoreRec.Bottom + h, w, h);
+
+            w = skullCounters[0].Width;
+            h = skullCounters[0].Height;
+            skullRec = new Rectangle(bestTitleRec.Center.X - w / 2, bestTitleRec.Bottom + h / 4, w, h);
+
+            w = (int)(statusTitle.Width * scale);
+            h = (int)(statusTitle.Height * scale);
+            statusTitleRec = new Rectangle(levelCompleteRec.Right + h, scoreTitleRec.Y, w, h);
+
+            w = (int)(skullStatus.Width * scale);
+            h = (int)(skullStatus.Height * scale);
+            skullStatusRec = new Rectangle(statusTitleRec.Right + statusTitleRec.Width / 2, statusTitleRec.Bottom + h / 4, w, h);
+
+            w = (int)(selectBack.Width * scale);
+            h = (int)(selectBack.Height * scale);
+            selectBackRec = new Rectangle(window.Right - (2 * w), window.Bottom - (2 * h), w, h);
         }
 
         void Continue (object sender, EventArgs e) {
@@ -94,8 +137,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
             Stage.LoadStage("MainMenu", true);
-            MenuSystem.AddScreen(new BackgroundScreen());
-            MenuSystem.AddScreen(new MainMenu());
         }
 
         public override void HandleInput (MenuInput input) {
@@ -130,52 +171,38 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if (!doneLerpingScore) {
                 int rate = lerpRate;
                 if ((baseScore + bonusPoints) > 900000)
-                    rate = 100000;
+                    rate = lerpRate * 10;
 
                 Lerp(baseScore + bonusPoints, ref score, (int)Math.Ceiling(rate * dt));
-            }
-               
-            else if (!doneLerpingKillStreak)
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("banknote_counter_COUNTING"); 
+            }          
+            else if (!doneLerpingKillStreak){
+           
                 TallySkulls();
-            else if (doneLerpingScore && doneLerpingKillStreak && checkForPerfect) {
-                CheckForPerfect();
+            } else if (doneLerpingScore && doneLerpingKillStreak && checkForPerfect) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("banknote-counterSTOPPING");
+                CalculateStatus();
             }
 
 #if DEBUG && WINDOWS
             ControlsQB c = Stage.ActiveStage.GetQB<ControlsQB>();
             if (c.CurrentKeyboardState.IsKeyDown(Keys.End) && c.LastKeyboardState.IsKeyUp(Keys.End)) {
-                drawPerfect = true;
+                drawStatus = true;
             }
 
 #endif
             base.Update(dt, otherScreenHasFocus, coveredByOtherScreen);
-
-                /*if (alpha >= 1.0) {
-                    diff = -0.7f * dt;
-                } else if (alpha <= 0.3) {
-                    diff = 0.7f * dt;
-                }
-                alpha += diff;
-
-                color *= alpha;
-                 */
         }
 
         public override void Draw (float dt) {
             // make sure our entries are in the right place before we draw them
             UpdateMenuEntryLocations();
 
-            GraphicsDevice graphics = Renderer.Instance.GraphicsDevice;
             SpriteBatch spriteBatch = Stage.renderer.SpriteBatch;
             SpriteFont font = MenuSystem.Font;
-            SpriteFont font2 = Stage.Content.Load<SpriteFont>("belligerent");
 
-            spriteBatch.Draw(smoked, window, new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+            spriteBatch.Draw(MenuSystem.BlankTexture, window, (Color.Black*0.5f)*TransitionAlpha);
 
-            scoreRec = new Rectangle(window.Center.X, window.Center.Y - window.Height / 2, window.Width / 2, window.Height / 2);
-            skullRec = new Rectangle(scoreRec.Center.X - (int)(skullCounters[0].Width * 0.5) / 2, window.Bottom - skullCounters[0].Height - 35,
-            (int)(skullCounters[0].Width * 0.5), (int)(skullCounters[0].Height * 0.5));
-            
             // Draw each menu entry in turn.
             for (int i = 0; i < MenuEntries.Count; i++) {
                 MenuEntry menuEntry = MenuEntries[i];
@@ -187,46 +214,31 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
-            // Draw the menu title centered on the menu
-            Vector2 titlePosition = new Vector2(graphics.Viewport.Width / 2, 80);
-            Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
-            Color titleColor = new Color(192, 192, 192) * TransitionAlpha;
-            float titleScale = 1.25f;
-
-            titlePosition.Y -= transitionOffset * 100;
-
-            spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
-                                   titleOrigin, titleScale, SpriteEffects.None, 0);
+            spriteBatch.Draw(levelComplete, levelCompleteRec, Color.White);
+                        
+            spriteBatch.Draw(scoreTitle, scoreTitleRec, Color.White);
+            spriteBatch.DrawString(font, score.ToString(System.Globalization.CultureInfo.InvariantCulture), new Vector2(scoreRec.Center.X, scoreRec.Center.Y + (2 * font.LineSpacing)), Color.Yellow, 0,
+                       font.MeasureString(score.ToString(System.Globalization.CultureInfo.InvariantCulture)) / 2, 2, SpriteEffects.None, 0);
 
             if (doneLerpingKillStreak)
             {
+                spriteBatch.Draw(bestTitle, bestTitleRec, Color.White);
+
                 spriteBatch.Draw(skullCounters[skullToDraw], skullRec, Color.White);
 
-
-                spriteBatch.DrawString(font2, "Kill Streak", new Vector2(skullRec.Center.X, skullRec.Top + 5), Color.White, 0,
-                          font.MeasureString("Kill Streak") / 2, 2, SpriteEffects.None, 0);
-
                 Vector2 killStreakTextSize = font.MeasureString("x" + killStreak);
-                spriteBatch.DrawString(font2, "x" + killStreak, new Vector2(skullRec.Center.X + 30, skullRec.Center.Y), 
+                spriteBatch.DrawString(font, "x" + killStreak, new Vector2(skullRec.Center.X + 30, skullRec.Center.Y), 
                     Color.White, 0, new Vector2(0, killStreakTextSize.Y/2), 2, SpriteEffects.None, 0);
             }
 
-            spriteBatch.DrawString(font, "Final Score ", new Vector2(scoreRec.Center.X, scoreRec.Center.Y), Color.White, 0,
-                      font.MeasureString("Final Score ") / 2, 2, SpriteEffects.None, 0);
+            if (drawStatus) {
+                spriteBatch.Draw(statusTitle, statusTitleRec, Color.White);
+                spriteBatch.Draw(skullStatus, skullStatusRec, Color.White);
+            }
 
-            spriteBatch.DrawString(font, score.ToString(System.Globalization.CultureInfo.InvariantCulture), new Vector2(scoreRec.Center.X, scoreRec.Center.Y + (2 * font.LineSpacing)), Color.White, 0,
-                       font.MeasureString(score.ToString(System.Globalization.CultureInfo.InvariantCulture)) / 2, 2, SpriteEffects.None, 0);
-
-            if (drawPerfect)
-                spriteBatch.Draw(perfection, new Rectangle(scoreRec.Center.X - (int)(perfection.Width * 0.5) / 2, scoreRec.Bottom - 100, (int)(perfection.Width * 0.5),
-                            (int)(perfection.Height * 0.5)), Color.White);
-
-            if (doneLerpingScore) {
-                spriteBatch.DrawString(font, "Press Green to Continue", new Vector2(skullRec.Center.X, skullRec.Bottom + 30), Color.White, 0,
-                    font.MeasureString("Press Green to Continue") / 2, 1, SpriteEffects.None, 0);
-
-                spriteBatch.DrawString(font, "Press Red to Return to Main Menu", new Vector2(skullRec.Center.X, skullRec.Bottom + 10 + skullRec.Height / 2), Color.White, 0,
-                    font.MeasureString("Press Red to Return to Main Menu") / 2, 1, SpriteEffects.None, 0);
+            if (doneLerpingScore && doneLerpingKillStreak && drawStatus) {
+                //selectBack
+                spriteBatch.Draw(selectBack, selectBackRec, Color.White);
             }
         }
 
@@ -266,10 +278,10 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 //Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(new Vector2(skullRec.Center.X, skullRec.Top), new Vector2(0, 10), 3f, "+" + bonusPoints);
         }
 
-        private void CheckForPerfect () {
+        private void CalculateStatus () {
             bonusPoints = rm.RockGodScore;
             if (bonusPoints > 0) {
-                drawPerfect = true;
+                drawStatus = true;
                 Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(Vector2.Zero, new Vector2(0, 10), 3f, "+" + bonusPoints);
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
             }

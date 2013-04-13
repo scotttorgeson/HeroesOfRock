@@ -31,6 +31,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if (menuEntries.Count < 1) return; //don't null reference
             // Move to the previous menu entry?
             if (input.IsMenuUp()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 int select = selectedEntry;
 
                 selectedEntry--;
@@ -39,10 +40,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
                     selectedEntry = menuEntries.Count - 1;
                 if (!menuEntries[selectedEntry].CanSelect)
                     selectedEntry = select;
-            }
-
-            // Move to the next menu entry?
-            if (input.IsMenuDown()) {
+            }else if (input.IsMenuDown()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 int select = selectedEntry;
 
                 selectedEntry++;
@@ -51,9 +50,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
                     selectedEntry = 0;
                 if (!menuEntries[selectedEntry].CanSelect)
                     selectedEntry = select;
-            }
+            } else if (input.IsMenuSelect()) {
 
-            if (input.IsMenuSelect()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A");
                 if (selectedEntry >= menuEntries.Count)
                     selectedEntry = 0;
                 else if (selectedEntry < 0)
@@ -61,6 +60,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
                 OnSelectEntry(selectedEntry);
             } else if (input.IsMenuCancel()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Uppercut");
                 OnCancel();
             }
         }

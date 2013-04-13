@@ -20,6 +20,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             LevelMenuEntry LEVEL3 = new LevelMenuEntry("Level3", "Level 3", "Level3", false);
             LevelMenuEntry LEVEL4 = new LevelMenuEntry("Level4", "Level 4", "Level4", false);
             LevelMenuEntry LEVEL5 = new LevelMenuEntry("Level5", "Level 5", "Level5", false);
+            selectedEntry = 1;
 
 #if XBOX
             if (Guide.IsTrialMode)
@@ -35,17 +36,17 @@ namespace GameLib.Engine.MenuSystem.Menus {
 #endif
             {
                 //TODO CHANGE ME this will need to be driven from the user profile
-                TUTORIAL.IsLocked = false;
-                LEVEL1.IsLocked = false;
+                //TUTORIAL.IsLocked = false;
+                //LEVEL1.IsLocked = false;
 #if RELEASE || TEST_SAVE_LOAD
-                LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
-                LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
-                LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
+                //LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
+                //LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
+                //LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
                 LEVEL5.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL5.LevelName);
 #else
-                LEVEL2.IsLocked = false;
-                LEVEL3.IsLocked = false;
-                LEVEL4.IsLocked = false;
+                //LEVEL2.IsLocked = false;
+                //LEVEL3.IsLocked = false;
+                //LEVEL4.IsLocked = false;
                 LEVEL5.IsLocked = false;
 #endif
                 //TEST.IsLocked = false;
@@ -104,8 +105,10 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             // update each menu entry's location in turn
             for (int i = 0; i < MenuEntries.Count; i++) {
+
                 MenuEntry menuEntry = MenuEntries[i];
                 int offset = (menuEntry.GetWidth(this) + 50) * (i - selectedEntry);
+
                 // each entry is to be centered vertically
                 position.X = Renderer.ScreenWidth - menuEntry.GetWidth(this) / 2 + offset;
                 position.Y = Renderer.ScreenHeight * 3 / 4;
@@ -142,6 +145,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         public override void HandleInput (MenuInput input) {
             // Move to the previous menu entry?
             if (input.IsMenuLeft() || input.IsMenuUp()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 int select = selectedEntry;
 
                 selectedEntry--;
@@ -152,10 +156,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 if (!MenuEntries[selectedEntry].CanSelect) {
                     selectedEntry = select;
                 }
-            }
-
-            // Move to the next menu entry?
-            if (input.IsMenuRight() || input.IsMenuDown()) {
+            } else if (input.IsMenuRight() || input.IsMenuDown()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 int select = selectedEntry;
 
                 selectedEntry++;
@@ -166,11 +168,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 if (!MenuEntries[selectedEntry].CanSelect) {
                     selectedEntry = select;
                 }
-            }
-
-            if (input.IsMenuSelect()) {
+            } else if (input.IsMenuSelect()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
                 OnSelectEntry(selectedEntry);
             } else if (input.IsMenuCancel()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Uppercut");
                 OnCancel();
             }
         }

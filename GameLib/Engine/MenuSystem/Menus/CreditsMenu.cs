@@ -50,15 +50,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                
         }
 
-        public override void HandleInput (MenuInput input) {
-            base.HandleInput(input);
-
-            if (input.IsMenuCancel()) {
-                OnCancel();
-            }
-                
-        }
-                /// <summary>
+        /// <summary>
         /// Draws the menu.
         /// </summary>
         public override void Draw (float dt) {
@@ -79,5 +71,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.renderer.SpriteBatch.Draw(back, backRec, Color.White * TransitionAlpha);
         }
 
+        public override void HandleInput (MenuInput input) {
+            if (input.IsMenuCancel()) {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Uppercut");
+                OnCancel();
+            }
+        }
     }
 }
