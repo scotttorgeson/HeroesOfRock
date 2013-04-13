@@ -22,41 +22,36 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         public LevelMenuEntry (string levelName, string text, string graphic, bool useLoadingLevel)
             : base(text) {
-                LevelName = levelName;
-                LevelGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/"+graphic);
-                divider = Stage.Content.Load<Texture2D>("UI/LevelGraphics/divider");
-                width = LevelGraphic.Width;
-                height = LevelGraphic.Height;
+                this.LevelName = levelName;
+                this.LevelGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/"+graphic);
+                this.divider = Stage.Content.Load<Texture2D>("UI/LevelGraphics/divider");
+                this.width = LevelGraphic.Width;
+                this.height = LevelGraphic.Height;
                 this.blank = Stage.Content.Load<Texture2D>("UI/Menu/blank");
                 this.lockGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/LevelLock");
                 this.baseFont = Stage.Content.Load<SpriteFont>("Arial");
                 this.scale =  1f;
-                            
+                      
             
                 //TODO These should be driven from user profile
                 PlayerScore();
-                IsLocked = true;
+                IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(levelName);
                 StarRating = 0;
                 tscores = TopScore();
                 UseLoadingLevel = useLoadingLevel;
         }
 
         private int[] TopScore () {
-            int[] topScores = new int[3];
-            
-            for (int i = 0; i < 3; i++) {
-                //get top three values
-            }
-
-            topScores = Stage.SaveGame.GetHighScores(LevelName).ToArray();
+            int[] topScores = Stage.SaveGame.GetHighScores(LevelName).ToArray();
+            Array.Sort(topScores);
+            Array.Reverse(topScores);
 
             return topScores;
-
         }
 
         //TODO PLACE APPROPRIATE VALUES
         private void PlayerScore () {
-            int playerScore = 20000;
+            int playerScore = 0;
             skullGraphic = null;
             rating = "";
 

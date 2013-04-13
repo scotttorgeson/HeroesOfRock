@@ -184,11 +184,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.renderer.SpriteBatch.Draw(knob, fxDialDims, null, Color.White, knobAngles[fxVol], knobMid, SpriteEffects.None, 0);
 
             Vector2 switcherMid = new Vector2(switcher.Width * .5f, switcher.Height * .415f);
-            Stage.renderer.SpriteBatch.Draw(switcher, strumSwitchDims, null, Color.White, (strumMode) ? 0 : (float)Math.PI,
+            Stage.renderer.SpriteBatch.Draw(switcher, strumSwitchDims, null, Color.White, (!strumMode) ? 0 : (float)Math.PI,
                 switcherMid, SpriteEffects.None, 0);
-            Stage.renderer.SpriteBatch.Draw(switcher, moreGoreSwitchDims, null, Color.White, (moreGore) ? 0 : (float)Math.PI,
+            Stage.renderer.SpriteBatch.Draw(switcher, moreGoreSwitchDims, null, Color.White, (!moreGore) ? 0 : (float)Math.PI,
                 switcherMid, SpriteEffects.None, 0);
-            Stage.renderer.SpriteBatch.Draw(switcher, goreSwitchDims, null, Color.White, (gore) ? 0 : (float)Math.PI,
+            Stage.renderer.SpriteBatch.Draw(switcher, goreSwitchDims, null, Color.White, (!gore) ? 0 : (float)Math.PI,
                 switcherMid, SpriteEffects.None, 0);
 
             int width = (int)(Renderer.ScreenWidth * 0.8);
@@ -208,6 +208,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             // Move to the previous menu entry?
             if (input.IsMenuLeft() || input.IsMenuUp())
             {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 index--;
                 if (index < 0)
                     index = options.Count - 1;
@@ -216,6 +217,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             // Move to the next menu entry?
             if (input.IsMenuRight() || input.IsMenuDown())
             {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 index++;
                 if (index >= options.Count)
                     index = 0;
@@ -223,6 +225,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             if (input.IsMenuSelect())
             {
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("MeatSlap2_16");
                 options.Data[index]();
             }
             else if (input.IsMenuCancel())
@@ -255,6 +258,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         private void ChangeStrum()
         {
+            if(strumMode)
+                MenuSystem.AddScreen(new StrumWarningPopUp(""));
             strumMode = !strumMode;
         }
         

@@ -122,5 +122,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 menuEntry.Draw(this, isSelected, dt);
             }
         }
+
+
+        /// <summary>
+        /// Handler for when the user has cancelled the menu.
+        /// </summary>
+        protected override void OnCancel () {
+            Stage.ActiveStage.ResumeGame();
+            ExitScreen();
+        }
     }
 }
