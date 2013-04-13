@@ -105,8 +105,8 @@ namespace GameLib
             return scores;
         }
 
-        public int musicVol = 11;
-        public int fxVol = 11;
+        public int musicVol = 0;
+        public int fxVol = 0;
         public bool strumMode = true;
         public bool gore = true;
         public bool moreGore = true;

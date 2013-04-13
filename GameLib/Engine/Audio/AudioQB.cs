@@ -122,12 +122,12 @@ namespace GameLib
             maxMusicVolume = (float)musicVol / 11;
             maxSFXVolume = (float)sfxVol / 11;
 
-            if ( levelTheme != null )
-                levelTheme.Volume = 0.1f;
+            if (levelTheme != null)
+                levelTheme.Volume = maxMusicVolume;
             if (cheeringSFX != null)
-                cheeringSFX.Volume = 0.1f;
+                cheeringSFX.Volume = maxSFXVolume;
             if (booingSFX != null)
-                booingSFX.Volume = 0.1f;
+                booingSFX.Volume = maxSFXVolume;
 
             base.PostLoadInit(Parm);
         }
