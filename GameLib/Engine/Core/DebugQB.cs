@@ -43,9 +43,9 @@ namespace GameLib
         {
             fpsPosition = new Vector2(Renderer.ScreenWidth - 200, Renderer.ScreenHeight - 80);
 
-            cpuPosition = new Vector2(Renderer.ScreenWidth - 200, 60);
+            cpuPosition = new Vector2(Renderer.ScreenWidth - 200, 320);
 #if WINDOWS
-            ramPosition = new Vector2(Renderer.ScreenWidth - 200, 40);
+            ramPosition = new Vector2(Renderer.ScreenWidth - 200, 300);
 
             if (cpuCounter == null)
             {

@@ -6,10 +6,14 @@ using GameLib.Engine.MenuSystem.Menus.MenuComponents;
 namespace GameLib.Engine.MenuSystem.Menus {
 
     public class QuitConfirmPopUp : PopUpScreen {
-        public QuitConfirmPopUp (string message)
-            : this(message, true) { }
+        Boolean quitGame;
 
-        public QuitConfirmPopUp (string message, bool includeUsageText)
+        public QuitConfirmPopUp (string message, Boolean quitGame)
+            : this(message) {
+                this.quitGame = quitGame;
+        }
+
+        public QuitConfirmPopUp (string message)
             : base(message) {
             Vector2 position = new Vector2(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X, Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.Y);
             MenuGraphic confirm = new MenuGraphic("Menu/quitConfirm", position, 0.5f);
@@ -20,8 +24,13 @@ namespace GameLib.Engine.MenuSystem.Menus {
         public override void HandleInput (MenuInput input) {
             if (input.IsMenuCancel())
                 ExitScreen();
-            if (input.IsMenuSelect())
-                Stage.QuitGame = true;
+            if (input.IsMenuSelect()) {
+                if (quitGame)
+                    Stage.QuitGame = true;
+                else
+                    Stage.LoadStage("MainMenu", true);
+            }
+                
         }
 
         public override void Draw (float dt) {
