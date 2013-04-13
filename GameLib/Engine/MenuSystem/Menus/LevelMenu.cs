@@ -35,21 +35,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
             else
 #endif
             {
-                //TODO CHANGE ME this will need to be driven from the user profile
-                //TUTORIAL.IsLocked = false;
-                //LEVEL1.IsLocked = false;
-#if RELEASE || TEST_SAVE_LOAD
-                //LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
-                //LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
-                //LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
+                TUTORIAL.IsLocked = false;
+                LEVEL1.IsLocked = false;
+                LEVEL2.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL2.LevelName);
+                LEVEL3.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL3.LevelName);
+                LEVEL4.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL4.LevelName);
                 LEVEL5.IsLocked = !Stage.SaveGame.levelsUnlocked.Contains(LEVEL5.LevelName);
-#else
-                //LEVEL2.IsLocked = false;
-                //LEVEL3.IsLocked = false;
-                //LEVEL4.IsLocked = false;
-                LEVEL5.IsLocked = false;
-#endif
-                //TEST.IsLocked = false;
             }
 
 
