@@ -49,7 +49,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
         void QuitGame (object sender, EventArgs e) {
-            MenuSystem.AddScreen(new QuitConfirmPopUp(""));
+            MenuSystem.AddScreen(new QuitConfirmPopUp("", false));
         }
 
         public override void HandleInput (MenuInput input) {
