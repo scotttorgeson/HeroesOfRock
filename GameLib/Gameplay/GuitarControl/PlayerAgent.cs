@@ -34,7 +34,6 @@ namespace GameLib
         #region InputAction declarations
         InputAction strum;
         InputAction leftAxisX;
-        InputAction jump;
         InputAction guitarJump;
         InputAction A;
         InputAction B;
@@ -119,7 +118,6 @@ namespace GameLib
             rightBumper = controlsQB.GetInputAction("RightBumper");
             triggers = controlsQB.GetInputAction("Triggers");
             leftAxisX = controlsQB.GetInputAction("MoveRight");
-            jump = controlsQB.GetInputAction("Jump");
             guitarJump = controlsQB.GetInputAction("GuitarJump");
 
             //set move direction
@@ -266,28 +264,21 @@ namespace GameLib
                 Dash(1);
             else if (leftBumper.IsNewAction)
                 Dash(-1);
-            else if (jump.IsNewAction)
-            {
-                actor.PhysicsObject.CharacterController.Jump();
-                State = PlayerState.Jumping;
-                recoveryTimer = actor.PhysicsObject.CharacterController.DashTime;
-            }
             else
             {
                 //get attack from input
                 if (B.IsNewAction)
                     input.Blue = true;
                 if (Y.IsNewAction)
-                    input.Yellow = true;
-                if (X.IsNewAction)
-                    input.Red = true;
-
-                if (triggers.IsNewAction)
                 {
-                    input.Red = true;
                     input.Yellow = true;
+                    input.Red = true;
                     input.Blue = true;
                 }
+                if (X.IsNewAction)
+                    input.Yellow = true;
+                if (A.IsNewAction)
+                    input.Red = true;
 
                 if (input.isSet())
                 {
@@ -334,25 +325,18 @@ namespace GameLib
                 this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
             }
 
-            //jumping
-            if (guitarJump.IsNewAction  || leftBumper.IsNewAction && strum.value != 0.0f || leftBumper.value != 0.0f && strum.IsNewAction)
-            {
-                State = PlayerState.Jumping;
-                actor.PhysicsObject.CharacterController.Jump();
-                recoveryTimer = jumpTime;
-            }
-
+          
             //holding strum and pushing dash button
             if (strum.value != 0.0f)
             {
-                if (A.IsNewAction)
+                if (A.IsNewAction || leftBumper.IsNewAction)
                     Dash(dir);
             }
 
             //all strumming actions
             if (strum.IsNewAction)
             {
-                if (A.value != 0.0f)
+                if (A.value != 0.0f || leftBumper.value != 0.0f)
                     Dash(dir);
                 else
                 {
@@ -400,17 +384,8 @@ namespace GameLib
                     break;
             }
             
- 
-            //jumping
-            if (guitarJump.IsNewAction || leftBumper.IsNewAction)
-            {
-                State = PlayerState.Jumping;
-                actor.PhysicsObject.CharacterController.Jump();
-                recoveryTimer = jumpTime;
-            }
-
             //holding strum and pushing dash button
-            if (A.IsNewAction)
+            if (A.IsNewAction || leftBumper.IsNewAction)
                 Dash(0);
 
             if (B.IsNewAction)

@@ -442,10 +442,10 @@ Content\Audio\banknote_counter_COUNTING.xnb
 Content\Audio\knob-click-1.xnb
 Content\Audio\banknote-counterSTOPPING.xnb
 Content\Models\Grid\Grid_0.xnb
-Content\FBX\B1F934E4\sLevel1.fbm\Ground_Texture_0.xnb
+Content\Ground_Texture_0.xnb
 Content\Models\Buildings\LargeApartmentBuildingDiffuse_0.xnb
 Content\Models\Buildings\SmallStoreDiffuse_0.xnb
-Content\FBX\DF3C393D\cardboardbox.fbm\boxdiffuse_0.xnb
+Content\boxdiffuse_0.xnb
 Content\Models\Environment\powerLineDiffuse_0.xnb
 Content\Models\Environment\ShoppingCartDiffuse_0.xnb
 Content\Models\Environment\StopLightDiffuse_0.xnb
