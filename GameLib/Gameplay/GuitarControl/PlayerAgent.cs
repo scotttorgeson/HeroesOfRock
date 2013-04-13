@@ -29,7 +29,7 @@ namespace GameLib
 
         public PlayerState State { get; private set; }
 
-        public bool isStrumMode;
+        public static bool isStrumMode;
 
         #region InputAction declarations
         InputAction strum;

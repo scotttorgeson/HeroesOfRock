@@ -67,6 +67,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             origGore = gore;
             origMoreGore = moreGore;
             origMusicVol = musicVol;
+            PlayerAgent.isStrumMode = strumMode;
             origStrumMode = strumMode;
         }
 
