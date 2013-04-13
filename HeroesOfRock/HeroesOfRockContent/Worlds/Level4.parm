@@ -612,5 +612,5 @@ FirstScreen=HudScreen
 EnemyWeakPoolSize=3
 EnemyRangedPoolSize=3
 EnemyHeavyPoolSize=3
-SoundTheme=HORsewer
+SoundTheme=HORtheme
 NextLevel=Level5

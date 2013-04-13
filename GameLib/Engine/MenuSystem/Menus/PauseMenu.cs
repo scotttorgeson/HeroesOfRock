@@ -33,7 +33,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
             MenuEntries.Add(controls);
             MenuEntries.Add(tune);
             MenuEntries.Add(giveUp);
-            Stage.ActiveStage.PauseGame();
         }
 
         void ResumeGame (object sender, EventArgs e) {

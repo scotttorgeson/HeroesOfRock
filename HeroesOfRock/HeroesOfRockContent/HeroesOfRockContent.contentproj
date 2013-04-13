@@ -352,10 +352,6 @@
       <Name>Couch</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
-    <Compile Include="Actors\WallPlane.parm">
-      <Name>WallPlane</Name>
-      <Importer>ParameterSetImporter</Importer>
-    </Compile>
     <None Include="Actors\Level1Path.parm">
       <Name>Level1Path</Name>
       <Importer>ParameterSetImporter</Importer>
@@ -1076,10 +1072,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Worlds\Level5.parm">
-      <Name>Level5</Name>
-      <Importer>ParameterSetImporter</Importer>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GameLib\GameLib.csproj">
@@ -1282,6 +1274,11 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
+    <Compile Include="Audio\HORtheme.wav">
+      <Name>HORtheme</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
     <Compile Include="Audio\Lunge.wav">
       <Name>Lunge</Name>
       <Importer>WavImporter</Importer>
@@ -1369,6 +1366,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\HORcityday.wav">
+      <Name>HORcityday</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="ParticleFX\rain.png">
       <Name>rain</Name>
       <Importer>TextureImporter</Importer>
@@ -1397,11 +1401,6 @@
     </Compile>
     <Compile Include="Audio\heavy_cheer.mp3">
       <Name>heavy_cheer</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\knob-click-1.mp3">
-      <Name>knob-click-1</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
@@ -1944,6 +1943,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\HORredlight.wav">
+      <Name>HORredlight</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Audio\asphaltsmash_16.wav">
       <Name>asphaltsmash_16</Name>
       <Importer>WavImporter</Importer>
@@ -2214,13 +2220,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\Menu\creds.png">
-      <Name>creds</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="UI\MainMenu\credits.png">
       <Name>credits</Name>
       <Importer>TextureImporter</Importer>
@@ -2394,13 +2393,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\MainMenu\controlsDiagram.png">
-      <Name>controlsDiagram</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="UI\Pause\continue.png">
       <Name>continue</Name>
       <Importer>TextureImporter</Importer>
@@ -2470,6 +2462,53 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="UI\EndLevel\statusTitle.png">
+      <Name>statusTitle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\banknote_counter_COUNTING.wav">
+      <Name>banknote_counter_COUNTING</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\knob-click-1.wav">
+      <Name>knob-click-1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Menu\warning.png">
+      <Name>warning</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Menu\creds.png">
+      <Name>creds</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\banknote-counterSTOPPING.wav">
+      <Name>banknote-counterSTOPPING</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\MainMenu\controlsDiagram.png">
+      <Name>controlsDiagram</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="UI\EndLevel\skull1.png">
       <Name>skull1</Name>
       <Importer>TextureImporter</Importer>
@@ -2494,42 +2533,6 @@
       <Name>Skull5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UI\EndLevel\statusTitle.png">
-      <Name>statusTitle</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\HORsewer.mp3">
-      <Name>HORsewer</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\HORhell.mp3">
-      <Name>HORhell</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\HORcityday.mp3">
-      <Name>HORcityday</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\HORredlight.mp3">
-      <Name>HORredlight</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\HORtheme.mp3">
-      <Name>HORtheme</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
