@@ -10,7 +10,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         Texture2D credits, teamLogo, hor, back;
         Rectangle rec;
         float alpha;
-        int scroll;
+        float scroll;
         Boolean endCredits, logoShowing;
 
         public CreditsMenu ()
@@ -20,7 +20,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             teamLogo = Stage.Content.Load<Texture2D>("UI/Menu/11outOf10_Logo_White");
             hor = Stage.Content.Load<Texture2D>("UI/Menu/logo");
             back = Stage.Content.Load<Texture2D>("UI/Menu/back");
-            rec = new Rectangle(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X - credits.Width/2, Stage.renderer.GraphicsDevice.Viewport.Bounds.Bottom - credits.Height/12, credits.Bounds.Width, credits.Bounds.Height);
+            rec = new Rectangle(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X - credits.Width*3/4, Stage.renderer.GraphicsDevice.Viewport.Bounds.Bottom - credits.Height/8, credits.Bounds.Width*3/2, credits.Bounds.Height*3/2);
             scroll = rec.Y;
             endCredits = logoShowing = false;
             
@@ -41,7 +41,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if (TransitionAlpha >= 1 && alpha <= 1f)
                 alpha += dt/2;
             else if (scroll >= (float)(-1 * credits.Height))
-                scroll -= (int)(100 * dt);
+                scroll -= (50 * dt);
             else if(!logoShowing){
                 endCredits = true;
                 alpha = 0;
@@ -61,11 +61,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.renderer.SpriteBatch.Draw(MenuSystem.BlankTexture, fullscreen, Color.Black * TransitionAlpha);
 
             if (!endCredits)
-                Stage.renderer.SpriteBatch.Draw(credits, new Rectangle(rec.X, scroll, rec.Width, rec.Height), Color.White * alpha);
+                Stage.renderer.SpriteBatch.Draw(credits, new Rectangle(rec.X, (int)scroll, rec.Width, rec.Height), Color.White * alpha);
             else {
                 width = (int)(teamLogo.Width * 0.85);
                 height = (int)(teamLogo.Height * 0.85);
-                Rectangle trec = new Rectangle(fullscreen.Center.X - width/2, fullscreen.Center.Y - height/2, width, height);
+                Rectangle trec = new Rectangle(fullscreen.Center.X - width*3/4, fullscreen.Center.Y - height*3/4, width*3/2, height*3/2);
                 Stage.renderer.SpriteBatch.Draw(teamLogo, trec, Color.White);
             }
             Stage.renderer.SpriteBatch.Draw(back, backRec, Color.White * TransitionAlpha);
