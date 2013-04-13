@@ -14,8 +14,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         public ControlsPopUp (string message, bool includeUsageText)
             : base(message) {
             Vector2 position = new Vector2(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X, Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.Y);
-            MenuGraphic confirm = new MenuGraphic("MainMenu/controlsDiagram", position, 1f);
-            back = Stage.Content.Load<Texture2D>("UI/Menu/back");
+            MenuGraphic confirm = new MenuGraphic("MainMenu/controlsDiagram", position, 0.75f);
             MenuEntries.Add(confirm);
         }
 
@@ -42,11 +41,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
                 menuEntry.Draw(this, isSelected, dt);
             }
-
-            int w = (int)(back.Width * 0.75);
-            int h = (int)(back.Height * 0.75) ;
-            Rectangle backRec = new Rectangle(fullscreen.Right - (3*w), fullscreen.Bottom - (3*h), w, h);
-            Stage.renderer.SpriteBatch.Draw(back, backRec, Color.White * TransitionAlpha);
         }
     }
 }
