@@ -166,8 +166,8 @@ namespace GameLib
                 AQB.AddSound(Player.Parm.GetString("Sound" + index));
                 index++;
             }
-
-            isStrumMode = Stage.SaveGame.getStrumMode();
+            if(!Stage.Editor)
+                isStrumMode = Stage.SaveGame.getStrumMode();
         }
 
         /// <summary>

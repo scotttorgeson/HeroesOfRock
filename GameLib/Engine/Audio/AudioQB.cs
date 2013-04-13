@@ -112,7 +112,11 @@ namespace GameLib
             }
             int musicVol;
             int sfxVol;
-            Stage.SaveGame.getVolumes(out musicVol, out sfxVol);
+
+            musicVol = 0;
+            sfxVol = 0;
+            if(!Stage.Editor)
+                Stage.SaveGame.getVolumes(out musicVol, out sfxVol);
             
             maxMusicVolume = (float)musicVol / 11;
             maxSFXVolume = (float)sfxVol / 11;

@@ -47,6 +47,7 @@ Content\Actors\40can.xnb
 Content\Actors\Beercan.xnb
 Content\Actors\Billboard.xnb
 Content\Actors\Couch.xnb
+Content\Actors\WallPlane.xnb
 Content\Actors\SmallStore-1.xnb
 Content\GameVariables.xnb
 Content\Worlds\AlphaLevel.xnb
@@ -455,7 +456,6 @@ Content\Models\Environment\TVDiffuse_0.xnb
 Content\Models\Environment\FireEscapeDiffuse_0.xnb
 Content\Models\Environment\40Diffuse_0.xnb
 Content\Models\Environment\BeerDiffuse_0.xnb
-Content\Actors\WallPlane.xnb
 Content\Audio\banknote-counterSTOPPING.wma
 Content\Audio\banknote-counter_COUNTING.wma
 Content\Audio\crickets.wma
