@@ -424,7 +424,7 @@ namespace GameLib
             //set player state
             State = PlayerState.Attacking;
             smash = 0;
-
+            
             if (currentAttack.Name != "Smash")
             {
                 recoveryTimer = currentAttack.TimeBeforeAttack / flow.getRate();
@@ -440,6 +440,7 @@ namespace GameLib
 
             attackAnimationTimer = attackAnimationDuration;
             animationType = currentAttack.AnimationType;
+            playerAnimation.resetAnimation(animationType);
         }
 
         public void Dash(int dir)
