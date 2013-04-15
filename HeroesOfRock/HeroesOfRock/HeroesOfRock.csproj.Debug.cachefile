@@ -48,6 +48,7 @@ Content\Actors\Beercan.xnb
 Content\Actors\Billboard.xnb
 Content\Actors\Couch.xnb
 Content\Actors\SmallStore-1.xnb
+Content\Actors\WallPlane.xnb
 Content\GameVariables.xnb
 Content\Worlds\AlphaLevel.xnb
 Content\Worlds\LoadingLevel.xnb
@@ -59,6 +60,7 @@ Content\Worlds\Level4.xnb
 Content\Worlds\StartGame.xnb
 Content\Worlds\Tutorial.xnb
 Content\Worlds\TestLevel2.xnb
+Content\Worlds\Level5.xnb
 Content\Worlds\MainMenu.xnb
 Content\Actors\EnemyWeak.xnb
 Content\Worlds\HORLevel1.xnb

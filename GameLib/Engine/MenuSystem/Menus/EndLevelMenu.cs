@@ -192,7 +192,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 CalculateStatus();
             }
 
-            if (doneLerpingScore) {
+            if (doneLerpingScore && soundPlaying) {
                 Stage.ActiveStage.GetQB<AudioQB>().StopStound(sound);
                 soundPlaying = false;
             }
