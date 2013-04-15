@@ -56,6 +56,7 @@ namespace GameLib.Engine.AttackSystem
 
         public void PerformAttack(Vector3 position, PlayerDirection facing, Move newMove, float increase)
         {
+            bool enemyHit = false;
             bool shieldHit = false;
             string soundName = null;
 
@@ -134,6 +135,7 @@ namespace GameLib.Engine.AttackSystem
                 actor = ai.actor;
                 if (hitbox.Intersects(actor.PhysicsObject.CollisionInformation.BoundingBox))
                 {
+                    enemyHit = true;
                     Vector3 actorPos = actor.PhysicsObject.Position;
 
                     HealthAgent actorHealth = actor.GetAgent<HealthAgent>();
@@ -208,9 +210,11 @@ namespace GameLib.Engine.AttackSystem
                 }
             }
 
-            //play a random sound
+            //play sounds
             if (shieldHit)
                 playRandomShieldHitSound(newMove.Disarming);
+            else if (!enemyHit)
+                playMissSound();
             else
                 playRandomHitSound();
         }
@@ -426,6 +430,13 @@ namespace GameLib.Engine.AttackSystem
             }
 
             Stage.ActiveStage.GetQB<AudioQB>().PlaySound(sound, 1, 0, 0);
+        }
+
+        private void playMissSound()
+        {
+            //TODO: get a good miss sound
+            string soundName = "Hihat";
+            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 1.0f, 0.0f, 0.0f);
         }
     }
 }
