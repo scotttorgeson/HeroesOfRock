@@ -407,7 +407,6 @@ Content\UI\LevelGraphics\level1.xnb
 Content\UI\LevelGraphics\level2.xnb
 Content\UI\LevelGraphics\level3.xnb
 Content\UI\LevelGraphics\level4.xnb
-Content\UI\LevelGraphics\level5.xnb
 Content\UI\Options\EffectsVolume.xnb
 Content\UI\Options\Gore.xnb
 Content\UI\Options\MoreGore.xnb
@@ -444,6 +443,7 @@ Content\UI\EndLevel\continueBack.xnb
 Content\Models\Buildings\LargeBuildingDiffuse_G.xnb
 Content\Models\Buildings\SmallStoreDiffuse_Graffiti.xnb
 Content\UI\MainMenu\controlsDiagram.xnb
+Content\UI\LevelGraphics\level5.xnb
 Content\Controls.xnb
 Content\MoveList.xnb
 Content\Models\Grid\Grid_0.xnb

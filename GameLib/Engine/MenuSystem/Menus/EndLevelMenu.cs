@@ -150,14 +150,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if (Stage.ActiveStage.Parm.HasParm("NextLevel")) {
                 LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
             } else {
-                LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("MainMenu"));
+                LoadingScreen.Load(MenuSystem, true, "MainMenu");
             }
         }
 
         void QuitGame (object sender, EventArgs e) {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
-            LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("MainMenu"));
+            LoadingScreen.Load(MenuSystem, true, "MainMenu");
         }
 
         public override void HandleInput (MenuInput input) {
