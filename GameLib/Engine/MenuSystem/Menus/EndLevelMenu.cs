@@ -15,7 +15,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private Texture2D scoreTitle;
         private Texture2D bestTitle;
         private Texture2D statusTitle;
-        private Texture2D selectBack;
+        private Texture2D continueBack;
         private Texture2D[] skullCounters;
         private Texture2D[] statusSkulls;
 
@@ -28,7 +28,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private Rectangle window;
         private Rectangle levelCompleteRec;
         private Rectangle bestTitleRec;
-        private Rectangle selectBackRec;
+        private Rectangle continueBackRec;
 
         private int baseScore;
         private int score;
@@ -104,7 +104,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             scoreTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/scoreTitle");
             bestTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/bestTitle");
             statusTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/statusTitle");
-            selectBack = Stage.Content.Load<Texture2D>("UI/MainMenu/select_back");
+            continueBack = Stage.Content.Load<Texture2D>("UI/EndLevel/continueBack");
 
             window = Stage.renderer.GraphicsDevice.Viewport.Bounds;
 
@@ -138,9 +138,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
             h = (int)(statusSkulls[0].Height * scale);
             skullStatusRec = new Rectangle(statusTitleRec.Center.X, scoreRec.Y, w, h);
 
-            w = (int)(selectBack.Width * scale);
-            h = (int)(selectBack.Height * scale);
-            selectBackRec = new Rectangle(window.Right - (int)(1.5*w), window.Bottom -  (int)(1.5 *h), w, h);
+            w = (int)(continueBack.Width * scale);
+            h = (int)(continueBack.Height * scale);
+            continueBackRec = new Rectangle(window.Right - (int)(1.5*w), window.Bottom -  (int)(1.5 *h), w, h);
         }
 
         void Continue (object sender, EventArgs e) {
@@ -263,8 +263,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
             }
 
             if (doneLerpingScore && doneLerpingKillStreak && drawStatus) {
-                //selectBack
-                spriteBatch.Draw(selectBack, selectBackRec, Color.White);
+                //continueBack
+                spriteBatch.Draw(continueBack, continueBackRec, Color.White);
             }
         }
 

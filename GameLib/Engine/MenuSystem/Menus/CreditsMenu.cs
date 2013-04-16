@@ -40,7 +40,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             if (TransitionAlpha >= 1 && alpha <= 1f)
                 alpha += dt/2;
-            else if (scroll >= (float)(-1 * credits.Height))
+            else if (scroll >= (float)(-1 * rec.Height))
                 scroll -= (50 * dt);
             else if(!logoShowing){
                 endCredits = true;

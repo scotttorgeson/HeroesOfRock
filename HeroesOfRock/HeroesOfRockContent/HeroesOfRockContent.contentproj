@@ -1959,11 +1959,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="UI\LevelGraphics\level5.png">
-      <Name>level5</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UI\Options\EffectsVolume.png">
@@ -2500,13 +2495,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\MainMenu\controlsDiagram.png.png">
-      <Name>controlsDiagram.png</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="UI\EndLevel\continueBack.png">
       <Name>continueBack</Name>
       <Importer>TextureImporter</Importer>
@@ -2521,6 +2509,20 @@
     </Compile>
     <Compile Include="Models\Buildings\SmallStoreDiffuse_Graffiti.png">
       <Name>SmallStoreDiffuse_Graffiti</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\MainMenu\controlsDiagram.png">
+      <Name>controlsDiagram</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\LevelGraphics\level5.png">
+      <Name>level5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
