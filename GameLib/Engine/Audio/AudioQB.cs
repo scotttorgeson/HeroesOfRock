@@ -116,7 +116,7 @@ namespace GameLib
 
             musicVol = 0;
             sfxVol = 0;
-            if(!Stage.Editor)
+            if(!Stage.Editor && Stage.SaveGame.SaveDataLoaded)
                 Stage.SaveGame.getVolumes(out musicVol, out sfxVol);
             
             maxMusicVolume = (float)musicVol / 11;
@@ -144,15 +144,16 @@ namespace GameLib
 
             musicVol = 0;
             sfxVol = 0;
-            if (!Stage.Editor)
+            if (!Stage.Editor && Stage.SaveGame.SaveDataLoaded)
                 Stage.SaveGame.getVolumes(out musicVol, out sfxVol);
 
             maxMusicVolume = (float)musicVol / 11;
             maxSFXVolume = (float)sfxVol / 11;
-
+            
             if (levelTheme != null)
             {
                 levelTheme.Volume = maxMusicVolume;
+                levelTheme.Play();
                 PlayTheme(1.0f);
             }
 #endif
@@ -173,19 +174,19 @@ namespace GameLib
             base.LevelLoaded();
         }
 
-        public override void PauseQB()
+        /*public override void PauseQB()
         {
             //to-do pause playing sfx
-            this.PauseTheme();
+            //this.PauseTheme();
             base.PauseQB();
         }
 
         public override void UnPauseQB()
         {
             //to-do resume paused sfx
-            this.ResumeTheme();
+            //this.ResumeTheme();
             base.UnPauseQB();
-        }
+        }*/
 
         public override void Update(float dt)
         {
@@ -391,6 +392,7 @@ namespace GameLib
             instance.IsLooped = isLooped;
             int id = soundEffectId++;
             soundInstances.Add(id, instance);
+            instance.Volume = maxSFXVolume;
             instance.Play();
 
             if (killWhenDone)

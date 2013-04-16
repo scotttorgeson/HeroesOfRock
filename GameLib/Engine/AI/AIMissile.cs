@@ -140,8 +140,8 @@ namespace GameLib.Engine.AI
         public override float StartAttack(ref Vector3 place)
         {
             //explosion particle FX
-            Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, place, true, -1, 30, 40, .75f, 1.0f, 0, 0,
-                Vector2.One * 1.5f, Vector2.One * 2.0f, Vector3.Zero, Vector3.Zero, Vector3.One * 5, "explosion");
+            Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, place, true, -1, 40, 50, .75f, 1.0f, 0, 0,
+                Vector2.One * 1.5f, Vector2.One * 2.0f, Vector3.One, Vector3.Zero, Vector3.One * 2.5f, "explosion");
             Stage.ActiveStage.GetQB<AudioQB>().PlaySound("MissileExplosion_16", 1.0f, 0.0f, 0.0f);
             actor.PhysicsObject.LinearVelocity = Vector3.Zero;
             actor.Shown = false;

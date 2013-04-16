@@ -43,31 +43,35 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         private int[] TopScore () {
             int[] topScores = Stage.SaveGame.GetHighScores(LevelName).ToArray();
-            Array.Sort(topScores);
-            Array.Reverse(topScores);
+            Array.Sort(topScores, ((a, b) => -1 * a.CompareTo(b)));
 
             return topScores;
         }
 
         //TODO PLACE APPROPRIATE VALUES
         private void PlayerScore () {
-            int playerScore = 0;
+            float perc = 0;
             skullGraphic = null;
             rating = "";
+            perc = Stage.SaveGame.GetPercKillStreak(LevelName);
 
-            if (playerScore <= 2000  && playerScore > 0) {
+            if(perc <= 0)
+            {
+                //do nothing
+            }
+            else if (perc < .25f) {
                 skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull1");
                 rating = "POSER STATUS";
-            } else if (playerScore <= 5000 && playerScore > 0) {
+            } else if (perc < .5f) {
                 skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull2");
                 rating = "HEAD BANGER STATUS";
-            } else if (playerScore <= 10000 && playerScore > 0) {
+            } else if (perc < .75f) {
                 skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull3");
                 rating = "METAL HEAD STATUS";
-            } else if (playerScore <= 15000 && playerScore > 0) {
+            } else if (perc < 1) {
                 skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull4");
                 rating = "HARDCORE STATUS";
-            } else if (playerScore >= 20000) {
+            } else {
                 skullGraphic = Stage.Content.Load<Texture2D>("UI/LevelGraphics/skull5");
                 rating = "ROCK GOD STATUS";
             }

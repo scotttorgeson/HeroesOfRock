@@ -106,6 +106,7 @@ namespace GameLib
                 spawnCount = ActorType.Length;
             }
 
+            AIQB.numEnemiesInLevel += spawnCount;
 
             triggered = false;
 

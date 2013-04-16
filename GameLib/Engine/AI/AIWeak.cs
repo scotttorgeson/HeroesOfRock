@@ -25,12 +25,12 @@ namespace GameLib.Engine.AI
         float wallOffset;
 
         //model swap stuff
-        RModelInstance weakModel;
+        /*RModelInstance weakModel;
         RModelInstance shieldModel;
         RModelInstance scaredModel;
         AnimationPlayer[] weakAnims;
         AnimationPlayer[] shieldAnims;
-        AnimationPlayer[] scaredAnims;
+        AnimationPlayer[] scaredAnims;*/
 
         public override void Initialize(Stage stage)
         {
@@ -64,7 +64,7 @@ namespace GameLib.Engine.AI
             enemyAnimationAgent = actor.GetAgent<WeakEnemyAnimationAgent>();
 
             //model stuff
-            if (type == EnemyType.Weak)
+            /*if (type == EnemyType.Weak)
             {
                 weakModel = actor.modelInstance;
                 weakAnims = enemyAnimationAgent.Animations;
@@ -87,7 +87,6 @@ namespace GameLib.Engine.AI
                 scaredModel.SetPhysicsObject(this.actor.PhysicsObject);
                 scaredModel.FinishLoad();
                 scaredModel.Shown = false;
-
                 scaredAnims = WeakEnemyAnimationAgent.CreateAnimationList(stage, ref p, ref scaredModel);
 
             }
@@ -116,7 +115,7 @@ namespace GameLib.Engine.AI
                 scaredModel.Shown = false;
 
                 scaredAnims = WeakEnemyAnimationAgent.CreateAnimationList(stage, ref p, ref scaredModel);
-            }
+            }*/
 
             FaceTargetSnappedToPlane();
         }
@@ -127,7 +126,7 @@ namespace GameLib.Engine.AI
             if ((e != EnemyType.Weak && e != EnemyType.WeakShielded) || e == type && type == EnemyType.Weak)
                 return;
 
-            actor.modelInstance.Shown = false;
+            /*actor.modelInstance.Shown = false;
             if (e == EnemyType.Weak)
             {
                 actor.modelInstance = weakModel;
@@ -138,7 +137,7 @@ namespace GameLib.Engine.AI
                 actor.modelInstance = shieldModel;
                 enemyAnimationAgent.Animations = shieldAnims;
             }
-            actor.modelInstance.Shown = true;
+            actor.modelInstance.Shown = true;*/
 
             bloodOnDamage = true;
             if (parm.HasParm("Speed"))
@@ -455,8 +454,8 @@ namespace GameLib.Engine.AI
                 FacePosSnappedToPlane(ref runAwayPos);
 
                 actor.modelInstance.Shown = false;
-                actor.modelInstance = scaredModel;
-                enemyAnimationAgent.Animations = scaredAnims;
+                //actor.modelInstance = scaredModel;
+                //enemyAnimationAgent.Animations = scaredAnims;
                 actor.modelInstance.Shown = true;
             }
         }

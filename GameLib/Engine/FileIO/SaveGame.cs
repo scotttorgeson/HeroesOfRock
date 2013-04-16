@@ -63,6 +63,7 @@ namespace GameLib
         public const int HIGH_SCORES_PER_LEVEL = 3;
         public List<string> levelsUnlocked = new List<string>();
         public Dictionary<string, List<int>> highScores = new Dictionary<string, List<int>>();
+        public Dictionary<string, float> highestPercKillStreak = new Dictionary<string, float>();
 
         public void AddHighScore(string level, int score)
         {
@@ -70,7 +71,7 @@ namespace GameLib
             {
                 // add score to the end of the list, and sort the list
                 highScores[level].Add(score);
-                highScores[level].Sort();
+                highScores[level].Sort((a, b) => -1 * a.CompareTo(b)); // descending sort
 
                 // remove any extra scores from the list
                 while ( highScores[level].Count > HIGH_SCORES_PER_LEVEL )
@@ -81,6 +82,21 @@ namespace GameLib
                 // create the entry in the dictionary, then insert the score
                 highScores[level] = new List<int>(HIGH_SCORES_PER_LEVEL + 1);
                 highScores[level].Add(score);
+                
+            }
+        }
+
+        public void AddPercKillStreak(string level, float percKillStreak)
+        {
+            if (highestPercKillStreak.ContainsKey(level))
+            {
+                //change the percScore if needed
+                if (percKillStreak > highestPercKillStreak[level])
+                    highestPercKillStreak[level] = percKillStreak;
+            }
+            else
+            {
+                highestPercKillStreak.Add(level, percKillStreak);
             }
         }
 
@@ -105,8 +121,16 @@ namespace GameLib
             return scores;
         }
 
-        public int musicVol = 0;
-        public int fxVol = 0;
+        public float GetPercKillStreak(string level)
+        {
+            float perc = 0;
+            if (highestPercKillStreak.ContainsKey(level))
+                perc = highestPercKillStreak[level];
+            return perc;
+        }
+
+        public int musicVol = 7;
+        public int fxVol = 7;
         public bool strumMode = true;
         public bool gore = true;
         public bool moreGore = true;
@@ -153,9 +177,11 @@ namespace GameLib
                                 foreach (string level in levelsUnlocked)
                                 {
                                     List<int> highScores = GetHighScores(level);
+                                    float perc = GetPercKillStreak(level);
                                     writer.Write(level);
                                     foreach (int score in highScores)
                                         writer.Write(' ' + score.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                                    writer.Write(' ' + perc.ToString(System.Globalization.CultureInfo.InvariantCulture));
                                     writer.Write(writer.NewLine);
                                 }
                                 //write in this order, music volume, fx volume, strumMode, gore, moreGore
@@ -213,7 +239,7 @@ namespace GameLib
                                         {
                                             string level = split[0];
                                             UnlockLevel(level);
-                                            for (int i = 1; (i < HIGH_SCORES_PER_LEVEL) && (i < split.Length - 1); i++)
+                                            for (int i = 1; (i <= HIGH_SCORES_PER_LEVEL) && (i < split.Length - 1); i++)
                                             {
                                                 int score = 0;
                                                 if (int.TryParse(split[i], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out score))
@@ -224,6 +250,20 @@ namespace GameLib
 #if DEBUG
                                                     System.Diagnostics.Debug.Assert(false, "File corrupted!!");
 #endif
+                                                    fileOk = false;
+                                                    break;
+                                                }
+                                            }
+                                            if (split.Length > HIGH_SCORES_PER_LEVEL + 1) //if we have one more element it is the percentage
+                                            {
+                                                float perc = 0;
+                                                if (float.TryParse(split[split.Length - 1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out perc))
+                                                    AddPercKillStreak(level, perc);
+                                                else
+                                                {
+                                                    //corrupted file
+                                                    System.Diagnostics.Debug.Assert(false, "File corrupted!!");
+
                                                     fileOk = false;
                                                     break;
                                                 }
@@ -246,6 +286,8 @@ namespace GameLib
 #endif
                                                             fileOk = false;
                                                         }
+                                                        else
+                                                            AudioQB.maxMusicVolume = (float)musicVol / 11;
                                                         break;
                                                     case 1: //fx volume
                                                         if (!int.TryParse(split[0], out fxVol))
@@ -256,6 +298,8 @@ namespace GameLib
 #endif
                                                             fileOk = false;
                                                         }
+                                                        else
+                                                            AudioQB.maxSFXVolume = (float)fxVol / 11;
                                                         break;
                                                     case 2: //strum mode
                                                         if (!bool.TryParse(split[0], out strumMode))

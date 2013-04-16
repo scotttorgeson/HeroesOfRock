@@ -255,8 +255,8 @@ namespace GameLib
                 //get this every time to account for controller switching?
                 //note the tutorial images won't actually switch, but the press to continue will
                 gp = cQB.GetGamePadType();
-                if (gp == Microsoft.Xna.Framework.Input.GamePadType.Guitar ||
-                    gp == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar)
+                if ((gp == Microsoft.Xna.Framework.Input.GamePadType.Guitar ||
+                    gp == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar) && PlayerAgent.isStrumMode)
                 {
                     if (strum.IsNewAction)
                     {

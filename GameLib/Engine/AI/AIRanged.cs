@@ -374,9 +374,9 @@ namespace GameLib.Engine.AI
                     _myMissile.GetAgent<AIMissile>().ReInit(ref pos);
                     _myMissile.WakeUp();
                 }
-                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, -toPlayer, false, -1, 10, 
-                                                15, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero, 
-                                                Vector3.Zero, Vector3.Zero, "smoke");
+                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, -toPlayer, false, -1, 15, 
+                                                20, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero, 
+                                                Vector3.Zero, Vector3.Zero, "dust2");
 
                 animationTime = 1.0f;
                 timer = 1.0f;
@@ -496,9 +496,9 @@ namespace GameLib.Engine.AI
             _myMissile.WakeUp();
 
             if(pFX)
-                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Up, false, -1, 10,
-                                            15, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero,
-                                            Vector3.Zero, Vector3.Zero, "smoke");
+                Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(_myMissile, Vector3.Up, false, -1, 15,
+                                            20, .5f, .75f, 0, 0, Vector2.One * .9f, Vector2.One, Vector3.Zero,
+                                            Vector3.Zero, Vector3.Zero, "dust2");
             hasAttacked = true;
         }
 
@@ -507,8 +507,7 @@ namespace GameLib.Engine.AI
             if (_myMissile != null)
             {
                 //make sure the missile dies when it explodes so it doesn't get stuck in memory
-                /*_myMissile.GetAgent<AIMissile>().DestroyOnExplosion = true;
-                actor.MarkForDeath();*/
+                _myMissile.ShutDown();
             }
 
             Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, actor.PhysicsObject.Position, true, -1, 20, 40, .25f, .5f,

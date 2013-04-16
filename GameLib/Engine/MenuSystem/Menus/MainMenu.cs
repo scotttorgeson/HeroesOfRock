@@ -8,6 +8,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
     public class MainMenu : GameMenu {
         Texture2D selectBack;
+        Texture2D mainImage;
+        Texture2D[] mainImages;
 
         public MainMenu ()
             : base(" ") {
@@ -19,6 +21,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             //MenuGraphic extras = new MenuGraphic("MainMenu/play"));
             MenuGraphic credits = new MenuGraphic("MainMenu/credits", "MainMenu/credits_hover", Vector2.Zero, 0.8f);
             MenuGraphic exit = new MenuGraphic("MainMenu/exit", "MainMenu/exit_hover", Vector2.Zero, 0.8f);
+            mainImage = Stage.Content.Load<Texture2D>("UI/Menu/blank");
 
             // Hook up menu event handlers.
             play.Selected += PlaySelected;
@@ -38,6 +41,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
             MenuEntries.Add(exit);
 
             selectBack = Stage.Content.Load<Texture2D>("UI/MainMenu/select_back");
+
+            mainImages = new Texture2D[MenuEntries.Count];
+            for (int i = 1; i < MenuEntries.Count; i++)
+            {
+                MenuGraphic menuEntry = (MenuGraphic)MenuEntries[i];
+
+                mainImages[i] = Stage.Content.Load<Texture2D>("UI/" + menuEntry.TextureName + "Main");
+            }
             selectedEntry = 1;
         }
 
@@ -102,7 +113,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             // make sure our entries are in the right place before we draw them
             UpdateMenuEntryLocations();
             Rectangle rectangle = new Rectangle(0, 0, 0, 0);
-            Texture2D mainImage = Stage.Content.Load<Texture2D>("UI/Menu/blank");
+            
             
             //logo
             MenuEntries[0].Draw(this, false, dt);
@@ -114,8 +125,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 bool isSelected = IsActive && (i == selectedEntry);
 
                 menuEntry.Draw(this, isSelected, dt);
-                if(isSelected)
-                    mainImage = Stage.Content.Load<Texture2D>("UI/"+menuEntry.TextureName +"Main");
+                if (isSelected)
+                    mainImage = mainImages[i];
                
             }
 

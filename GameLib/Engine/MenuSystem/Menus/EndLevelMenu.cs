@@ -15,9 +15,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private Texture2D scoreTitle;
         private Texture2D bestTitle;
         private Texture2D statusTitle;
-        private Texture2D skullStatus;
         private Texture2D selectBack;
         private Texture2D[] skullCounters;
+        private Texture2D[] statusSkulls;
 
         private Rectangle skullRec;
         private Rectangle scoreRec;
@@ -35,6 +35,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         private int bonusPoints;
         private int killStreak;
         private int skullToDraw;
+        private int statusSkull;
         private int lerpRate;
         private int sound;
 
@@ -59,6 +60,10 @@ namespace GameLib.Engine.MenuSystem.Menus {
             
             // save the high score
             Stage.SaveGame.AddHighScore(Stage.ActiveStage.Parm.GetString("AssetName"), rm.GetTotalScore);
+            float percEnemiesOnKillStreak = 0;
+            if (AI.AIQB.numEnemiesInLevel > 0)
+                percEnemiesOnKillStreak = (float)rm.HighestKillStreak / AI.AIQB.numEnemiesInLevel;
+            Stage.SaveGame.AddPercKillStreak(Stage.ActiveStage.Parm.GetString("AssetName"), percEnemiesOnKillStreak);
             if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
                 Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
             Stage.SaveGame.SaveGameData();
@@ -74,7 +79,13 @@ namespace GameLib.Engine.MenuSystem.Menus {
             skullToDraw = 0;
             bonusPoints = 0;
             lerpRate = 10000;
+            int totScore = rm.GetTotalScore;
+            if(totScore > lerpRate * 5)
+            {
+                lerpRate = totScore / 5;
+            }
             skullCounters = new Texture2D[4];
+            statusSkulls = new Texture2D[5];
             checkForPerfect = true;
         }
 
@@ -86,12 +97,13 @@ namespace GameLib.Engine.MenuSystem.Menus {
             //load textures
             for (int i = 0; i < 4; i++)
                 skullCounters[i] = Stage.Content.Load<Texture2D>("UI/HUD/SkullCounter" + (i + 1));
+            for (int i = 0; i < 5; i++)
+                statusSkulls[i] = Stage.Content.Load<Texture2D>("UI/EndLevel/skull" + (i + 1));
 
             levelComplete = Stage.Content.Load<Texture2D>("UI/EndLevel/levelComplete");
             scoreTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/scoreTitle");
             bestTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/bestTitle");
             statusTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/statusTitle");
-            skullStatus = Stage.Content.Load<Texture2D>("UI/EndLevel/skull1");
             selectBack = Stage.Content.Load<Texture2D>("UI/MainMenu/select_back");
 
             window = Stage.renderer.GraphicsDevice.Viewport.Bounds;
@@ -122,8 +134,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
             h = (int)(statusTitle.Height * scale);
             statusTitleRec = new Rectangle(levelCompleteRec.Right + h, scoreTitleRec.Y, w, h);
 
-            w = (int)(skullStatus.Width * scale);
-            h = (int)(skullStatus.Height * scale);
+            w = (int)(statusSkulls[0].Width * scale);
+            h = (int)(statusSkulls[0].Height * scale);
             skullStatusRec = new Rectangle(statusTitleRec.Center.X, scoreRec.Y, w, h);
 
             w = (int)(selectBack.Width * scale);
@@ -141,7 +153,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         void QuitGame (object sender, EventArgs e) {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
-            Stage.LoadStage("MainMenu", true);
+            LoadingScreen.Load(MenuSystem, true, "MainMenu");
         }
 
         public override void HandleInput (MenuInput input) {
@@ -250,7 +262,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             if (drawStatus && doneLerpingScore) {
                 spriteBatch.Draw(statusTitle, statusTitleRec, Color.White);
-                spriteBatch.Draw(skullStatus, skullStatusRec, Color.White);
+                spriteBatch.Draw(statusSkulls[statusSkull], skullStatusRec, Color.White);
             }
 
             if (doneLerpingScore && doneLerpingKillStreak && drawStatus) {
@@ -271,35 +283,51 @@ namespace GameLib.Engine.MenuSystem.Menus {
             }
         }
 
-        private void TallySkulls () {
+        private void TallySkulls()
+        {
 
             killStreak = rm.HighestKillStreak;
-                if (killStreak >= 50) {
-                    skullToDraw = 3;
-                    Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
-                }
-                else if (killStreak >= 20)
-                {
-                    skullToDraw = 2;
-                    Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
-                }
-                else if (killStreak >= 5)
-                {
-                    skullToDraw = 1;
-                    Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
-                }
+            if (killStreak >= 50)
+            {
+                skullToDraw = 3;
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
+            }
+            else if (killStreak >= 20)
+            {
+                skullToDraw = 2;
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
+            }
+            else if (killStreak >= 5)
+            {
+                skullToDraw = 1;
+                Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
+            }
 
-                doneLerpingKillStreak = true;
-                doneLerpingScore = false;
-                bonusPoints = rm.KillStreakScore;
-                //Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(new Vector2(skullRec.Center.X, skullRec.Top), new Vector2(0, 10), 3f, "+" + bonusPoints);
+            float percEnemiesOnKillStreak = 0;
+            
+            if(AI.AIQB.numEnemiesInLevel > 0)
+                percEnemiesOnKillStreak = (float)killStreak / AI.AIQB.numEnemiesInLevel;
+
+            if (percEnemiesOnKillStreak < .25f)
+                statusSkull = 0;
+            else if (percEnemiesOnKillStreak < .5f)
+                statusSkull = 1;
+            else if (percEnemiesOnKillStreak < .75f)
+                statusSkull = 2;
+            else if (percEnemiesOnKillStreak < 1)
+                statusSkull = 3;
+            else
+                statusSkull = 4;
+
+            doneLerpingKillStreak = true;
+            doneLerpingScore = false;
+            bonusPoints = rm.KillStreakScore;
         }
 
         private void CalculateStatus () {
             bonusPoints = rm.RockGodScore;
             if (bonusPoints > 0) {
                 drawStatus = true;
-                Stage.ActiveStage.GetQB<ParticleQB>().AddFloatingText(Vector2.Zero, new Vector2(0, 10), 3f, "+" + bonusPoints);
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
             }
             doneLerpingScore = false;

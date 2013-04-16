@@ -17,8 +17,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
         bool origGore;
         bool origMoreGore;
 
-        private float[] knobAngles = new float[] { 5.272f, 4.729f, 4.229f, 3.816f, 3.381f, 2.881f, 2.424f, 2.055f, 1.562f, 1.007f, .543f, 0 };
-
+        private float[] knobAngles = new float[] { 5.184f, 4.729f, 4.229f, 3.816f, 3.381f, 2.881f, 2.424f, 2.055f, 1.562f, 1.007f, .543f, 0 };
+        
         Texture2D selectBack;
         private Texture2D amp;
         private Texture2D knob;
@@ -266,6 +266,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if(strumMode)
                 MenuSystem.AddScreen(new StrumWarningPopUp(""));
             strumMode = !strumMode;
+            PlayerAgent.isStrumMode = strumMode;
         }
         
     }

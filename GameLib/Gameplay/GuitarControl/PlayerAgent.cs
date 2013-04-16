@@ -554,28 +554,6 @@ namespace GameLib
             return 0.0f;
         }
 
-        public void MoveToNextStopZone()
-        {
-            State = PlayerState.Running;
-            facing = MoveDirection;
-            FaceMovementDirection();
-            switch (MoveDirection)
-            {
-                case PlayerDirection.Right:
-                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = Vector2.UnitX;
-                    break;
-                case PlayerDirection.Left:
-                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = -Vector2.UnitX;
-                    break;
-                case PlayerDirection.Forward:
-                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = -Vector2.UnitY;
-                    break;
-                case PlayerDirection.Backward:
-                    this.actor.PhysicsObject.CharacterController.HorizontalMotionConstraint.MovementDirection = Vector2.UnitY;
-                    break;
-            }
-        }
-
         public void ReachedStopZone()
         {
             State = PlayerState.Normal;

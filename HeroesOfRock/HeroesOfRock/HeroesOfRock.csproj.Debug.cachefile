@@ -156,8 +156,8 @@ Content\Audio\WeakAOE_16.xnb
 Content\Audio\HORcityday.xnb
 Content\Audio\HORhell.xnb
 Content\Audio\HORredlight.xnb
-Content\Audio\HORtheme.xnb
 Content\Audio\HORsewer.xnb
+Content\Audio\HORtheme.xnb
 Content\DefaultFont.xnb
 Content\belligerent.xnb
 Content\boycott.xnb
@@ -288,8 +288,6 @@ Content\Models\Environment\TrashCanDiffuse.xnb
 Content\Models\Environment\TVDiffuse.xnb
 Content\Models\Environment\TVSpecular.xnb
 Content\Models\StandardEnemy\ShieldEnemyDiffuse.xnb
-Content\Models\Buildings\LargeBuildingDiffuse_G.xnb
-Content\Models\Buildings\SmallStoreDiffuse_Graffiti.xnb
 Content\Models\dumpster_diffuse.xnb
 Content\Models\Environment\FireEscapeDiffuse.xnb
 Content\Models\Environment\40Diffuse.xnb
@@ -444,6 +442,8 @@ Content\UI\EndLevel\skull2.xnb
 Content\UI\EndLevel\skull3.xnb
 Content\UI\EndLevel\skull4.xnb
 Content\UI\EndLevel\Skull5.xnb
+Content\Models\Buildings\LargeBuildingDiffuse_G.xnb
+Content\Models\Buildings\SmallStoreDiffuse_Graffiti.xnb
 Content\Controls.xnb
 Content\MoveList.xnb
 Content\Models\Grid\Grid_0.xnb

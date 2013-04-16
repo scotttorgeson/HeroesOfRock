@@ -1006,16 +1006,6 @@
       <Processor>AnimationProcessor</Processor>
       <ProcessorParameters_Scale>0.3</ProcessorParameters_Scale>
     </Compile>
-    <Compile Include="Models\Buildings\LargeBuildingDiffuse_G.tga">
-      <Name>LargeBuildingDiffuse_G</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Buildings\SmallStoreDiffuse_Graffiti.tga">
-      <Name>SmallStoreDiffuse_Graffiti</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Models\dumpster_diffuse.tga">
       <Name>dumpster_diffuse</Name>
       <Importer>TextureImporter</Importer>
@@ -2505,6 +2495,11 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
+    <Compile Include="Audio\HORsewer.mp3">
+      <Name>HORsewer</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
     <Compile Include="Audio\HORtheme.mp3">
       <Name>HORtheme</Name>
       <Importer>Mp3Importer</Importer>
@@ -2512,10 +2507,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\HORsewer.mp3">
-      <Name>HORsewer</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
+    <Compile Include="Models\Buildings\LargeBuildingDiffuse_G.png">
+      <Name>LargeBuildingDiffuse_G</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Buildings\SmallStoreDiffuse_Graffiti.png">
+      <Name>SmallStoreDiffuse_Graffiti</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

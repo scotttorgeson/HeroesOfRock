@@ -35,6 +35,8 @@ namespace GameLib.Engine.AI
         public ParameterSet AOEParm;
         public ParameterSet ScaredShieldedParm;
 
+        public static int numEnemiesInLevel;
+
         public override string Name()
         {
             return "AIQB";
@@ -47,6 +49,7 @@ namespace GameLib.Engine.AI
 
         public override void PreLoadInit(ParameterSet Parm)
         {
+            numEnemiesInLevel = 0;
             aliveEnemies = new LinkedList<AI>();
             spawners = new List<SpawnActorTriggerVolume>();
             rand = new Random();
@@ -822,7 +825,6 @@ namespace GameLib.Engine.AI
 
                 PlayerAgent.Player.GetAgent<GameLib.Engine.AttackSystem.RockMeter>().RockLevelLocked = true;
                 isBound = false;
-                PlayerAgent.Player.GetAgent<PlayerAgent>().MoveToNextStopZone();
             }
         }
 
