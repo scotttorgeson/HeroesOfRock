@@ -1,5 +1,4 @@
-﻿#define DEFERRED
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +13,7 @@ namespace GameLib
 {
     public class Stage
     {
-#if DEFERRED
         public static Renderer renderer;
-#else
-        public static BasicRenderer renderer;
-#endif
         public ParameterSet Parm;
         
         private static Stage activeStage;
