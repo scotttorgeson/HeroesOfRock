@@ -396,10 +396,6 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
-    <Compile Include="Actors\WallPlane.parm">
-      <Name>WallPlane</Name>
-      <Importer>ParameterSetImporter</Importer>
-    </Compile>
     <None Include="Effects\v2\Common.fxh">
       <Name>Common</Name>
     </None>
@@ -1990,11 +1986,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="UI\Options\OptionsKnob.png">
-      <Name>OptionsKnob</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="UI\Options\OptionsSwitch.png">
       <Name>OptionsSwitch</Name>
       <Importer>TextureImporter</Importer>
@@ -2114,13 +2105,6 @@
   <ItemGroup>
     <Compile Include="UI\Menu\creds.png">
       <Name>creds</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="UI\MainMenu\controlsDiagram.png">
-      <Name>controlsDiagram</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -2495,15 +2479,38 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
+    <Compile Include="Audio\HORtheme.mp3">
+      <Name>HORtheme</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Audio\HORsewer.mp3">
       <Name>HORsewer</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\HORtheme.mp3">
-      <Name>HORtheme</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\Options\OptionsKnob.png">
+      <Name>OptionsKnob</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\MainMenu\controlsDiagram.png.png">
+      <Name>controlsDiagram.png</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UI\EndLevel\continueBack.png">
+      <Name>continueBack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -147,13 +147,17 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
             ExitScreen();
-            LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
+            if (Stage.ActiveStage.Parm.HasParm("NextLevel")) {
+                LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
+            } else {
+                LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("MainMenu"));
+            }
         }
 
         void QuitGame (object sender, EventArgs e) {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
-            LoadingScreen.Load(MenuSystem, true, "MainMenu");
+            LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("MainMenu"));
         }
 
         public override void HandleInput (MenuInput input) {
@@ -161,15 +165,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 if (input.IsGreen() || input.IsRed()) {
                     score = baseScore + bonusPoints;
                     doneLerpingScore = true;
+                    
                 }
             } else if (doneLerpingScore) {
                 if (input.IsGreen() || input.IsMenuSelect()) {
-                    if (Stage.ActiveStage.Parm.HasParm("NextLevel")) {
-                        LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
-                    } else {
-                        LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("MainMenu"));
-                    }
-
+                    Continue(this, new EventArgs());
                 } else if (input.IsRed() || input.IsMenuCancel()) {
                     QuitGame(this, new EventArgs());
                 }
@@ -255,9 +255,6 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 Vector2 killStreakTextSize = font.MeasureString("x" + killStreak);
                 spriteBatch.DrawString(font, "x" + killStreak, new Vector2(skullRec.Center.X + 30, skullRec.Center.Y), 
                     Color.White, 0, new Vector2(0, killStreakTextSize.Y/2), 2, SpriteEffects.None, 0);
-
-                //spriteBatch.DrawString(font, "x" + killStreak, new Vector2(scoreRec.Center.X + 4*font.MeasureString("x" + killStreak).X, scoreRec.Center.Y + (2 * font.LineSpacing)),
-    //Color.White, 0, new Vector2(0, killStreakTextSize.Y / 2), 2, SpriteEffects.None, 0);
             }
 
             if (drawStatus && doneLerpingScore) {
