@@ -143,20 +143,10 @@ namespace GameLib.Engine.AttackSystem
             if (actor.Parm.HasParm("StartingRockLevel"))
                 startingRockLevel = actor.Parm.GetInt("StartingRockLevel");
 
-            //get params for the rock level decrease speed here
-            int count = 0;
             tiers = new List<RockTier>();
-            if (GlobalGameParms.initialized)
-            {
-                while (GlobalGameParms.GameParms.HasParm("RockLevelTier" + count))
-                {
-                    tiers.Add(new RockTier(GlobalGameParms.GameParms.GetInt("RockLevelTier" + count),
-                        GlobalGameParms.GameParms.GetFloat("RockLevelTier" + count + "DecayRate")));
-                    count++;
-                }
-            }
-            if (tiers.Count == 0)
-                tiers.Add(new RockTier(1, 3.0f));
+            tiers.Add(new RockTier(1, 4.0f));
+            tiers.Add(new RockTier(4, 3.0f));
+            tiers.Add(new RockTier(9, 2.0f));
 
             actor.RegisterDeathFunction(OnPlayerDeath);
 
@@ -297,11 +287,7 @@ namespace GameLib.Engine.AttackSystem
             score = goalScore = 0;
             rockLevel = startingRockLevel;
             lastRockLevel = rockLevel;
-            if (GlobalGameParms.initialized)
-            {
-                if (GlobalGameParms.GameParms.HasParm("RockLevelStartingValue"))
-                    rockLevel = GlobalGameParms.GameParms.GetInt("RockLevelStartingValue");
-            }
+            rockLevel = 4;
             rockLevelf = rockLevel;
 
             tierIndex = 0;

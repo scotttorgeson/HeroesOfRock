@@ -40,12 +40,6 @@ namespace GameLib
 
         public static void LoadStage(string file, bool blockingLoad)
         {
-            if (!GlobalGameParms.initialized)
-            {
-                GlobalGameParms.GameParms = Content.Load<ParameterSet>("GameVariables");
-                GlobalGameParms.initialized = true;
-            }
-
             LoadStage( Content.Load<ParameterSet>("Worlds/" + file), blockingLoad );
         }
 
@@ -219,9 +213,6 @@ namespace GameLib
                         break;
                     case "AIQB":
                         AddQB<Engine.AI.AIQB>();
-                        break;
-                    case "TempoQB":
-                        AddQB<TempoQB>();
                         break;
                     case "DecalQB":
                         AddQB<Engine.Decals.DecalQB>();

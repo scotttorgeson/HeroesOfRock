@@ -42,7 +42,7 @@ namespace GameLib.Engine.AI
         public AIState state { get; protected set; }
         public EnemyType type { get; protected set; }
         public bool spawnedFromTrigger;
-        public Vector3 spawnPos { get; protected set; }
+        public Vector3 spawnPos;
 
         protected bool stunnable = true;
 

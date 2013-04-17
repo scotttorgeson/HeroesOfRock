@@ -147,10 +147,14 @@ namespace GameLib.Engine.MenuSystem.Menus {
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
             ExitScreen();
-            if (Stage.ActiveStage.Parm.HasParm("NextLevel")) {
+            if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
+            {
                 LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
-            } else {
-                LoadingScreen.Load(MenuSystem, true, "MainMenu");
+            }
+            else
+            {
+                MenuSystem.AddScreen(new BackgroundScreen());
+                LoadingScreen.Load(MenuSystem, true, "CreditsMenu");
             }
         }
 

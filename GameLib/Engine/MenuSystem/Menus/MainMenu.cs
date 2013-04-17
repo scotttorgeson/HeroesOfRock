@@ -72,7 +72,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
         void CredsSelected (object sender, EventArgs e) {
-            MenuSystem.AddScreen(new CreditsMenu());
+            MenuSystem.AddScreen(new CreditsMenu(false));
         }
 
         /// All menu entries are lined up in a vertical list, centered on the menu.

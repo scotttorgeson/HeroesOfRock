@@ -1,6 +1,6 @@
 AssetName=Level3
 SunAngles=45 45
-Quarterbacks=PhysicsQB,ControlsQB,ActorQB,CameraQB,DebugQB,AudioQB,TriggerQB,PlayerAttackSystemQB,ParticleQB,AIQB,BloodSplatterQB,MenuSystemQB,TempoQB,DecalQB
+Quarterbacks=PhysicsQB,ControlsQB,ActorQB,CameraQB,DebugQB,AudioQB,TriggerQB,PlayerAttackSystemQB,ParticleQB,AIQB,BloodSplatterQB,MenuSystemQB,DecalQB
 Gravity=0 -30 0
 Actor0=GuitarAvatar
 Actor0Position=50.57919 70.71542 65.95118

@@ -39,7 +39,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         void GoToMainMenu (object sender, EventArgs e) {
             Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
             this.MarkedForRemove = true;
-            MenuSystem.AddScreen(new BackgroundScreen("MainMenu/background", 0.8f));
+            //MenuSystem.AddScreen(new BackgroundScreen("MainMenu/background", 0.8f));
             MenuSystem.AddScreen(new MainMenu());
         }
 

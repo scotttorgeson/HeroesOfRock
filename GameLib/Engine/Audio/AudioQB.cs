@@ -80,11 +80,6 @@ namespace GameLib
                 index++;
             }
             maxMusicVolume = 1.0f;
-            if (GlobalGameParms.initialized)
-            {
-                if (GlobalGameParms.GameParms.HasParm("SoundMaxMusicVol"))
-                    maxMusicVolume = GlobalGameParms.GameParms.GetFloat("SoundMaxMusicVol");
-            }
 
             if (Parm.HasParm("SoundTheme"))
             {
@@ -104,13 +99,9 @@ namespace GameLib
             if(PlayerAgent.Player != null)
                 rm = PlayerAgent.Player.GetAgent<GameLib.Engine.AttackSystem.RockMeter>();
             
-            if (GlobalGameParms.initialized)
-            {
-                if(GlobalGameParms.GameParms.HasParm("SoundFluctuationRate"))
-                    pitchFluctuationRate = 6.28f * GlobalGameParms.GameParms.GetFloat("SoundFluctuationRate");
-                if (GlobalGameParms.GameParms.HasParm("SoundFluctuationAmp"))
-                    pitchFluctuationAmplitude = GlobalGameParms.GameParms.GetFloat("SoundFluctuationAmp");
-            }
+            pitchFluctuationRate = 6.28f;
+            pitchFluctuationAmplitude = .1f;
+
             int musicVol;
             int sfxVol;
 

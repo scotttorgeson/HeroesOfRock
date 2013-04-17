@@ -151,7 +151,6 @@
     <Compile Include="Engine\Core\ActorQB.cs" />
     <Compile Include="Engine\Core\Agent.cs" />
     <Compile Include="Engine\Core\DebugQB.cs" />
-    <Compile Include="Engine\Core\GlobalGameParms.cs" />
     <Compile Include="Engine\Core\LoadingQB.cs" />
     <Compile Include="Engine\Core\Quarterback.cs" />
     <Compile Include="Engine\Core\Stage.cs" />
@@ -213,7 +212,6 @@
     <Compile Include="Engine\Physics\Triggers\TriggerQB.cs" />
     <Compile Include="Engine\Physics\Triggers\TriggerVolume.cs" />
     <Compile Include="Engine\Physics\Triggers\TutorialStopTriggerVolume.cs" />
-    <Compile Include="Engine\Tempo\TempoQB.cs" />
     <Compile Include="Engine\Utilities\FastFrustum.cs" />
     <Compile Include="Engine\Utilities\FastList.cs" />
     <Compile Include="Gameplay\BloodSplatter\BloodSplatter.cs" />

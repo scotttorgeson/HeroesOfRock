@@ -20,7 +20,7 @@ namespace GameLib.Engine.MenuSystem {
         private GameScreen GetGameScreenByName (string screenname) {
             switch (screenname) {
                 case "CreditsMenu":
-                    return new CreditsMenu();
+                    return new CreditsMenu(true);
                 case "LevelMenu":
                     return new LevelMenu();
                 case "MainMenu":

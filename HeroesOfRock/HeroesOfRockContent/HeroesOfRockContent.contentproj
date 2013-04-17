@@ -396,13 +396,13 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+    <Compile Include="Actors\WallPlane.parm">
+      <Name>WallPlane</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
     <None Include="Effects\v2\Common.fxh">
       <Name>Common</Name>
     </None>
-    <Compile Include="GameVariables.parm">
-      <Name>GameVariables</Name>
-      <Importer>ParameterSetImporter</Importer>
-    </Compile>
     <Compile Include="Effects\v2\SkinnedWithSpecular.fx">
       <Name>SkinnedWithSpecular</Name>
       <Importer>EffectImporter</Importer>
@@ -811,12 +811,6 @@
       <Name>TestLevel2</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
-    <Compile Include="Models\RangedEnemy\Ranged_Enemy_RocketBounce_Bounce_1.fbx">
-      <Name>Ranged_Enemy_RocketBounce_Bounce_1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>AnimationProcessor</Processor>
-      <ProcessorParameters_Scale>0.3</ProcessorParameters_Scale>
-    </Compile>
     <Compile Include="Models\RangedEnemy\Ranged_Enemy_RocketBounce_End_1.fbx">
       <Name>Ranged_Enemy_RocketBounce_End_1</Name>
       <Importer>FbxImporter</Importer>
@@ -1066,6 +1060,10 @@
       <Name>Level5</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
+    <Compile Include="Worlds\CreditsMenu.parm">
+      <Name>CreditsMenu</Name>
+      <Importer>ParameterSetImporter</Importer>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GameLib\GameLib.csproj">
@@ -1258,6 +1256,7 @@
       <Name>smoke</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1568,13 +1567,6 @@
   <ItemGroup>
     <Compile Include="ParticleFX\dust2.png">
       <Name>dust2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ParticleFX\dust.png">
-      <Name>dust</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

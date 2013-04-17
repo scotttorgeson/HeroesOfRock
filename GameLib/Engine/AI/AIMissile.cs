@@ -46,15 +46,12 @@ namespace GameLib.Engine.AI
                 actor.PhysicsObject.CollisionInformation.CollisionRules.Group = PhysicsQB.missileGroup;
                 actor.PhysicsObject.CollisionInformation.Entity.IsAffectedByGravity = false;
                 actor.PhysicsObject.CollisionInformation.Events.ContactCreated += HitObject;
+                BEPUphysics.MathExtensions.Matrix3X3 m = new BEPUphysics.MathExtensions.Matrix3X3(0, 0, 0, 0, 0, 0, 0, 0, 0);
+                ((BEPUphysics.Entities.Entity)this.actor.PhysicsObject.SpaceObject).LocalInertiaTensor = m;
             }
             shouldAttack = true;
 
             sploded = false;
-
-            
-            BEPUphysics.MathExtensions.Matrix3X3 m = new BEPUphysics.MathExtensions.Matrix3X3(0,0,0,0,0,0,0,0,0);
-            //actor.PhysicsObject.CharacterController.
-            ((BEPUphysics.Entities.Entity)this.actor.PhysicsObject.SpaceObject).LocalInertiaTensor = m;
 
             Vector3 missileDir = PlayerAgent.Player.PhysicsObject.Position - actor.PhysicsObject.Position;
             missileDir.Normalize();
@@ -133,7 +130,7 @@ namespace GameLib.Engine.AI
         {
             Stage.ActiveStage.GetQB<AttackSystem.PlayerAttackSystemQB>().EnemyAttack(attackDmg, attackForce,
                 new Vector3(4, 4, 4), this.actor, AIQB.MoveDirection); //do damage
-            
+            this.actor.PhysicsObject.Position = Vector3.Zero;
             this.actor.ShutDown();
         }
 

@@ -48,7 +48,7 @@ Content\Actors\Beercan.xnb
 Content\Actors\Billboard.xnb
 Content\Actors\Couch.xnb
 Content\Actors\SmallStore-1.xnb
-Content\GameVariables.xnb
+Content\Actors\WallPlane.xnb
 Content\Worlds\AlphaLevel.xnb
 Content\Worlds\LoadingLevel.xnb
 Content\Worlds\TestLevel.xnb
@@ -60,6 +60,7 @@ Content\Worlds\StartGame.xnb
 Content\Worlds\Tutorial.xnb
 Content\Worlds\TestLevel2.xnb
 Content\Worlds\Level5.xnb
+Content\Worlds\CreditsMenu.xnb
 Content\Worlds\MainMenu.xnb
 Content\Actors\EnemyWeak.xnb
 Content\Worlds\HORLevel1.xnb
@@ -216,7 +217,6 @@ Content\Models\Buildings\Building_02.xnb
 Content\Models\sLevel\sLevel1Backdrop.xnb
 Content\Models\Buildings\LargeApartmentBuildingModel.xnb
 Content\Models\Buildings\SmallStoreModel.xnb
-Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_Bounce_1.xnb
 Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_End_1.xnb
 Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_Idle_1.xnb
 Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_Start_1.xnb
@@ -343,7 +343,6 @@ Content\Models\Earth_Texture.xnb
 Content\Decals\blood.xnb
 Content\Decals\crack.xnb
 Content\ParticleFX\dust2.xnb
-Content\ParticleFX\dust.xnb
 Content\UI\HUD\number1.xnb
 Content\UI\HUD\number10.xnb
 Content\UI\HUD\number11.xnb
@@ -447,10 +446,10 @@ Content\UI\LevelGraphics\level5.xnb
 Content\Controls.xnb
 Content\MoveList.xnb
 Content\Models\Grid\Grid_0.xnb
-Content\FBX\B1F934E4\sLevel1.fbm\Ground_Texture_0.xnb
+Content\FBX\722729C6\sLevel1.fbm\Ground_Texture_0.xnb
 Content\Models\Buildings\LargeApartmentBuildingDiffuse_0.xnb
 Content\Models\Buildings\SmallStoreDiffuse_0.xnb
-Content\FBX\DF3C393D\cardboardbox.fbm\boxdiffuse_0.xnb
+Content\FBX\303E2E1F\cardboardbox.fbm\boxdiffuse_0.xnb
 Content\Models\Environment\powerLineDiffuse_0.xnb
 Content\Models\Environment\ShoppingCartDiffuse_0.xnb
 Content\Models\Environment\StopLightDiffuse_0.xnb

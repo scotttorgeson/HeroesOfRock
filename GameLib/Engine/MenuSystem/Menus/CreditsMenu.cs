@@ -12,8 +12,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
         float alpha;
         float scroll;
         Boolean endCredits, logoShowing;
+        bool mainMenuOnExit;
 
-        public CreditsMenu ()
+        public CreditsMenu (bool addMainMenuOnExit)
             : base("") {
             alpha = 0f;
             credits = Stage.Content.Load<Texture2D>("UI/Menu/creds");
@@ -23,6 +24,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             rec = new Rectangle(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X - credits.Width*3/4, Stage.renderer.GraphicsDevice.Viewport.Bounds.Bottom - credits.Height/8, credits.Bounds.Width*3/2, credits.Bounds.Height*3/2);
             scroll = rec.Y;
             endCredits = logoShowing = false;
+            mainMenuOnExit = addMainMenuOnExit;
             
         }
         
@@ -32,6 +34,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
         /// </summary>
         protected override void OnCancel () {
             this.MarkedForRemove = true;
+            if (mainMenuOnExit)
+                MenuSystem.AddScreen(new BackgroundScreen());
             MenuSystem.AddScreen(new MainMenu());
         }
 

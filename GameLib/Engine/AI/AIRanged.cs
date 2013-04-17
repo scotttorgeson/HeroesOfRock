@@ -508,6 +508,7 @@ namespace GameLib.Engine.AI
             {
                 //make sure the missile dies when it explodes so it doesn't get stuck in memory
                 _myMissile.ShutDown();
+                _myMissile.PhysicsObject.Position = Vector3.Zero;
             }
 
             Stage.ActiveStage.GetQB<Particles.ParticleQB>().AddParticleEmitter(null, actor.PhysicsObject.Position, true, -1, 20, 40, .25f, .5f,

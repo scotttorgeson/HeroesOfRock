@@ -379,6 +379,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -403,6 +404,7 @@ namespace GameLib.Engine.AI
                         Actor a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.ActiveStage);
 #endif
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -421,6 +423,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -439,6 +442,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor(enemyType, enemyType, ref basePos, ref rot, Stage.ActiveStage); //no offset if the enemy is on a platform
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -457,6 +461,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -475,6 +480,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor(enemyType, enemyType, ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -516,6 +522,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor("EnemyWeak", "EnemyWeak", ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -540,6 +547,7 @@ namespace GameLib.Engine.AI
                         Actor a = aQB.CreateActor("EnemyWeakShielded", "EnemyWeakShielded", ref pos, ref rot, Stage.ActiveStage);
 #endif
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -558,6 +566,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor("EnemyRanged", "EnemyRanged", ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -576,6 +585,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor("EnemyRangedPogo", "EnemyRangedPogo", ref basePos, ref rot, Stage.ActiveStage); //no offset if the enemy is on a platform
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -594,6 +604,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor("EnemyHeavy","EnemyHeavy", ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -612,6 +623,7 @@ namespace GameLib.Engine.AI
                         ActorQB aQB = Stage.ActiveStage.GetQB<ActorQB>();
                         Actor a = aQB.CreateActor("EnemyHeavyAOE", "EnemyHeavyAOE", ref pos, ref rot, Stage.ActiveStage);
                         temp = a.GetAgentByBaseType<AI>();
+                        temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
                     break;
@@ -668,7 +680,9 @@ namespace GameLib.Engine.AI
 
         public override void Serialize(ParameterSet parm)
         {
-
+            parm.AddParm("EnemyWeakPoolSize",3);
+            parm.AddParm("EnemyRangedPoolSize",3);
+            parm.AddParm("EnemyHeavyPoolSize", 3);
         }
 
         public static Quaternion EulerToQuaternion(Vector3 rot)
