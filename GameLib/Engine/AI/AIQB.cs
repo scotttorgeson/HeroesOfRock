@@ -112,6 +112,7 @@ namespace GameLib.Engine.AI
 
         public void OnPlayerDeath()
         {
+            spawnLaneIndex = savedIndex;
             // reset active triggers
             foreach (SpawnActorTriggerVolume spawner in spawners)
             {
@@ -127,10 +128,9 @@ namespace GameLib.Engine.AI
 
         public override void LevelLoaded()
         {
-            //InitEnemyPools();
-            //ShutdownAll();
             isBound = false;
             playerBoundingBoxes.Clear();
+            spawnLaneIndex = 0;
             base.LevelLoaded();
         }
 
@@ -627,6 +627,9 @@ namespace GameLib.Engine.AI
                         aliveEnemies.AddLast(temp);
                     }
                     break;
+                default:
+                    Console.WriteLine("ya screwed up");
+                    break;
             }
             if (temp != null)
             {
@@ -740,6 +743,7 @@ namespace GameLib.Engine.AI
 
         private static int spawnLaneIndex = 0;
         private static int numSpawnLanes = 3;
+        private static int savedIndex;
         private static float spawnLaneOffset = 2.0f;
 
         public static Vector3 RandomizeSpawn(ref Vector3 pos)
@@ -778,6 +782,7 @@ namespace GameLib.Engine.AI
             
             if (!isBound)
             {
+                savedIndex = spawnLaneIndex;
                 CameraQB c = Stage.ActiveStage.GetQB<CameraQB>();
                 PlayerCamera p = (c.ActiveCamera as PlayerCamera);
 

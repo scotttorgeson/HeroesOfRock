@@ -49,7 +49,6 @@ Content\Actors\Billboard.xnb
 Content\Actors\Couch.xnb
 Content\Actors\SmallStore-1.xnb
 Content\Actors\WallPlane.xnb
-Content\GameVariables.xnb
 Content\Worlds\AlphaLevel.xnb
 Content\Worlds\LoadingLevel.xnb
 Content\Worlds\TestLevel.xnb
@@ -61,6 +60,7 @@ Content\Worlds\StartGame.xnb
 Content\Worlds\Tutorial.xnb
 Content\Worlds\TestLevel2.xnb
 Content\Worlds\Level5.xnb
+Content\Worlds\CreditsMenu.xnb
 Content\Worlds\MainMenu.xnb
 Content\Actors\EnemyWeak.xnb
 Content\Worlds\HORLevel1.xnb
@@ -156,8 +156,8 @@ Content\Audio\WeakAOE_16.xnb
 Content\Audio\HORcityday.xnb
 Content\Audio\HORhell.xnb
 Content\Audio\HORredlight.xnb
-Content\Audio\HORsewer.xnb
 Content\Audio\HORtheme.xnb
+Content\Audio\HORsewer.xnb
 Content\DefaultFont.xnb
 Content\belligerent.xnb
 Content\boycott.xnb
@@ -217,7 +217,6 @@ Content\Models\Buildings\Building_02.xnb
 Content\Models\sLevel\sLevel1Backdrop.xnb
 Content\Models\Buildings\LargeApartmentBuildingModel.xnb
 Content\Models\Buildings\SmallStoreModel.xnb
-Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_Bounce_1.xnb
 Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_End_1.xnb
 Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_Idle_1.xnb
 Content\Models\RangedEnemy\Ranged_Enemy_RocketBounce_Start_1.xnb
@@ -288,8 +287,6 @@ Content\Models\Environment\TrashCanDiffuse.xnb
 Content\Models\Environment\TVDiffuse.xnb
 Content\Models\Environment\TVSpecular.xnb
 Content\Models\StandardEnemy\ShieldEnemyDiffuse.xnb
-Content\Models\Buildings\LargeBuildingDiffuse_G.xnb
-Content\Models\Buildings\SmallStoreDiffuse_Graffiti.xnb
 Content\Models\dumpster_diffuse.xnb
 Content\Models\Environment\FireEscapeDiffuse.xnb
 Content\Models\Environment\40Diffuse.xnb
@@ -346,7 +343,6 @@ Content\Models\Earth_Texture.xnb
 Content\Decals\blood.xnb
 Content\Decals\crack.xnb
 Content\ParticleFX\dust2.xnb
-Content\ParticleFX\dust.xnb
 Content\UI\HUD\number1.xnb
 Content\UI\HUD\number10.xnb
 Content\UI\HUD\number11.xnb
@@ -410,12 +406,10 @@ Content\UI\LevelGraphics\level1.xnb
 Content\UI\LevelGraphics\level2.xnb
 Content\UI\LevelGraphics\level3.xnb
 Content\UI\LevelGraphics\level4.xnb
-Content\UI\LevelGraphics\level5.xnb
 Content\UI\Options\EffectsVolume.xnb
 Content\UI\Options\Gore.xnb
 Content\UI\Options\MoreGore.xnb
 Content\UI\Options\MusicVolume.xnb
-Content\UI\Options\OptionsKnob.xnb
 Content\UI\Options\OptionsSwitch.xnb
 Content\UI\Options\Options_Amp.xnb
 Content\UI\Options\StrumMode.xnb
@@ -438,12 +432,17 @@ Content\UI\EndLevel\scoreTitle.xnb
 Content\UI\EndLevel\statusTitle.xnb
 Content\UI\Menu\warning.xnb
 Content\UI\Menu\creds.xnb
-Content\UI\MainMenu\controlsDiagram.xnb
 Content\UI\EndLevel\skull1.xnb
 Content\UI\EndLevel\skull2.xnb
 Content\UI\EndLevel\skull3.xnb
 Content\UI\EndLevel\skull4.xnb
 Content\UI\EndLevel\Skull5.xnb
+Content\UI\Options\OptionsKnob.xnb
+Content\UI\EndLevel\continueBack.xnb
+Content\Models\Buildings\LargeBuildingDiffuse_G.xnb
+Content\Models\Buildings\SmallStoreDiffuse_Graffiti.xnb
+Content\UI\MainMenu\controlsDiagram.xnb
+Content\UI\LevelGraphics\level5.xnb
 Content\Controls.xnb
 Content\MoveList.xnb
 Content\Models\Grid\Grid_0.xnb
