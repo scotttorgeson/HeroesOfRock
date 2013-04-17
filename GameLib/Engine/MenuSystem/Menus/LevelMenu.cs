@@ -8,12 +8,13 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace GameLib.Engine.MenuSystem.Menus {
     public class LevelMenu : GameMenu {
-        Texture2D levelSelect, levelLock;
-
+        Texture2D levelSelect;
+        Texture2D selectBack;
         public LevelMenu ()
             : base("") {
 
             levelSelect = Stage.Content.Load<Texture2D>("UI/LevelGraphics/levelSelect");
+            selectBack = Stage.Content.Load<Texture2D>("UI/MainMenu/select_back");
             LevelMenuEntry TUTORIAL = new LevelMenuEntry("Tutorial", "Tutorial", "Level1", false);
             LevelMenuEntry LEVEL1 = new LevelMenuEntry("Level1", "Level 1", "Level1", false);
             LevelMenuEntry LEVEL2 = new LevelMenuEntry("Level2", "Level 2", "Level2", false);
@@ -131,6 +132,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
             int height = (int)(levelSelect.Height * 0.7f);
             Rectangle levelSelectRec = new Rectangle(rec.Left + width/2, rec.Top + (int)(height * 2), width, height);
             Stage.renderer.SpriteBatch.Draw(levelSelect, levelSelectRec, Color.White);
+
+            width = (int)(selectBack.Width * 0.7f);
+            height = (int)(selectBack.Height * 0.7f);
+            Rectangle selectBackRec = new Rectangle(rec.Right - (2*width), rec.Bottom - (int)(1.5*height), width,height);
+            Stage.renderer.SpriteBatch.Draw(selectBack, selectBackRec, Color.White);
+
         }
 
         public override void HandleInput (MenuInput input) {
