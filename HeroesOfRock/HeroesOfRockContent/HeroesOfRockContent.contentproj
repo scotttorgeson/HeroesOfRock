@@ -1060,10 +1060,6 @@
       <Name>Level5</Name>
       <Importer>ParameterSetImporter</Importer>
     </Compile>
-    <Compile Include="Worlds\CreditsMenu.parm">
-      <Name>CreditsMenu</Name>
-      <Importer>ParameterSetImporter</Importer>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GameLib\GameLib.csproj">
