@@ -333,15 +333,16 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
             doneLerpingKillStreak = true;
             doneLerpingScore = false;
-            bonusPoints = rm.KillStreakScore;
+            bonusPoints += rm.KillStreakScore;
         }
 
         private void CalculateStatus () {
-            bonusPoints = rm.RockGodScore;
-            if (bonusPoints > 0) {
-                drawStatus = true;
+            int rgScore = rm.RockGodScore;
+            if (rgScore > 0) {
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("A-heavy");
             }
+            bonusPoints += rgScore;
+            drawStatus = true;
             doneLerpingScore = false;
             checkForPerfect = false; ;
         }
