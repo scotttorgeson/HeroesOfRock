@@ -6,12 +6,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.GamerServices;
 
-namespace GameLib.Engine.MenuSystem.Menus {
-    public class LevelMenu : GameMenu {
+namespace GameLib.Engine.MenuSystem.Menus
+{
+    public class LevelMenu : GameMenu
+    {
         Texture2D levelSelect;
         Texture2D selectBack;
-        public LevelMenu ()
-            : base("") {
+        public LevelMenu()
+            : base("")
+        {
 
             levelSelect = Stage.Content.Load<Texture2D>("UI/LevelGraphics/levelSelect");
             selectBack = Stage.Content.Load<Texture2D>("UI/MainMenu/select_back");
@@ -67,7 +70,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void LoadLevel (object sender, EventArgs e)
+        void LoadLevel(object sender, EventArgs e)
         {
             LevelMenuEntry entry = (LevelMenuEntry)sender;
             if (!entry.IsLocked)
@@ -82,21 +85,23 @@ namespace GameLib.Engine.MenuSystem.Menus {
                     LoadingScreen.Load(MenuSystem, true, entry.LevelName);
                     //Stage.LoadStage(entry.LevelName, true);
                 }
-                 this.MarkedForRemove = true;
+                this.MarkedForRemove = true;
             }
         }
 
         /// <summary>
         /// All menu entries are lined up in a vertical list, centered on the menu.
         /// </summary>
-        protected override void UpdateMenuEntryLocations () {
-            
+        protected override void UpdateMenuEntryLocations()
+        {
+
             Vector2 position = new Vector2(0f, 175f);
             Vector2 selectedPosition = new Vector2();
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             // update each menu entry's location in turn
-            for (int i = 0; i < MenuEntries.Count; i++) {
+            for (int i = 0; i < MenuEntries.Count; i++)
+            {
 
                 MenuEntry menuEntry = MenuEntries[i];
                 int offset = (menuEntry.GetWidth(this) + 50) * (i - selectedEntry);
@@ -116,60 +121,88 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 menuEntry.Position = position;
             }
         }
-        
+
         /// <summary>
         /// When the user cancels the main menu, ask if they want to exit the sample.
         /// </summary>
-        protected override void OnCancel () {
+        protected override void OnCancel()
+        {
             this.MarkedForRemove = true;
             MenuSystem.AddScreen(new MainMenu());
         }
 
-        public override void Draw (float dt) {
+        public override void Draw(float dt)
+        {
             base.Draw(dt);
             Rectangle rec = Renderer.ScreenRect;
             int width = (int)(levelSelect.Width * 0.7f);
             int height = (int)(levelSelect.Height * 0.7f);
-            Rectangle levelSelectRec = new Rectangle(rec.Left + width/2, rec.Top + (int)(height * 2), width, height);
+            Rectangle levelSelectRec = new Rectangle(rec.Left + width / 2, rec.Top + (int)(height * 2), width, height);
             Stage.renderer.SpriteBatch.Draw(levelSelect, levelSelectRec, Color.White);
 
             width = (int)(selectBack.Width * 0.7f);
             height = (int)(selectBack.Height * 0.7f);
-            Rectangle selectBackRec = new Rectangle(rec.Right - (2*width), rec.Bottom - (int)(1.5*height), width,height);
+            Rectangle selectBackRec = new Rectangle(rec.Right - (2 * width), rec.Bottom - (int)(1.5 * height), width, height);
             Stage.renderer.SpriteBatch.Draw(selectBack, selectBackRec, Color.White);
 
         }
 
-        public override void HandleInput (MenuInput input) {
+        public override void HandleInput(MenuInput input)
+        {
+            bool isPrevious = false;
+            bool isNext = false;
+            if (Stage.ActiveStage.GetQB<ControlsQB>().GetGamePadType() == Microsoft.Xna.Framework.Input.GamePadType.Guitar
+                || Stage.ActiveStage.GetQB<ControlsQB>().GetGamePadType() == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar)
+            {
+                isPrevious = input.IsMenuUp();
+                isNext = input.IsMenuDown();
+            }
+            else
+            {
+                isPrevious = input.IsMenuLeft();
+                isNext = input.IsMenuRight();
+            }
+
             // Move to the previous menu entry?
-            if (input.IsMenuLeft() || input.IsMenuUp()) {
+            if (isPrevious)
+            {
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 int select = selectedEntry;
 
                 selectedEntry--;
 
-                if (selectedEntry < 0) { 
+                if (selectedEntry < 0)
+                {
                     selectedEntry = MenuEntries.Count - 1;
                 }
-                if (!MenuEntries[selectedEntry].CanSelect) {
+                if (!MenuEntries[selectedEntry].CanSelect)
+                {
                     selectedEntry = select;
                 }
-            } else if (input.IsMenuRight() || input.IsMenuDown()) {
+            }
+            else if (isNext)
+            {
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 int select = selectedEntry;
 
                 selectedEntry++;
 
-                if (selectedEntry >= MenuEntries.Count) {
+                if (selectedEntry >= MenuEntries.Count)
+                {
                     selectedEntry = 0;
                 }
-                if (!MenuEntries[selectedEntry].CanSelect) {
+                if (!MenuEntries[selectedEntry].CanSelect)
+                {
                     selectedEntry = select;
                 }
-            } else if (input.IsMenuSelect()) {
+            }
+            else if (input.IsMenuSelect())
+            {
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Arail-attack2");
                 OnSelectEntry(selectedEntry);
-            } else if (input.IsMenuCancel()) {
+            }
+            else if (input.IsMenuCancel())
+            {
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("Uppercut");
                 OnCancel();
             }

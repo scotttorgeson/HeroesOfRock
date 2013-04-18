@@ -1,4 +1,4 @@
 AssetName=StartGame
 FirstScreen=ElevenTenLogoScreen
-Quarterbacks=ActorQB,ControlsQB,ParticleQB,AudioQB,MenuSystemQB,CameraQB
+Quarterbacks=ActorQB,ControlsQB,AudioQB,MenuSystemQB,CameraQB
 Sound0=Arail-attack2
