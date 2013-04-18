@@ -59,9 +59,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
             options.Add(ChangeMoreGore);
             options.Add(ChangeStrum);
 
-            strumMode = Stage.SaveGame.getStrumMode();
-            Stage.SaveGame.getGores(out gore, out moreGore);
-            Stage.SaveGame.getVolumes(out musicVol, out fxVol);
+            if (!Stage.Editor)
+            {
+                strumMode = Stage.SaveGame.getStrumMode();
+                Stage.SaveGame.getGores(out gore, out moreGore);
+                Stage.SaveGame.getVolumes(out musicVol, out fxVol);
+            }
 
             origFXVol = fxVol;
             origGore = gore;

@@ -65,10 +65,13 @@ namespace GameLib.Engine.MenuSystem.Menus {
             float percEnemiesOnKillStreak = 0;
             if (AI.AIQB.numEnemiesInLevel > 0)
                 percEnemiesOnKillStreak = (float)rm.HighestKillStreak / AI.AIQB.numEnemiesInLevel;
-            Stage.SaveGame.AddPercKillStreak(Stage.ActiveStage.Parm.GetString("AssetName"), percEnemiesOnKillStreak);
-            if (Stage.ActiveStage.Parm.HasParm("NextLevel") && !Guide.IsTrialMode)
-                Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
-            Stage.SaveGame.SaveGameData();
+            if (!Stage.Editor)
+            {
+                Stage.SaveGame.AddPercKillStreak(Stage.ActiveStage.Parm.GetString("AssetName"), percEnemiesOnKillStreak);
+                if (Stage.ActiveStage.Parm.HasParm("NextLevel") && !Guide.IsTrialMode)
+                    Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
+                Stage.SaveGame.SaveGameData();
+            }
         }
 
         private void GetScoreData () {

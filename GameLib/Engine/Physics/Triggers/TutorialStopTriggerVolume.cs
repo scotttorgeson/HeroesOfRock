@@ -337,7 +337,7 @@ namespace GameLib
 
             if (++tutIndex >= numTuts && returnToMenu)
             {
-                LoadingScreen.Load(Stage.ActiveStage.GetQB<MenuSystemQB>().MenuSystem, true, "MainMenu");
+                LoadingScreen.Load(Stage.ActiveStage.GetQB<MenuSystemQB>().MenuSystem, true, "Level1");
             }
         }
 
