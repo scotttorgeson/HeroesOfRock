@@ -435,8 +435,8 @@ namespace GameLib.Engine.AttackSystem
         private void playMissSound()
         {
             //TODO: get a good miss sound
-            string soundName = "Hihat";
-            Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 1.0f, 0.0f, 0.0f);
+            //string soundName = "Hihat";
+            //Stage.ActiveStage.GetQB<AudioQB>().PlaySound(soundName, 1.0f, 0.0f, 0.0f);
         }
     }
 }
