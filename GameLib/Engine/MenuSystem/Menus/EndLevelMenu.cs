@@ -8,6 +8,7 @@ using GameLib.Engine.MenuSystem.Menus.MenuComponents;
 using GameLib.Engine.Particles;
 using Microsoft.Xna.Framework.Input;
 using GameLib.Engine.AttackSystem;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace GameLib.Engine.MenuSystem.Menus {
     public class EndLevelMenu : GameMenu {
@@ -64,7 +65,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if (AI.AIQB.numEnemiesInLevel > 0)
                 percEnemiesOnKillStreak = (float)rm.HighestKillStreak / AI.AIQB.numEnemiesInLevel;
             Stage.SaveGame.AddPercKillStreak(Stage.ActiveStage.Parm.GetString("AssetName"), percEnemiesOnKillStreak);
-            if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
+            if (Stage.ActiveStage.Parm.HasParm("NextLevel") && !Guide.IsTrialMode)
                 Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
             Stage.SaveGame.SaveGameData();
         }
@@ -144,16 +145,21 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
         void Continue (object sender, EventArgs e) {
+            if (Guide.IsTrialMode)
+            {
+                QuitGame(sender, e);
+                return;
+            }
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
             ExitScreen();
+            
             if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
             {
                 LoadingScreen.Load(MenuSystem, true, Stage.ActiveStage.Parm.GetString("NextLevel"));
             }
             else
             {
-                MenuSystem.AddScreen(new BackgroundScreen());
                 LoadingScreen.Load(MenuSystem, true, "CreditsMenu");
             }
         }

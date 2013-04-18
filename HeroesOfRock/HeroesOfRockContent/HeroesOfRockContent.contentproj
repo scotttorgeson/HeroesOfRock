@@ -75,68 +75,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\bassandbeat.mp3">
-      <Name>bassandbeat</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\bassdrum.mp3">
-      <Name>bassdrum</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\bassdrumpLOOP.mp3">
-      <Name>bassdrumpLOOP</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\bassloop.mp3">
-      <Name>bassloop</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\beat4loop.mp3">
-      <Name>beat4loop</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Beat4track.mp3">
-      <Name>Beat4track</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\cymbal.mp3">
-      <Name>cymbal</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Guitarandbeat.mp3">
-      <Name>Guitarandbeat</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Guitarandbeat2.mp3">
-      <Name>Guitarandbeat2</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\guitarslide.mp3">
-      <Name>guitarslide</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Hihat.mp3">
-      <Name>Hihat</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\snare.mp3">
-      <Name>snare</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="DefaultFont.spritefont">
       <Name>DefaultFont</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -2165,18 +2103,8 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\BloodBath_16.mp3">
-      <Name>BloodBath_16</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
     <Compile Include="Audio\BloodOrgyLoud.mp3">
       <Name>BloodOrgyLoud</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\BloodOrgy_16.mp3">
-      <Name>BloodOrgy_16</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -2212,16 +2140,6 @@
     </Compile>
     <Compile Include="Audio\DemonSlayerLoud.mp3">
       <Name>DemonSlayerLoud</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\DemonSlayer_16.mp3">
-      <Name>DemonSlayer_16</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\FullAOE_16.mp3">
-      <Name>FullAOE_16</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -2345,11 +2263,6 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\Rampage_16.mp3">
-      <Name>Rampage_16</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
     <Compile Include="Audio\Ranged-attack2.mp3">
       <Name>Ranged-attack2</Name>
       <Importer>Mp3Importer</Importer>
@@ -2357,11 +2270,6 @@
     </Compile>
     <Compile Include="Audio\RockGodLoud.mp3">
       <Name>RockGodLoud</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\RockGod_16.mp3">
-      <Name>RockGod_16</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -2400,11 +2308,6 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\Slaughterhouse_16.mp3">
-      <Name>Slaughterhouse_16</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
     <Compile Include="Audio\slide.mp3">
       <Name>slide</Name>
       <Importer>Mp3Importer</Importer>
@@ -2417,21 +2320,6 @@
     </Compile>
     <Compile Include="Audio\Static_16.mp3">
       <Name>Static_16</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\TEST_BloodBath.mp3">
-      <Name>TEST_BloodBath</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\TEST_DemonSlayer.mp3">
-      <Name>TEST_DemonSlayer</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\TEST_Rampage.mp3">
-      <Name>TEST_Rampage</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>

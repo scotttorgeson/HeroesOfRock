@@ -21,7 +21,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             teamLogo = Stage.Content.Load<Texture2D>("UI/Menu/11outOf10_Logo_White");
             hor = Stage.Content.Load<Texture2D>("UI/Menu/logo");
             back = Stage.Content.Load<Texture2D>("UI/Menu/back");
-            rec = new Rectangle(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X - credits.Width*3/4, Stage.renderer.GraphicsDevice.Viewport.Bounds.Bottom - credits.Height/8, credits.Bounds.Width*3/2, credits.Bounds.Height*3/2);
+            rec = new Rectangle(Stage.renderer.GraphicsDevice.Viewport.Bounds.Center.X - credits.Width*3/4, Stage.renderer.GraphicsDevice.Viewport.Bounds.Bottom - credits.Height/4, credits.Bounds.Width*3/2, credits.Bounds.Height*3/2);
             scroll = rec.Y;
             endCredits = logoShowing = false;
             mainMenuOnExit = addMainMenuOnExit;
