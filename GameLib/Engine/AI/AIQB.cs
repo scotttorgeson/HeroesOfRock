@@ -266,83 +266,6 @@ namespace GameLib.Engine.AI
 
         public static bool camLocked = false;
 
-        //this is O(n) time currently, there is probably a better way to do it
-        public Actor FindClosestEnemyInDir(GameLib.PlayerDirection dir, ref Vector3 pos, ref DashAttack d, float attackRange)
-        {
-            Actor toReturn = null;
-            float minDist = float.PositiveInfinity;
-            float currDist;
-
-            Vector3 enemyPos;
-
-            foreach (AI e in aliveEnemies)
-            {
-
-                enemyPos = e.actor.PhysicsObject.Position;
-                if (!OnScreen(ref pos, ref enemyPos))
-                    continue;
-                switch (dir)
-                {
-                    case PlayerDirection.Right:
-                        if (enemyPos.X >= pos.X)
-                        {
-                            currDist = Math.Abs(enemyPos.X - pos.X);
-                            if (currDist < minDist)
-                            {
-                                minDist = currDist;
-                                toReturn = e.actor;
-                            }
-                        }
-                        break;
-                    case PlayerDirection.Left:
-
-                        if (enemyPos.X <= pos.X)
-                        {
-                            currDist = Math.Abs(enemyPos.X - pos.X);
-                            if (currDist < minDist)
-                            {
-                                minDist = currDist;
-                                toReturn = e.actor;
-                            }
-                        }
-
-                        break;
-                    case PlayerDirection.Forward:
-                        if (enemyPos.Z >= pos.Z)
-                        {
-                            currDist = Math.Abs(enemyPos.Z - pos.Z);
-                            if (currDist < minDist)
-                            {
-                                minDist = currDist;
-                                toReturn = e.actor;
-                            }
-                        }
-
-                        break;
-                    case PlayerDirection.Backward:
-                        if (enemyPos.Z <= pos.Z)
-                        {
-                            currDist = Math.Abs(enemyPos.Z - pos.Z);
-                            if (currDist < minDist)
-                            {
-                                minDist = currDist;
-                                toReturn = e.actor;
-                            }
-                        }
-
-                        break;
-                }
-
-            }
-
-            d.Target = toReturn;
-            d.Dist = minDist;
-            d.AttackRange = attackRange;
-            d.Direction = dir;
-
-            return toReturn;
-        }
-
         public void AddLiveEnemy(Actor a)
         {
             AI ai = a.GetAgentByBaseType<AI>();
@@ -626,9 +549,6 @@ namespace GameLib.Engine.AI
                         temp.spawnPos = a.PhysicsObject.Position;
                         aliveEnemies.AddLast(temp);
                     }
-                    break;
-                default:
-                    Console.WriteLine("ya screwed up");
                     break;
             }
             if (temp != null)

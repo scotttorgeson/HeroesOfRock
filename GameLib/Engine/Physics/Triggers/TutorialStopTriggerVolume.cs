@@ -7,6 +7,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using GameLib.Engine.AI;
 using Microsoft.Xna.Framework.Graphics;
+using GameLib.Engine.MenuSystem;
+using GameLib.Engine.MenuSystem.Menus;
 
 
 namespace GameLib
@@ -335,8 +337,7 @@ namespace GameLib
 
             if (++tutIndex >= numTuts && returnToMenu)
             {
-                Stage.LoadStage("MainMenu", true);
-                Stage.ActiveStage.GetQB<GameLib.Engine.MenuSystem.MenuSystemQB>().GoToLevelSelect();
+                LoadingScreen.Load(Stage.ActiveStage.GetQB<MenuSystemQB>().MenuSystem, true, "MainMenu");
             }
         }
 

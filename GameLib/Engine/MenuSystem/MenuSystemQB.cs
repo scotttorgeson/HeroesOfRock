@@ -13,6 +13,11 @@ namespace GameLib.Engine.MenuSystem {
         private MenuSystem menuSystem;
         private GameScreen firstScreen;
 
+        public MenuSystem MenuSystem
+        {
+            get { return menuSystem; }
+        }
+
         public MenuSystemQB () {
             
         }
