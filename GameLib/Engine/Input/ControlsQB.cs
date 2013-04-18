@@ -231,10 +231,10 @@ namespace GameLib {
         GamePadState ReadGamePadState (string s)
         {
             string[] ss = s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            Vector2 leftThumbStick = new Vector2(float.Parse(ss[0]), float.Parse(ss[1]));
-            Vector2 rightThumbStick = new Vector2(float.Parse(ss[2]), float.Parse(ss[3]));
-            float leftTrigger = float.Parse(ss[4]);
-            float rightTrigger = float.Parse(ss[5]);
+            Vector2 leftThumbStick = new Vector2(float.Parse(ss[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(ss[1], System.Globalization.CultureInfo.InvariantCulture));
+            Vector2 rightThumbStick = new Vector2(float.Parse(ss[2], System.Globalization.CultureInfo.InvariantCulture), float.Parse(ss[3], System.Globalization.CultureInfo.InvariantCulture));
+            float leftTrigger = float.Parse(ss[4], System.Globalization.CultureInfo.InvariantCulture);
+            float rightTrigger = float.Parse(ss[5], System.Globalization.CultureInfo.InvariantCulture);
             List<Buttons> buttons = new List<Buttons>();
             for (int i = 6; i < ss.Length; i++)
             {

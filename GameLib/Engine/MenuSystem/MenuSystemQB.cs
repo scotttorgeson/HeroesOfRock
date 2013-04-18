@@ -39,7 +39,7 @@ namespace GameLib.Engine.MenuSystem {
                     return new HudScreen();
                 case "SplashMenu":
                     menuSystem.AddScreen(new BackgroundScreen());
-                    return new SplashMenu();
+                    return new SplashMenu(true);
                 case "ElevenTenLogoScreen":
                     menuSystem.AddScreen(new ColoredBackgroundScreen(Color.Black));
                     return new ElevenTenLogoScreen(2);

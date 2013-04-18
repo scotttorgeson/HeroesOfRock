@@ -29,7 +29,7 @@ namespace GameLib
 
         public float GetRate()
         {
-            return float.Parse(rate);
+            return float.Parse(rate, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public Buttons? GetButton(bool low)
@@ -219,7 +219,7 @@ namespace GameLib
         public InputAction(string name, string rate, string buttonLow, string buttonHigh, string keyLow, string keyHigh, string axis)
         {
             this.name = name;
-            this.rate = float.Parse(rate);
+            this.rate = float.Parse(rate, System.Globalization.CultureInfo.InvariantCulture);
             this.buttonLow = ParseButton(buttonLow);
             this.buttonHigh = ParseButton(buttonHigh);
             this.keyLow = ParseKey(keyLow);

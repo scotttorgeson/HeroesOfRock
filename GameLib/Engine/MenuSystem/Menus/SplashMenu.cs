@@ -11,7 +11,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
     class SplashMenu : GameMenu {
         ControlsQB controlsQB = Stage.ActiveStage.GetQB<ControlsQB>();
 
-        public SplashMenu ()
+        public SplashMenu (bool playThemeSong)
             : base("") {
 
             SpriteFont font = Stage.Content.Load<SpriteFont>("DefaultFont");
@@ -32,7 +32,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
             selectedEntry = 1;
 
             Stage.SaveGame.LoadGameData();
-            Stage.ActiveStage.GetQB<AudioQB>().ChangeTheme("HORcityday");
+
+            if ( playThemeSong )
+                Stage.ActiveStage.GetQB<AudioQB>().ChangeTheme("HORcityday");
         }
 
 

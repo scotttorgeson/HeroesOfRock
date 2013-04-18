@@ -28,7 +28,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 if (quitGame)
                     Stage.QuitGame = true;
                 else
-                    Stage.LoadStage("MainMenu", true);
+                    LoadingScreen.Load(MenuSystem, true, "MainMenu");
             }
                 
         }

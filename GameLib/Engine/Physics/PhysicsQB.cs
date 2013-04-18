@@ -133,9 +133,9 @@ namespace GameLib
             if (Parm.HasParm("Gravity"))
             {
                 string[] gravity = Parm.GetString("Gravity").Split();
-                float x = float.Parse(gravity[0]);
-                float y = float.Parse(gravity[1]);
-                float z = float.Parse(gravity[2]);
+                float x = float.Parse(gravity[0], System.Globalization.CultureInfo.InvariantCulture);
+                float y = float.Parse(gravity[1], System.Globalization.CultureInfo.InvariantCulture);
+                float z = float.Parse(gravity[2], System.Globalization.CultureInfo.InvariantCulture);
                 Space.ForceUpdater.Gravity = new Vector3(x, y, z);
             }
         }

@@ -35,8 +35,12 @@ namespace GameLib.Engine.MenuSystem.Menus {
         protected override void OnCancel () {
             this.MarkedForRemove = true;
             if (mainMenuOnExit)
+            {
                 MenuSystem.AddScreen(new BackgroundScreen());
-            MenuSystem.AddScreen(new MainMenu());
+                LoadingScreen.Load(MenuSystem, true, "MainMenu");
+            }
+            else
+                MenuSystem.AddScreen(new MainMenu());
         }
 
         public override void Update (float dt, bool otherScreenHasFocus, bool coveredByOtherScreen) {

@@ -62,7 +62,7 @@ namespace GameLib.Engine.MenuSystem.Screens {
         private void LogoScreenOut () {
             this.MarkedForRemove = true;
             MenuSystem.AddScreen(new BackgroundScreen("Menu/splashBackground", 0.8f));
-            MenuSystem.AddScreen(new SplashMenu());
+            MenuSystem.AddScreen(new SplashMenu(true));
         }
     }
 }

@@ -34,7 +34,7 @@ namespace GameLib.Engine.MenuSystem.Screens {
                     BepuPhysicsLogoScreen bepu = new BepuPhysicsLogoScreen(1.0f);
                     bepu.LoadContent();
 
-                    SplashMenu splash = new SplashMenu();
+                    SplashMenu splash = new SplashMenu(false);
                     splash.LoadContent();
 
                     BackgroundScreen bg = new BackgroundScreen();
