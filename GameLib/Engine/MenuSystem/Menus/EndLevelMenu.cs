@@ -200,12 +200,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
                     sound = Stage.ActiveStage.GetQB<AudioQB>().PlaySoundInstance("banknote_counter_COUNTING", true, true);
                     soundPlaying = true;
                 }
-                    
-                int rate = lerpRate;
-                if ((baseScore + bonusPoints) > 900000)
-                    rate = lerpRate * 100;
 
-                Lerp(baseScore + bonusPoints, ref score, (int)Math.Ceiling(rate * dt));
+                Lerp(baseScore + bonusPoints, ref score, (int)Math.Ceiling(lerpRate * dt));
             }          
             else if (!doneLerpingKillStreak){           
                 TallySkulls();

@@ -242,6 +242,7 @@ namespace GameLib.Engine.AI
                         //there is no walk animation for ranged enemies
                         break;
                     case AIState.WaitingToAttack:
+                        
                         float d = AIQB.DistanceSquared(actor.PhysicsObject.Position, targetPos);
 
                         Vector3 p = actor.PhysicsObject.Position;
@@ -385,6 +386,9 @@ namespace GameLib.Engine.AI
 
         public override float StartAttack(ref Vector3 place)
         {
+            if (!actor.PhysicsObject.CylinderCharController.SupportFinder.HasSupport)
+                return 0;
+
             FaceTargetSnappedToPlane();
             state = AIState.Attacking;
             actor.PhysicsObject.CylinderCharController.HorizontalMotionConstraint.MovementDirection = Vector2.Zero;
