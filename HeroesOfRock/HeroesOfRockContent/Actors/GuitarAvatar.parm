@@ -33,8 +33,7 @@ Sound3=Melee2_16
 Sound4=Melee3_16
 Sound5=Melee4_16
 Sound6=MetalSlam_16
-Sound7=ShieldDisarm_16
-Sound8=ShieldDisarm2_16
+Sound7=SlaughterhouseLoud
 Sound9=MeatSlap2_16
 Sound10=Dash_16
 Sound11=ShieldHit1_16
@@ -59,7 +58,3 @@ Sound29=BloodOrgyLoud
 Sound30=DemonSlayerLoud
 Sound31=RampageLoud
 Sound32=RockGodLoud
-Sound33=SlaughterhouseLoud
-
-#AI soundFX eveutually move to the AI parm
-Sound34=bloodsplat_16
