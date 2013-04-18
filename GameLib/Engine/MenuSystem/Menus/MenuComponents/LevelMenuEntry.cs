@@ -42,6 +42,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
         private int[] TopScore () {
+            
             int[] topScores = Stage.SaveGame.GetHighScores(LevelName).ToArray();
             Array.Sort(topScores, ((a, b) => -1 * a.CompareTo(b)));
 
@@ -138,15 +139,19 @@ namespace GameLib.Engine.MenuSystem.Menus {
                 }
                 
                 //draw Top scores
-                String title = "TOP SCORES";
-                Vector2 titlePos = new Vector2(dividerRec.Right - font.MeasureString(title).X, dividerRec.Bottom + 
-                    font.MeasureString(title).Y);
-                Stage.renderer.SpriteBatch.DrawString(font, title,  titlePos, color, 0, origin, 1, SpriteEffects.None, 0);
+                if (LevelName != "Tutorial")
+                {
+                    String title = "TOP SCORES";
+                    Vector2 titlePos = new Vector2(dividerRec.Right - font.MeasureString(title).X, dividerRec.Bottom +
+                        font.MeasureString(title).Y);
+                    Stage.renderer.SpriteBatch.DrawString(font, title, titlePos, color, 0, origin, 1, SpriteEffects.None, 0);
 
-                for (int i = 0; i < tscores.Length; i++) {
-                    String score = (i + 1) + " - " + tscores[i].ToString(System.Globalization.CultureInfo.InvariantCulture);
-                    Stage.renderer.SpriteBatch.DrawString(baseFont, score, new Vector2(rec.Right - baseFont.MeasureString(score).X, (int)titlePos.Y
-                        + 15 + (int)(1.5*baseFont.MeasureString(score).Y * (i + 1))/2) , color, 0, origin, 1, SpriteEffects.None, 0);
+                    for (int i = 0; i < tscores.Length; i++)
+                    {
+                        String score = (i + 1) + " - " + tscores[i].ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        Stage.renderer.SpriteBatch.DrawString(baseFont, score, new Vector2(rec.Right - baseFont.MeasureString(score).X, (int)titlePos.Y
+                            + 15 + (int)(1.5 * baseFont.MeasureString(score).Y * (i + 1)) / 2), color, 0, origin, 1, SpriteEffects.None, 0);
+                    }
                 }
             }
         }

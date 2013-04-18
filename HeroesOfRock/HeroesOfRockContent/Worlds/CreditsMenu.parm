@@ -1,0 +1,8 @@
+AssetName=Credits
+FirstScreen=CreditsMenu
+Quarterbacks=ActorQB,ControlsQB,ParticleQB,AudioQB,MenuSystemQB,CameraQB
+Sound0=A
+Sound1=Arail-attack2
+Sound2=knob-click-1
+Sound3=Uppercut
+SoundTheme=HORhell

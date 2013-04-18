@@ -93,7 +93,7 @@ namespace GameLib.Engine.MenuSystem {
             if (PlayerAgent.Player != null) {
                 base.Draw(dt);
                 //draw time TODO FIX TO REFLECT ACTUAL TIME; 
-                String timeString = FormatTime(time+=dt);
+                String timeString = FormatTime(time);
                 Vector2 timePos = new Vector2(timeRec.Center.X , timeRec.Center.Y);
                 Stage.renderer.SpriteBatch.Draw(timeBG, timeRec, Color.White);
                 Stage.renderer.SpriteBatch.DrawString(font, timeString, timePos, Color.White);
@@ -157,7 +157,9 @@ namespace GameLib.Engine.MenuSystem {
 
         public override void Update (float dt, bool otherScreenHasFocus, bool coveredByOtherScreen) {
             base.Update(dt, otherScreenHasFocus, coveredByOtherScreen);
-            health.Update(dt); 
+            health.Update(dt);
+
+            time += dt;
 
             //Crowd Transitions
             if (PlayerAgent.Player.GetAgent<RockMeter>().RockLevel > 10)
