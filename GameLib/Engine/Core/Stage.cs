@@ -93,6 +93,7 @@ namespace GameLib
 
                 GameRunning = true;
                 DoLoadStage = false;
+                ActiveStage.ResumeGame();
             //}
             //else
             //{

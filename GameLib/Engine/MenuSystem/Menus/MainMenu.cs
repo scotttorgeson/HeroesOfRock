@@ -52,6 +52,39 @@ namespace GameLib.Engine.MenuSystem.Menus {
             selectedEntry = 1;
         }
 
+        public override void LoadContent()
+        {
+            base.LoadContent();
+
+            System.Threading.Thread thread = new System.Threading.Thread((_) =>
+            {
+#if XBOX
+                    System.Threading.Thread.CurrentThread.SetProcessorAffinity(new[] { 4 });
+#endif
+
+                OptionPopUp options = new OptionPopUp("message");
+                options.LoadContent();
+
+                CreditsMenu creditsMenu = new CreditsMenu(false);
+                creditsMenu.LoadContent();
+
+                LevelMenu levelMenu = new LevelMenu();
+                levelMenu.LoadContent();
+
+                ControlsPopUp controls = new ControlsPopUp("message");
+                controls.LoadContent();
+
+                QuitConfirmPopUp quit = new QuitConfirmPopUp("message");
+                quit.LoadContent();
+
+                StrumWarningPopUp strum = new StrumWarningPopUp("message");
+                strum.LoadContent();
+            });
+
+            thread.Name = "MainMenuLoadingThread";
+            thread.Start();
+        }
+
 
         void PlaySelected (object sender, EventArgs e) {
             MenuSystem.AddScreen(new BackgroundScreen());

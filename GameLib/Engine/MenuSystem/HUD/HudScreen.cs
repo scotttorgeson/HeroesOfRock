@@ -69,6 +69,24 @@ namespace GameLib.Engine.MenuSystem {
               
             health = new HealthKnob(healthRec);
             health.LoadContent();
+
+            OptionPopUp options = new OptionPopUp("message");
+            options.LoadContent();
+
+            ControlsPopUp controls = new ControlsPopUp("message");
+            controls.LoadContent();
+
+            QuitConfirmPopUp quit = new QuitConfirmPopUp("message");
+            quit.LoadContent();
+
+            StrumWarningPopUp strum = new StrumWarningPopUp("message");
+            strum.LoadContent();
+
+            PauseMenu pause = new PauseMenu("message");
+            pause.LoadContent();
+
+            EndLevelMenu menu = new EndLevelMenu("message");
+            menu.LoadContent();
         }
 
         public override void Draw (float dt) {

@@ -60,7 +60,8 @@ namespace GameLib.Engine.MenuSystem.Menus {
             timer = 0f;
             
             // save the high score
-            Stage.SaveGame.AddHighScore(Stage.ActiveStage.Parm.GetString("AssetName"), rm.GetTotalScore);
+            if ( rm != null )
+                Stage.SaveGame.AddHighScore(Stage.ActiveStage.Parm.GetString("AssetName"), rm.GetTotalScore);
             float percEnemiesOnKillStreak = 0;
             if (AI.AIQB.numEnemiesInLevel > 0)
                 percEnemiesOnKillStreak = (float)rm.HighestKillStreak / AI.AIQB.numEnemiesInLevel;
@@ -71,16 +72,20 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
         private void GetScoreData () {
-            //get our data
-            rm = PlayerAgent.Player.GetAgent<RockMeter>();
 
-            baseScore = rm.Score;
+            if (PlayerAgent.Player != null)
+            {
+                //get our data
+                rm = PlayerAgent.Player.GetAgent<RockMeter>();
+
+                baseScore = rm.Score;
+            }
             timeOnLevel = Stage.ActiveStage.Time;
             killStreak = 0;
             skullToDraw = 0;
             bonusPoints = 0;
             lerpRate = 10000;
-            int totScore = rm.GetTotalScore;
+            int totScore = PlayerAgent.Player != null ? rm.GetTotalScore : 0;
             if(totScore > lerpRate * 5)
             {
                 lerpRate = totScore / 5;
@@ -106,6 +111,9 @@ namespace GameLib.Engine.MenuSystem.Menus {
             bestTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/bestTitle");
             statusTitle = Stage.Content.Load<Texture2D>("UI/EndLevel/statusTitle");
             continueBack = Stage.Content.Load<Texture2D>("UI/EndLevel/continueBack");
+
+            if (MenuSystem == null || MenuSystem.Font == null)
+                return;
 
             window = Stage.renderer.GraphicsDevice.Viewport.Bounds;
 

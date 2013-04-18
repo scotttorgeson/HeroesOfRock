@@ -24,6 +24,28 @@ namespace GameLib.Engine.MenuSystem.Screens {
                 content = Stage.Content;
 
             logoTexture = content.Load<Texture2D>("UI/Menu/11outOf10_Logo_White");
+
+            System.Threading.Thread thread = new System.Threading.Thread((_) =>
+                {
+#if XBOX
+                    System.Threading.Thread.CurrentThread.SetProcessorAffinity(new[] { 3 });
+#endif
+
+                    BepuPhysicsLogoScreen bepu = new BepuPhysicsLogoScreen(1.0f);
+                    bepu.LoadContent();
+
+                    SplashMenu splash = new SplashMenu();
+                    splash.LoadContent();
+
+                    BackgroundScreen bg = new BackgroundScreen();
+                    bg.LoadContent();
+
+                    MainMenu mainMenu = new MainMenu();
+                    mainMenu.LoadContent();
+                });
+
+            thread.Name = "EleventOutOfTenLoadingThread";
+            thread.Start();
         }
 
         public override void Update (float dt, bool otherScreenHasFocus,
