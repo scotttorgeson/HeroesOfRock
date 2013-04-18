@@ -278,25 +278,28 @@ namespace GameLib
 
         private void DrawParticles()
         {
-            foreach (ParticleEmitter e in Stage.ActiveStage.GetQB<ParticleQB>().emitters)
+            if (Stage.ActiveStage.QBTable.ContainsKey(typeof(ParticleQB)))
             {
-                particleEffect.Texture = e.texture;
-                particleEffect.Parameters["Texture"].SetValue(e.texture);
-                particleEffect.World = Matrix.Identity; //need to figure out world matrix
-                particleEffect.View = view;
-                particleEffect.Projection = projection;
-                
-                foreach (EffectPass pass in particleEffect.CurrentTechnique.Passes)
+                foreach (ParticleEmitter e in Stage.ActiveStage.GetQB<ParticleQB>().emitters)
                 {
-                    pass.Apply();
+                    particleEffect.Texture = e.texture;
+                    particleEffect.Parameters["Texture"].SetValue(e.texture);
+                    particleEffect.World = Matrix.Identity; //need to figure out world matrix
+                    particleEffect.View = view;
+                    particleEffect.Projection = projection;
 
-                    foreach (Particle p in e.liveParticles)
+                    foreach (EffectPass pass in particleEffect.CurrentTechnique.Passes)
                     {
-                        GraphicsDevice.DrawUserIndexedPrimitives
-                            <VertexPositionNormalTexture>(
-                            PrimitiveType.TriangleList,
-                            p.quad.Vertices, 0, 4,
-                            p.quad.Indexes, 0, 2);
+                        pass.Apply();
+
+                        foreach (Particle p in e.liveParticles)
+                        {
+                            GraphicsDevice.DrawUserIndexedPrimitives
+                                <VertexPositionNormalTexture>(
+                                PrimitiveType.TriangleList,
+                                p.quad.Vertices, 0, 4,
+                                p.quad.Indexes, 0, 2);
+                        }
                     }
                 }
             }

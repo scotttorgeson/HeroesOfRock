@@ -207,8 +207,22 @@ namespace GameLib.Engine.MenuSystem.Menus {
 
         public override void HandleInput(MenuInput input)
         {
+            bool isPrevious = false;
+            bool isNext = false;
+            if (Stage.ActiveStage.GetQB<ControlsQB>().GetGamePadType() == Microsoft.Xna.Framework.Input.GamePadType.Guitar
+                || Stage.ActiveStage.GetQB<ControlsQB>().GetGamePadType() == Microsoft.Xna.Framework.Input.GamePadType.AlternateGuitar)
+            {
+                isPrevious = input.IsMenuUp();
+                isNext = input.IsMenuDown();
+            }
+            else
+            {
+                isPrevious = input.IsMenuLeft();
+                isNext = input.IsMenuRight();
+            }
+
             // Move to the previous menu entry?
-            if (input.IsMenuLeft() || input.IsMenuUp())
+            if (isPrevious)
             {
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 index--;
@@ -217,7 +231,7 @@ namespace GameLib.Engine.MenuSystem.Menus {
             }
 
             // Move to the next menu entry?
-            if (input.IsMenuRight() || input.IsMenuDown())
+            if (isNext)
             {
                 Stage.ActiveStage.GetQB<AudioQB>().PlaySound("knob-click-1");
                 index++;
