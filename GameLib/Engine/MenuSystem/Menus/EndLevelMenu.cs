@@ -278,12 +278,13 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if (goalVal < currVal) {
                 currVal -= lerpAmount;
                 if (currVal <= goalVal) currVal = goalVal;
-            } else if (goalVal == currVal) {
-                doneLerpingScore = true;
             } else {
                 currVal += lerpAmount;
                 if (currVal >= goalVal) currVal = goalVal;
             }
+
+            if (goalVal == currVal)
+                doneLerpingScore = true;
         }
 
         private void TallySkulls()
