@@ -68,7 +68,11 @@ namespace GameLib.Engine.MenuSystem.Menus {
             if (!Stage.Editor)
             {
                 Stage.SaveGame.AddPercKillStreak(Stage.ActiveStage.Parm.GetString("AssetName"), percEnemiesOnKillStreak);
+#if XBOX
                 if (Stage.ActiveStage.Parm.HasParm("NextLevel") && !Guide.IsTrialMode)
+#else
+                if (Stage.ActiveStage.Parm.HasParm("NextLevel"))
+#endif
                     Stage.SaveGame.UnlockLevel(Stage.ActiveStage.Parm.GetString("NextLevel"));
                 Stage.SaveGame.SaveGameData();
             }
@@ -156,11 +160,13 @@ namespace GameLib.Engine.MenuSystem.Menus {
         }
 
         void Continue (object sender, EventArgs e) {
+#if XBOX
             if (Guide.IsTrialMode)
             {
                 QuitGame(sender, e);
                 return;
             }
+#endif
             Stage.GameRunning = true;
             Stage.ActiveStage.ResumeGame();
             ExitScreen();
